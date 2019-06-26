@@ -23,7 +23,7 @@
 
 ####Team expectations
 
-* What to do when there is a disagreement about an approach/technology? - Discuss pros and cons of each approach. - Come to consensus as a group on how to proceed. - If no consensus can be reached, get a help ticket (ask fellow or instructor)
+* What to do when there is a disagreement about an approach/technology? - Discuss pros and cons of each approach. - Come to consensus as a group on how to proceed. - If no consensus can be reached, get a help ticket (ask fellow or instructor).
 
 * Each team member has the right to deny a task in the interest of their physical or mental health.
 
