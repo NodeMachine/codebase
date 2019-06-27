@@ -10,6 +10,28 @@ const test = () => {
   el.innerHTML += (doSomething(2) === 3) + ' '
 }
 
+// github answer -->
+
+function promiseTimeout(ms, promise) {
+  return new Promise(function(resolve, reject) {
+    // create a timeout to reject promise if not resolved
+    var timer = setTimeout(function() {
+      reject(new Error('promise timeout'))
+    }, ms)
+
+    promise
+      .then(function(res) {
+        clearTimeout(timer)
+        resolve(res)
+      })
+      .catch(function(err) {
+        clearTimeout(timer)
+        console.log(err)
+        reject('Your code timed out :(')
+      })
+  })
+}
+
 async function ssr(url, userCode) {
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
