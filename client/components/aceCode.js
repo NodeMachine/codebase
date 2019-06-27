@@ -1,5 +1,6 @@
 import React from 'react'
 import AceEditor from 'react-ace'
+import axios from 'axios'
 
 class AceCode extends React.Component {
   constructor(props) {
@@ -8,10 +9,18 @@ class AceCode extends React.Component {
       code: ''
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(newValue) {
     this.setState({code: newValue})
+  }
+
+  handleSubmit() {
+    axios
+      .post('/api/solution', this.state)
+      .then(result => alert(result.data))
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -25,13 +34,7 @@ class AceCode extends React.Component {
           value={this.state.code}
           editorProps={{$blockScrolling: true}}
         />
-        <button
-          onClick={() => {
-            console.log(this.state)
-          }}
-        >
-          Run code
-        </button>
+        <button onClick={() => this.handleSubmit()}>Run code</button>
       </div>
     )
   }
