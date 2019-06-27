@@ -28,6 +28,7 @@ function promiseTimeout(ms, promise) {
         clearTimeout(timer)
         console.log(err)
         reject('Your code timed out :(')
+        // throw new Error('Your code timed out :(')
       })
   })
 }
@@ -47,17 +48,23 @@ router.post('/', async (req, res, next) => {
   try {
     //
     const code = req.body.code
-    ssr(`file:${path.join(__dirname, 'toDelete.html')}`, code)
-      .then(result => {
-        console.log('result before filter', result)
-        result = result.match(/\B>.*?<\/div/)[0]
-        result = result.slice(1, result.length - 5)
-        console.log('result it here', result)
-        res.send(result)
-      })
-      .catch(err => console.log('in the catch', err))
+    let testResult = await promiseTimeout(
+      3000,
+      ssr(`file:${path.join(__dirname, 'toDelete.html')}`, code)
+        .then(result => {
+          console.log('result before filter', result)
+          result = result.match(/\B>.*?<\/div/)[0]
+          result = result.slice(1, result.length - 5)
+          console.log('result it here', result)
+          return result
+        })
+        .catch(err => console.log('in the catch', err))
+    )
+    console.log('>>> ', testResult)
+    res.send(testResult)
   } catch (error) {
-    console.log('hi')
+    console.log('In error block')
+    res.send('YA TIMED OUT, SON')
     next(error)
   }
 })
