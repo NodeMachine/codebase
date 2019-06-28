@@ -55,6 +55,27 @@ dennisRef.get().then(result => {
   console.log('result: ', result.data())
 })
 
+// db.collection('users').where("name", "==", "Dennis")
+//   .get()
+//   .then((querySnapshot) => {
+//     querySnapshot.forEach(elem => {
+//       console.log(elem.id, "=>", "")
+//     })
+//   })
+db
+  .collection('users')
+  .get()
+  .then(querySnapshot => {
+    console.log('result: ', querySnapshot)
+    querySnapshot.forEach(elem => {
+      console.log(
+        `result name: ${elem.data().name}, result.id: ${elem.id}, problems: ${
+          elem.data().problems
+        }`
+      )
+    })
+  })
+
 // let userChild = userRef.child('users');
 
 // usersRef.push({
