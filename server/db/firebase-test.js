@@ -1,18 +1,18 @@
-const firebase = require('firebase')
-const keys = require('../../keys')
-// Your web app's Firebase configuration
-var firebaseConfig = {
-  apiKey: keys.firebase,
-  authDomain: keys.authDomain,
-  databaseURL: keys.databaseURL,
-  projectId: keys.projectId,
-  storageBucket: keys.storageBucket,
-  messagingSenderId: keys.messagingSenderId,
-  appId: keys.appId
-}
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig)
-const db = firebase.firestore()
+// const firebase = require('firebase');
+// const keys = require('../../keys');
+// // Your web app's Firebase configuration
+// var firebaseConfig = {
+// 	apiKey: keys.apiKey,
+// 	authDomain: keys.authDomain,
+// 	databaseURL: keys.databaseURL,
+// 	projectId: keys.projectId,
+// 	storageBucket: keys.storageBucket,
+// 	messagingSenderId: keys.messagingSenderId,
+// 	appId: keys.appId
+// };
+// // Initialize Firebase
+// firebase.initializeApp(firebaseConfig);
+// const db = firebase.firestore();
 
 // const problemRef = db.collection('problems').doc().set({
 // 	category: 'algorithm',
@@ -23,9 +23,9 @@ const db = firebase.firestore()
 // 	title: 'Increase By 5'
 // });
 
-const userRef = db.collection('users').doc()
-const user2Ref = db.collection('users').doc()
-const user3Ref = db.collection('users').doc()
+// const userRef = db.collection('users').doc();
+// const user2Ref = db.collection('users').doc();
+// const user3Ref = db.collection('users').doc();
 
 // userRef.set({
 // 	firstName: 'Ken',
@@ -65,93 +65,101 @@ const user3Ref = db.collection('users').doc()
 // 	interests: 'Dynamic Programming'
 // });
 
-// const userProblemRef = userRef.collection('problems').doc();
-const userProblemRef = db
-  .collection('users')
-  .doc('ZTfJqUb5lxzCRF71IQE8')
-  .collection('userProblems')
-  .doc()
+// // const userProblemRef = userRef.collection('problems').doc();
+// const userProblemRef = db.collection('users').doc('ZTfJqUb5lxzCRF71IQE8').collection('userProblems').doc();
 
-userProblemRef.set({
-  isSolved: true,
-  solution: 'function increment(num) { return num + 5}',
-  category: 'algorithm',
-  language: 'javascript',
-  points: 12,
-  prompt: 'Increment a number by 5.',
-  tests: 'increment(1) === 6, increment(5) === 10',
-  title: 'Increase By 5'
-})
+// userProblemRef.set({
+// 	isSolved: true,
+// 	solution: 'function increment(num) { return num + 5}',
+// 	category: 'algorithm',
+// 	language: 'javascript',
+// 	points: 12,
+// 	prompt: 'Increment a number by 5.',
+// 	tests: 'increment(1) === 6, increment(5) === 10',
+// 	title: 'Increase By 5'
+// });
 
-// const user2ProblemRef = db.collection('users').doc('eJJNI8FdivnRSLmyxMnA').collection('problems').doc();
-const setUserProblem = async () => {
-  try {
-    // let userProb;
-    const userProb = await db
-      .collection('problems')
-      .doc('LFVUhY31wLEn3Ge3hlvY')
-      .get()
-    // .then((doc) => {
-    // 	userProb = doc.data();
-    // 	return userProb;
-    // });
-    console.log('USER PROB', userProb.data())
-    await db
-      .collection('users')
-      .doc('eJJNI8FdivnRSLmyxMnA')
-      .collection('userProblems')
-      .doc(userProb.id)
-      .set({
-        ...userProb.data(),
-        isSolved: true,
-        solution: 'function increment(num) { return num + 1}'
-      })
-    // .then((doc) => console.log(doc.data()));
-  } catch (error) {
-    console.log(error)
-  }
-}
-setUserProblem()
-
-// let query = usersRef
-// 	.where('age', '>', 30)
-// 	.get()
-// 	.then((snapshot) => {
-// 		if (snapshot.empty) {
-// 			console.log('No matching documents.');
-// 			return;
-// 		}
-
-// 		snapshot.forEach((doc) => {
-// 			console.log(doc.id, '=>', doc.data());
+// const setUserProblem = async () => {
+// 	try {
+// 		const userProb = await db.collection('problems').doc('LFVUhY31wLEn3Ge3hlvY').get();
+// 		console.log('USER PROB', userProb.data());
+// 		await db.collection('users').doc('eJJNI8FdivnRSLmyxMnA').collection('userProblems').doc(userProb.id).set({
+// 			...userProb.data(),
+// 			isSolved: true,
+// 			solution: 'function increment(num) { return num + 1}'
 // 		});
-// 	})
-// 	.catch((err) => {
-// 		console.log('Error getting documents', err);
-// 	});
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// };
+// setUserProblem();
 
-// let getDoc = userRef
-// 	.get()
-// 	.then((doc) => {
-// 		if (!doc.exists) {
-// 			console.log('No such document!');
-// 		} else {
-// 			console.log('Document data:', doc.data());
-// 		}
-// 	})
-// 	.catch((err) => {
-// 		console.log('Error getting document', err);
-// 	});
+// const getUserProblems = async () => {
+// 	const resultsArray = [];
+// 	const result = await db.collection('users').doc('eJJNI8FdivnRSLmyxMnA').collection('userProblems').get();
 
-// let getOtherDoc = anotherUserRef
-// 	.get()
-// 	.then((doc) => {
-// 		if (!doc.exists) {
-// 			console.log('No such document!');
-// 		} else {
-// 			console.log('Document data:', doc.data());
-// 		}
-// 	})
-// 	.catch((err) => {
-// 		console.log('Error getting document', err);
-// 	});
+// 	console.log(
+// 		'RESULT DOCS',
+// 		result.docs.map((item) => {
+// 			return { ...item.data(), id: item.id };
+// 		})
+// 	);
+// };
+// getUserProblems();
+
+// // let query = usersRef
+// // 	.where('age', '>', 30)
+// // 	.get()
+// // 	.then((snapshot) => {
+// // 		if (snapshot.empty) {
+// // 			console.log('No matching documents.');
+// // 			return;
+// // 		}
+
+// // 		snapshot.forEach((doc) => {
+// // 			console.log(doc.id, '=>', doc.data());
+// // 		});
+// // 	})
+// // 	.catch((err) => {
+// // 		console.log('Error getting documents', err);
+// // 	});
+
+// // let getDoc = userRef
+// // 	.get()
+// // 	.then((doc) => {
+// // 		if (!doc.exists) {
+// // 			console.log('No such document!');
+// // 		} else {
+// // 			console.log('Document data:', doc.data());
+// // 		}
+// // 	})
+// // 	.catch((err) => {
+// // 		console.log('Error getting document', err);
+// // 	});
+
+// // let getOtherDoc = anotherUserRef
+// // 	.get()
+// // 	.then((doc) => {
+// // 		if (!doc.exists) {
+// // 			console.log('No such document!');
+// // 		} else {
+// // 			console.log('Document data:', doc.data());
+// // 		}
+// // 	})
+// // 	.catch((err) => {
+// // 		console.log('Error getting document', err);
+// // 	});
+
+const {
+  createUser,
+  updateUser,
+  deleteUser,
+  getUserById,
+  getAllUsers,
+  addProblemToUser
+} = require('./userQueryFunctions')
+
+addProblemToUser('BxYYH8VosDJrJqWedjy8', '5MZl2UY4cRkLpgJ0hQkh', {
+  isSolved: false,
+  solution: 'rando string'
+})
