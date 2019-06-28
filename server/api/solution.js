@@ -49,7 +49,7 @@ router.post('/', async (req, res, next) => {
     const code = req.body.code
     let testResult = await promiseTimeout(
       3000,
-      ssr(`file:${path.join(__dirname, 'toDelete.html')}`, code)
+      ssr(`file:${path.join(__dirname, 'testingEnviroment.html')}`, code)
         .then(result => {
           result = result.match(/\B>.*?<\/div/)[0]
           result = result.slice(1, result.length - 5)
