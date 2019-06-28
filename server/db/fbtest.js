@@ -37,23 +37,29 @@ firebase.initializeApp(config)
 
 const db = firebase.firestore()
 //const db = firebase.storage();
-let userRef = db.collection('users').doc('Dennis')
+let dennisRef = db.collection('users').doc('Dennis')
 let usersRef = db.collection('users')
 
-console.log('userRef: ', userRef)
-console.log('usersRef: ', usersRef)
+//console.log('dennisRef: ', dennisRef)
+//console.log('usersRef: ', usersRef)
 
-// userRef.set(
-//   {
-//     admin: 'somebody',
-//   }
-// )
+dennisRef.set(
+  {
+    admin: 'somebody'
+  },
+  {
+    merge: true
+  }
+)
+dennisRef.get().then(result => {
+  console.log('result: ', result.data())
+})
 
 // let userChild = userRef.child('users');
 
-usersRef.push({
-  name: 'Sam Peach'
-})
+// usersRef.push({
+//   name: 'Sam Peach'
+// })
 
 //let rootRef = firebase.database().ref();
 //console.log(rootRef);
