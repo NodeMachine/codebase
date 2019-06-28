@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import ProblemsList from './problemsList'
 
-class Main extends Component {
+class MainPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -24,4 +24,4 @@ class Main extends Component {
   }
 }
 
-export default Main
+export default MainPage
