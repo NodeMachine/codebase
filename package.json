@@ -49,6 +49,7 @@
     "firebase": "^6.2.3",
     "firebase-admin": "^8.2.0",
     "history": "^4.9.0",
+    "materialize-css": "^1.0.0",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-google-oauth": "^2.0.0",
@@ -86,6 +87,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "chai": "^4.2.0",
+    "css-loader": "^3.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^5.16.0",
@@ -102,6 +104,7 @@
     "react-test-renderer": "^16.4.2",
     "redux-devtools-extension": "^2.13.5",
     "redux-mock-store": "^1.5.3",
+    "style-loader": "^0.23.1",
     "supertest": "^4.0.2",
     "webpack": "^4.16.4",
     "webpack-cli": "^3.1.0"
