@@ -5,11 +5,11 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div className="nav-wraper">
-    <h1 className="brand-logo">Our Codewars Clone</h1>
-    <nav>
+  <div>
+    <nav className="nav-wrapper">
+      <a className="brand-logo">Our Codewars Clone</a>
       {isLoggedIn ? (
-        <div className="right ">
+        <div className="right  ">
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
           <a href="#" onClick={handleClick}>

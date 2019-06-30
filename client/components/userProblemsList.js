@@ -1,5 +1,6 @@
 import React from 'react'
 
+// Until we have a CSS file
 const styles = {
   icon: {marginTop: 30}
 }
@@ -10,7 +11,7 @@ const UserProblemList = props => {
       {props.userProblems.map(el => {
         return (
           <li key={el.id}>
-            <div className="divider card " />
+            <div className="divider card" />
             <div className="row section card-content">
               <div className="col s8">
                 <h3>{el.title}</h3>
