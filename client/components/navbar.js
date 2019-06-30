@@ -3,15 +3,13 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import 'materialize-css/dist/css/materialize.min.css'
-import 'materialize-css/dist/js/materialize.min.js'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div className="nav-wraper">
-    <h1>Our Codewars Clone</h1>
+    <h1 className="brand-logo">Our Codewars Clone</h1>
     <nav>
       {isLoggedIn ? (
-        <div className="right">
+        <div className="right ">
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
           <a href="#" onClick={handleClick}>
@@ -19,7 +17,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </a>
         </div>
       ) : (
-        <div className="right">
+        <div className="right ">
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>

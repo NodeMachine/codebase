@@ -46,7 +46,7 @@ class UserProfile extends Component {
               </h1>
               <h4>{this.state.user.location}</h4>
               <p>{this.state.user.bio}</p>
-              <p>Interests:{this.state.user.interests}</p>
+              <p>Interests: {this.state.user.interests}</p>
             </div>
           </div>
           <div className="col s6 card-content">

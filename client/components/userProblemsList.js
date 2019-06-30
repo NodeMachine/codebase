@@ -10,7 +10,8 @@ const UserProblemList = props => {
       {props.userProblems.map(el => {
         return (
           <li key={el.id}>
-            <div className="row">
+            <div className="divider card " />
+            <div className="row section card-content">
               <div className="col s8">
                 <h3>{el.title}</h3>
                 <h5>{el.category}</h5>
