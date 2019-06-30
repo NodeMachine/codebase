@@ -7,9 +7,9 @@ import 'materialize-css/dist/css/materialize.min.css'
 import 'materialize-css/dist/js/materialize.min.js'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
+  <div className="nav-wraper">
     <h1>Our Codewars Clone</h1>
-    <nav className="nav-wraper">
+    <nav>
       {isLoggedIn ? (
         <div className="right">
           {/* The navbar will show these links after you log in */}
