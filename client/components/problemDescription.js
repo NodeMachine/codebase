@@ -1,7 +1,15 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 
 const ProblemDescription = props => {
-  return <div>This was brought to you by problemDescription!</div>
+  console.log('Problem description ', props)
+  return <div>{props.prompt}</div>
 }
+
+// const mapState = state => {
+//   return {
+//     prompt: state.problems[0].prompt
+//   }
+// }
 
 export default ProblemDescription

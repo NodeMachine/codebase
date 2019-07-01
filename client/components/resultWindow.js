@@ -1,5 +1,7 @@
-import react, {Component} from 'react'
+import React, {Component} from 'react'
 
-export const ResultWindos = props => {
+const ResultWindow = props => {
   return <div>... and this is a result window!</div>
 }
+
+export default ResultWindow
