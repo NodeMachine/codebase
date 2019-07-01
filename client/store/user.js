@@ -57,6 +57,25 @@ export const signup = (
       email,
       password
     })
+    console.log('heeere', res.data)
+    dispatch(getUser(res.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const saveSolution = (
+  problem,
+  userId,
+  isSolved,
+  solution
+) => async dispatch => {
+  try {
+    const res = await axios.post(`/api/users/save/${userId}`, {
+      problem,
+      isSolved,
+      solution
+    })
     dispatch(getUser(res.data))
   } catch (error) {
     console.log(error)
@@ -107,7 +126,7 @@ export const deleteAccount = id => async dispatch => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_USER:
-      return {...state, singleUser: action.user}
+      return {...state, singleUser: action.singleUser}
     case REMOVE_USER:
       return {...state, singleUser: {}}
     case GET_USERS:

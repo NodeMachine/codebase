@@ -5,7 +5,8 @@ const {
   deleteUser,
   createUser,
   getUserByAuthId,
-  getAllUserProblems
+  getAllUserProblems,
+  addProblemToUser
 } = require('../db/queryFunctions/userQueryFunctions')
 const router = require('express').Router()
 const {auth} = require('../db/queryFunctions/index')
@@ -44,6 +45,28 @@ router.delete('/:id', async (req, res, next) => {
   }
 })
 
+router.post('/save/:userId', async (req, res, next) => {
+  try {
+    console.log('here', req.body)
+    const problem = req.body.problem
+    const problemId = problem.id
+    const isSolved = req.body.isSolved
+    const solution = req.body.solution
+    const userId = req.params.userId
+    await addProblemToUser(userId, problemId, {
+      ...problem,
+      isSolved: isSolved,
+      solution: solution
+    })
+    const user = await getUserById(userId)
+    const problems = await getAllUserProblems(userId)
+    user.problems = problems
+    res.send(user)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post('/signup', async (req, res, next) => {
   try {
     const firstName = req.body.firstName
@@ -60,8 +83,9 @@ router.post('/signup', async (req, res, next) => {
           authId: user.user.uid,
           score: 0
         })
+        newUser.problems = []
         req.session.userId = newUser.id
-        res.status(201).send({...newUser, problems: []})
+        res.status(201).send(newUser)
       })
       .catch(error => {
         const errorCode = error.code

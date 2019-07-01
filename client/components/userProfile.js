@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import UserProblemsList from './userProblemsList'
+import {connect} from 'react-redux'
 
 // Until we have a CSS file
 const styles = {
@@ -10,37 +11,10 @@ const styles = {
 class UserProfile extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      user: {
-        id: 1,
-        firstName: 'John',
-        lastName: 'Smith',
-        location: 'New York',
-        bio: 'Likes to set up Docker containers for fun',
-        interests: 'Docker',
-        score: 38,
-        email: 'email@emai.com',
-        photo: 'https://i.ebayimg.com/images/g/eYkAAOSwALtaWWmr/s-l300.jpg'
-      },
-      userProblems: [
-        {
-          id: 1,
-          title: 'Sum two digits',
-          points: 80,
-          category: 'arrays',
-          isSolved: 0
-        },
-        {
-          id: 2,
-          title: 'Return a string',
-          points: 1,
-          category: 'strings',
-          isSolved: 1
-        }
-      ]
-    }
   }
+
   render() {
+    const user = this.props.user
     return (
       <div>
         <div className="row">
@@ -48,23 +22,23 @@ class UserProfile extends Component {
             <div className="col s6">
               <div className="row">
                 <div className="col s6 card-image">
-                  <img style={styles.photo} src={this.state.user.photo} />
+                  <img style={styles.photo} src={user.photo} />
                 </div>
 
                 <div className="col s6 card-content">
                   <h1>
-                    {this.state.user.firstName} {this.state.user.lastName}
+                    {user.firstName} {user.lastName}
                   </h1>
-                  <h3>Score: {this.state.user.score}</h3>
+                  <h3>Score: {user.score}</h3>
                 </div>
 
                 <div className="col s12 card-content">
                   <div className="row">
                     <div className="col s9">
-                      <h4>Location: {this.state.user.location}</h4>
-                      <h5>Bio: {this.state.user.bio}</h5>
-                      <h5>Interests: {this.state.user.interests}</h5>
-                      <h5>Email: {this.state.user.email}</h5>
+                      <h4>Location: {user.location}</h4>
+                      <h5>Bio: {user.bio}</h5>
+                      <h5>Interests: {user.interests}</h5>
+                      <h5>Email: {user.email}</h5>
                     </div>
 
                     <div className="col s3">
@@ -80,7 +54,7 @@ class UserProfile extends Component {
           <div className="card">
             <div className="col s6 card-content grey lighten-4">
               <h2>Past Problems:</h2>
-              <UserProblemsList userProblems={this.state.userProblems} />
+              <UserProblemsList userProblems={user.problems} />
             </div>
           </div>
         </div>
@@ -89,4 +63,8 @@ class UserProfile extends Component {
   }
 }
 
-export default UserProfile
+const mapStateToProps = state => ({
+  user: state.singleUser
+})
+
+export default connect(mapStateToProps)(UserProfile)

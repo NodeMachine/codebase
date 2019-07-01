@@ -8,7 +8,7 @@ const styles = {
 const UserProblemList = props => {
   return (
     <ul>
-      {props.userProblems.map(el => {
+      {props.problems.map(el => {
         return (
           <li key={el.id}>
             <div className="divider card" />
