@@ -4,7 +4,8 @@ const {
   updateUser,
   deleteUser,
   createUser,
-  getUserByAuthId
+  getUserByAuthId,
+  getAllUserProblems
 } = require('../db/queryFunctions/userQueryFunctions')
 const router = require('express').Router()
 const {auth} = require('../db/queryFunctions/index')
@@ -78,9 +79,11 @@ router.put('/login', async (req, res, next) => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        getUserByAuthId(user.user.uid).then(singleUser => {
+        getUserByAuthId(user.user.uid).then(async singleUser => {
           req.session.userId = singleUser.id
-          res.send(singleUser)
+          const problems = await getAllUserProblems(singleUser.id)
+          console.log(problems)
+          res.send({...singleUser, problems})
         })
       })
       .catch(error => {

@@ -86,6 +86,18 @@ const addProblemToUser = async (userId, problemId, problemData) => {
   }
 }
 
+const getAllUserProblems = async userId => {
+  try {
+    const problems = await db
+      .collection('users')
+      .doc(`${userId}`)
+      .getDocuments()
+    return problems
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const createUser = async obj => {
   try {
     await db.collection('users').add(obj)
@@ -103,5 +115,6 @@ module.exports = {
   getUserById,
   getAllUsers,
   addProblemToUser,
-  getUserByAuthId
+  getUserByAuthId,
+  getAllUserProblems
 }
