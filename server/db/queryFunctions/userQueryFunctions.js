@@ -1,19 +1,15 @@
-const db = require('./index')
-
-const createUser = async obj => {
-  try {
-    await db.collection('users').add(obj)
-  } catch (error) {
-    console.log(error)
-  }
-}
+const {db} = require('./index')
 
 const updateUser = async (id, obj) => {
   try {
+    const updates = []
+    for (let el in obj) {
+      updates.push(el, obj[el])
+    }
     await db
       .collection('users')
       .doc(`${id}`)
-      .set(obj)
+      .update(...updates)
   } catch (error) {
     console.log(error)
   }
@@ -37,6 +33,26 @@ const getUserById = async id => {
       .doc(`${id}`)
       .get()
     return {id: result.id, ...result.data()}
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getUserByAuthId = async authid => {
+  try {
+    const results = await db
+      .collection('users')
+      .where('authId', '==', `${authid}`)
+      .get()
+    let result
+    results.forEach(doc => {
+      if (doc) {
+        result = {id: doc.id, ...doc.data()}
+      } else {
+        console.log('User does not exist')
+      }
+    })
+    return result
   } catch (error) {
     console.log(error)
   }
@@ -70,11 +86,22 @@ const addProblemToUser = async (userId, problemId, problemData) => {
   }
 }
 
+const createUser = async obj => {
+  try {
+    await db.collection('users').add(obj)
+    const user = await getUserByAuthId(obj.authId)
+    return user
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   createUser,
   updateUser,
   deleteUser,
   getUserById,
   getAllUsers,
-  addProblemToUser
+  addProblemToUser,
+  getUserByAuthId
 }
