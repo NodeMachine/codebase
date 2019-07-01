@@ -40,10 +40,10 @@ class AceCode extends React.Component {
           editorProps={{$blockScrolling: true}}
         />
         <button onClick={() => this.handleSubmit()}>Run code</button>
-        <div>
+        {/* <div>
           This is a result window for now:
           <p>{this.state.result}</p>
-        </div>
+        </div> */}
       </div>
     )
   }
