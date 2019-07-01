@@ -23,7 +23,8 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await getUserById(req.params.id)
-    res.send(user)
+    const problems = await getAllUserProblems(req.params.id)
+    res.send({...user, problems})
   } catch (error) {
     next(error)
   }
@@ -60,7 +61,7 @@ router.post('/signup', async (req, res, next) => {
           score: 0
         })
         req.session.userId = newUser.id
-        res.status(201).send(newUser)
+        res.status(201).send({...newUser, problems: []})
       })
       .catch(error => {
         const errorCode = error.code
@@ -82,7 +83,6 @@ router.put('/login', async (req, res, next) => {
         getUserByAuthId(user.user.uid).then(async singleUser => {
           req.session.userId = singleUser.id
           const problems = await getAllUserProblems(singleUser.id)
-          console.log(problems)
           res.send({...singleUser, problems})
         })
       })
