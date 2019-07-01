@@ -9,7 +9,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
     <nav>
       <a>Our Codewars Clone</a>
       {isLoggedIn ? (
-        <div>
+        <div className="right">
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
           <a href="#" onClick={handleClick}>
@@ -17,7 +17,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </a>
         </div>
       ) : (
-        <div>
+        <div className="right">
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
