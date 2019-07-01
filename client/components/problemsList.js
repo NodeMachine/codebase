@@ -1,24 +1,56 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {getAllProblems} from '../store/problems'
+import {Link} from 'react-router-dom'
 
 // Until we have a CSS file
 const styles = {
   listItem: {display: 'flex'}
 }
+class ProblemList extends Component {
+  constructor(props) {
+    super(props)
+  }
 
-const ProblemList = props => {
-  return (
-    <ul>
-      {props.problems.map(el => {
-        return (
-          <li key={el.id} style={styles.listItem}>
-            <h1>{el.category}</h1>
-            <h2>{el.title}</h2>
-            <p>Difficulty: {el.points < 100 ? 'Easy' : 'Medium'}</p>
-          </li>
-        )
-      })}
-    </ul>
-  )
+  componentDidMount() {
+    this.props.getAllProblems()
+  }
+
+  render() {
+    return (
+      <div>
+        <ul>
+          {this.props.problems.map(el => {
+            return (
+              <li key={el.id} style={styles.listItem}>
+                <h6>{el.category}</h6>
+                <Link
+                  to={{
+                    pathname: `/problems/${el.id}`
+                  }}
+                >
+                  <h6>{el.name}</h6>
+                </Link>
+                <p>Difficulty: {el.points < 50 ? 'Easy' : 'Medium'}</p>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    )
+  }
 }
 
-export default ProblemList
+const mapState = state => {
+  return {
+    problems: state.problems
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    getAllProblems: () => dispatch(getAllProblems())
+  }
+}
+
+export default connect(mapState, mapDispatch)(ProblemList)
