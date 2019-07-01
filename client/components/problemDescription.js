@@ -1,5 +1,7 @@
-import react, {Component} from 'react'
+import React, {Component} from 'react'
 
-export const ProblemDescription = props => {
+const ProblemDescription = props => {
   return <div>This was brought to you by problemDescription!</div>
 }
+
+export default ProblemDescription

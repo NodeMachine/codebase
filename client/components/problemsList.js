@@ -24,7 +24,11 @@ class ProblemList extends Component {
             return (
               <li key={el.id} style={styles.listItem}>
                 <h6>{el.category}</h6>
-                <Link to={`/problems/${el.id}`}>
+                <Link
+                  to={{
+                    pathname: `/problems/${el.id}`
+                  }}
+                >
                   <h6>{el.name}</h6>
                 </Link>
                 <p>Difficulty: {el.points < 50 ? 'Easy' : 'Medium'}</p>

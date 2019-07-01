@@ -1,5 +1,6 @@
-import react, {Component} from 'react'
+import React, {Component} from 'react'
 import AceCode from './acecode'
+import ProblemDescription from './problemDescription'
 
 class SingleProblem extends Component {
   render() {
@@ -7,7 +8,7 @@ class SingleProblem extends Component {
       <div style={style.outerDiv}>
         <AceCode />
         <ProblemDescription />
-        <ResultWindow />
+        {/* <ResultWindow /> */}
       </div>
     )
   }
