@@ -6,5 +6,5 @@ secrets.js
 npm-debug.log
 yarn-error.log
 seed.js
-server/db/fbtest.js
-KEYS.js
+keys.js
+
