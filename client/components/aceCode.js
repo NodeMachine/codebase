@@ -24,6 +24,7 @@ class AceCode extends React.Component {
   }
 
   render() {
+    console.log('this.state.code: ', this.state.code)
     return (
       <div>
         <AceEditor
