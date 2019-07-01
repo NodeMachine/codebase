@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, MainPage} from './components'
 import UserProfile from './components/userProfile'
 import ProblemList from './components/problemsList'
+import SingleProblem from './components/singleProblem'
 import {me} from './store'
 
 /**
@@ -24,6 +25,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/problems" component={ProblemList} />
+        <Route path="/problems/:id" component={SingleProblem} />
         <Route path="/" component={MainPage} />
 
         {isLoggedIn && (
