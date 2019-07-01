@@ -27,7 +27,7 @@ class SingleProblem extends Component {
             this.props.problem.length ? this.props.problem[0].prompt : false
           }
         />
-        <ResultWindow />
+        {/* <ResultWindow /> */}
       </div>
     )
   }

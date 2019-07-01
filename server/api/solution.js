@@ -47,12 +47,15 @@ async function ssr(url, userCode) {
 router.post('/', async (req, res, next) => {
   try {
     const code = req.body.code
+    console.log('code: ', code)
+
     let testResult = await promiseTimeout(
-      3000,
+      7000,
       ssr(`file:${path.join(__dirname, 'testingEnviroment.html')}`, code)
         .then(result => {
           result = result.match(/\B>.*?<\/div/)[0]
           result = result.slice(1, result.length - 5)
+          console.log('result: ', result)
           return result
         })
         .catch(err => console.log(err))
