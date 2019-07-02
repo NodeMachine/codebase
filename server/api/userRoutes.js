@@ -68,7 +68,6 @@ router.delete('/:id', async (req, res, next) => {
 
 router.post('/save/:userId', async (req, res, next) => {
   try {
-    console.log('here', req.body)
     const problem = req.body.problem
     const problemId = problem.id
     const isSolved = req.body.isSolved
