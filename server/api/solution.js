@@ -20,19 +20,6 @@ const superTest = () => {
   el.innerHTML += 'somthing' + ' '
 }
 
-const testString =
-  "() => {let el = document.getElementById('code-box');el.innerHTML += (doSomething(1) === 2) + ' ';el.innerHTML += (doSomething(2) === 3) + ' '}"
-
-// const test = () => {
-//     let el = document.getElementById('code-box')
-//     el.innerHTML += (doSomething(1) === 2) + ' '
-//     el.innerHTML += (doSomething(2) === 3) + ' '
-// }
-
-const test = () => {
-  let el = document.getElementById('code-box')
-  el.innerHTML += this
-}
 // Function used to timeout async functions. Protects against infinite loops and stuff.
 function promiseTimeout(ms, promise) {
   return new Promise(function(resolve, reject) {
@@ -60,12 +47,20 @@ async function ssr(url, userCode, userProblemTests) {
   const page = await browser.newPage()
   await page.goto(url, {waitUntil: 'networkidle0'})
   await page.addScriptTag({content: `${userCode}`})
-  testArr.forEach(async test => {
-    await page.evaluate(superTest(test))
+  await page.addScriptTag({
+    content: `function tests () {
+  const testArr = [${testArr}]
+  let el = document.getElementById('code-box')
+  testArr.forEach(test => {
+    el.innerHTML += test + ' '
   })
-  // await page.evaluate(test)
+}
+tests()`
+  })
+  await page.evaluate(() => 'hi')
   const html = await page.content()
   await browser.close()
+  console.log(html)
   return html
 }
 
@@ -74,16 +69,17 @@ router.post('/:id', async (req, res, next) => {
   try {
     const code = req.body.code
     const problemId = req.params.id
-    const userProblem = await getProblemById(problemId)
+    console.log(problemId)
+    const problem = await getProblemById(problemId)
+    console.log('problem', problem)
+    const testingEnvironmentPath = `file:${path.join(
+      __dirname,
+      'testingEnviroment.html'
+    )}`
     let testResult = await promiseTimeout(
       7000,
-      ssr(
-        `file:${path.join(__dirname, 'testingEnviroment.html')}`,
-        code,
-        userProblem.tests
-      )
+      ssr(testingEnvironmentPath, code, problem.tests)
         .then(result => {
-          console.log('HTML ', result)
           result = result.match(/\B>.*?<\/div/)[0]
           result = result.slice(1, result.length - 5)
           return result
@@ -93,6 +89,5 @@ router.post('/:id', async (req, res, next) => {
     res.send(testResult)
   } catch (error) {
     res.send('Your solution timed out.')
-    next(error)
   }
 })

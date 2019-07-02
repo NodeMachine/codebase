@@ -1,4 +1,4 @@
-const db = require('./index')
+const {db} = require('./index')
 
 const createProblem = async obj => {
   try {
@@ -36,7 +36,9 @@ const getProblemById = async id => {
       .collection('problems')
       .doc(`${id}`)
       .get()
-    return {id: result.id, ...result.data()}
+    const problem = {id: result.id, ...result.data()}
+    console.log('in this', problem)
+    return problem
   } catch (error) {
     console.log(error)
   }
