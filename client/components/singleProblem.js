@@ -59,15 +59,10 @@ class SingleProblem extends Component {
         const solution = this.state.code
         this.props.saveSolution(problem, userId, isSolved, solution)
       }
+      this.setState({result: data})
     } catch (error) {
       console.error("Something went wrong submitting user's code", error)
     }
-    // await axios
-    //   .post(`/api/solution/${this.props.problem[0].id}`, this.state)
-    //   .then(returnResult => {
-    //     this.setState({result: returnResult.data})
-    //   })
-    //   .catch(err => console.log(err))
   }
 
   handleReset() {

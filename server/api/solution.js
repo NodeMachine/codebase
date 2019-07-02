@@ -68,7 +68,7 @@ router.post('/:id', async (req, res, next) => {
         })
         .catch(err => console.log(err))
     )
-    res.send(testResult.split(' '))
+    res.send(testResult.length ? testResult.split(' ') : ['Bad code'])
   } catch (error) {
     res.send('Your solution timed out.')
   }
