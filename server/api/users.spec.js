@@ -9,6 +9,7 @@ const app = require('../index')
 // const User = db.model('user');
 
 describe('User routes', () => {
+  // needs to be fixed to handle route protections
   describe('/api/users/', () => {
     it('GET /api/users', async () => {
       const res = await request(app)
@@ -31,7 +32,6 @@ describe('User routes', () => {
     const res = await request(app)
       .post('/api/users/signup')
       .send(userCredentials)
-    console.log('RESPONSE BODY', res.body)
     expect(res.statusCode).to.equal(201)
     deleteUser(res.body.id)
   })
