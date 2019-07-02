@@ -2,31 +2,66 @@
 
 const {expect} = require('chai')
 const request = require('supertest')
-const db = require('../db')
+//const db = require('../db');
+const {db, auth} = require('../db/queryFunctions/index')
+const {deleteUser} = require('../db/queryFunctions/userQueryFunctions')
 const app = require('../index')
-const User = db.model('user')
+// const User = db.model('user');
 
 describe('User routes', () => {
-  beforeEach(() => {
-    return db.sync({force: true})
-  })
+  // beforeEach(() => {
+  // 	return db.sync({ force: true });
+  // });
 
   describe('/api/users/', () => {
-    const codysEmail = 'cody@puppybook.com'
-
-    beforeEach(() => {
-      return User.create({
-        email: codysEmail
-      })
-    })
+    // beforeEach(() => {
+    // 	return User.create({
+    // 		email: codysEmail
+    // 	});
+    // });
 
     it('GET /api/users', async () => {
       const res = await request(app)
         .get('/api/users')
         .expect(200)
-
       expect(res.body).to.be.an('array')
-      expect(res.body[0].email).to.be.equal(codysEmail)
     })
   }) // end describe('/api/users')
+
+  it('POST /api/users/signup', async () => {
+    const randomNum = Math.floor(Math.random() * 30)
+    const userCredentials = {
+      firstName: 'Blob',
+      lastName: 'Bloberson',
+      email: `email${randomNum}@email.com`,
+      password: 'yY@74Cd5#PMQ'
+    }
+
+    const res = await request(app)
+      .post('/api/users/signup')
+      .send(userCredentials)
+    console.log('RESPONSE BODY', res.body)
+    expect(res.statusCode).to.equal(201)
+    deleteUser(res.body.id)
+  })
+
+  it('PUT /api/users/login', async () => {
+    const userCredentials = {
+      email: 'email20@email.com',
+      password: 'yY@74Cd5#PMQ'
+    }
+
+    //login the user before we run any tests
+    const authenticatedUser = request.agent(app)
+
+    const res = await authenticatedUser
+      .put('/api/users/login')
+      .send(userCredentials)
+    expect(res.statusCode).to.equal(200)
+  })
+
+  it('DELETE /api/users/logout', async () => {
+    const res = await request(app).delete('/api/users/logout')
+    expect(res.statusCode).to.equal(204)
+  })
 }) // end describe('User routes')
