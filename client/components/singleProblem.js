@@ -15,6 +15,7 @@ class SingleProblem extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleReset = this.handleReset.bind(this)
   }
 
   componentDidMount() {
@@ -42,6 +43,10 @@ class SingleProblem extends Component {
       .catch(err => console.log(err))
   }
 
+  handleReset() {
+    this.setState({code: this.props.problem[0].defaultCode})
+  }
+
   render() {
     return (
       <div>
@@ -54,6 +59,7 @@ class SingleProblem extends Component {
           editorProps={{$blockScrolling: true}}
         />
         <button onClick={() => this.handleSubmit()}>Run code</button>
+        <button onClick={() => this.handleReset()}>Reset code</button>
         <ProblemDescription
           prompt={
             this.props.problem.length ? this.props.problem[0].prompt : false
