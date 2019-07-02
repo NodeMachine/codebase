@@ -12,23 +12,44 @@ const router = require('express').Router()
 const {auth} = require('../db/queryFunctions/index')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
-  try {
-    const users = await getAllUsers()
-    res.send(users)
-  } catch (error) {
-    next(error)
-  }
+router.get('/', (req, res, next) => {
+  auth.onAuthStateChanged(async user => {
+    if (user) {
+      if (user.isAdmin) {
+        try {
+          const users = await getAllUsers()
+          res.send(users)
+        } catch (error) {
+          next(error)
+        }
+      } else {
+        res.send('User is not admin!')
+      }
+    } else {
+      res.send('Not logged in!')
+    }
+  })
 })
 
 router.get('/:id', async (req, res, next) => {
-  try {
-    const user = await getUserById(req.params.id)
-    const problems = await getAllUserProblems(req.params.id)
-    res.send({...user, problems})
-  } catch (error) {
-    next(error)
-  }
+  auth.onAuthStateChanged(async user => {
+    if (user) {
+      const singleUser = await getUserByAuthId(user.uid)
+      if (singleUser.id === req.params.id) {
+        try {
+          const user = await getUserById(req.params.id)
+          const problems = await getAllUserProblems(req.params.id)
+          res.send({...user, problems})
+        } catch (error) {
+          next(error)
+        }
+      } else {
+        res.send('User is not admin!')
+      }
+    } else {
+      res.send('Not logged in!')
+    }
+  })
 })
 
 router.delete('/logout', (req, res, next) => {
@@ -47,7 +68,6 @@ router.delete('/:id', async (req, res, next) => {
 
 router.post('/save/:userId', async (req, res, next) => {
   try {
-    console.log('here', req.body)
     const problem = req.body.problem
     const problemId = problem.id
     const isSolved = req.body.isSolved
@@ -125,12 +145,23 @@ router.put('/login', async (req, res, next) => {
   }
 })
 
-router.post('/update/:id', async (req, res, next) => {
-  try {
-    const update = req.body.update
-    await updateUser(req.params.id, update)
-    res.send('Update successful!')
-  } catch (error) {
-    next(error)
-  }
+router.post('/update/:id', (req, res, next) => {
+  auth.onAuthStateChanged(async user => {
+    if (user) {
+      const singleUser = await getUserByAuthId(user.uid)
+      if (singleUser.id === req.params.id) {
+        try {
+          const update = req.body.update
+          await updateUser(req.params.id, update)
+          res.send('Update successful!')
+        } catch (error) {
+          next(error)
+        }
+      } else {
+        res.send('Not allowed to update for this user.')
+      }
+    } else {
+      res.send('Not logged in!')
+    }
+  })
 })

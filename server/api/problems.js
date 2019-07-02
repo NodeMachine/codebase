@@ -17,7 +17,6 @@ router.get('/:id', async (req, res, next) => {
   const problemId = req.params.id
   try {
     const problem = await getProblemById(problemId)
-    console.log('Problem: ', problem)
     res.status(200).json(problem)
   } catch (error) {
     console.error('Error getting single problem: ', error)
