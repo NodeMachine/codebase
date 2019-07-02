@@ -4,30 +4,34 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <nav>
-      <a>Our Codewars Clone</a>
-      {isLoggedIn ? (
-        <div className="right">
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div className="right">
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/profile">Profile</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-)
+//console.log("isLoggedIn navbar: ", isLoggedIn);
+const Navbar = ({handleClick, isLoggedIn}) => {
+  console.log('isLoggedIn navbar: ', isLoggedIn)
+  return (
+    <div>
+      <nav>
+        <a>Our Codewars Clone</a>
+        {isLoggedIn ? (
+          <div className="right">
+            {/* The navbar will show these links after you log in */}
+            <Link to="/home">Home</Link>
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
+        ) : (
+          <div className="right">
+            {/* The navbar will show these links before you log in */}
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+            <Link to="/profile">Profile</Link>
+          </div>
+        )}
+      </nav>
+      <hr />
+    </div>
+  )
+}
 
 /**
  * CONTAINER
