@@ -57,7 +57,6 @@ export const signup = (
       email,
       password
     })
-    console.log('heeere', res.data)
     dispatch(getUser(res.data))
   } catch (error) {
     console.log(error)
