@@ -4,7 +4,11 @@ const ResultWindow = props => {
   return (
     <div>
       ... and this is a result window!
-      <p>{props.result}</p>
+      <ul>
+        {props.result.length
+          ? props.result.map((result, ind) => <li key={ind}>{result}</li>)
+          : ''}
+      </ul>
     </div>
   )
 }

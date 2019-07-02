@@ -43,7 +43,7 @@ class ProblemList extends Component {
 
 const mapState = state => {
   return {
-    problems: state.problems
+    problems: state.problems.allProblems
   }
 }
 

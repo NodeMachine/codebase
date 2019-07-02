@@ -88,7 +88,7 @@ const addProblemToUser = async (userId, problemId, problemData) => {
 
 const getAllUserProblems = async userId => {
   try {
-    const problems = []
+    const problems = {}
     await db
       .collection('users')
       .doc(`${userId}`)
@@ -96,9 +96,7 @@ const getAllUserProblems = async userId => {
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          console.log('in the for each', doc)
-          console.log(doc.data())
-          problems.push({id: doc.id, ...doc.data()})
+          problems[doc.id] = doc.data()
         })
       })
     return problems
@@ -113,7 +111,7 @@ const createUser = async obj => {
     const user = await getUserByAuthId(obj.authId)
     return user
   } catch (error) {
-    console.log(error)
+    console.log('error crating user: ', error)
   }
 }
 

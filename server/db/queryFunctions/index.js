@@ -1,5 +1,5 @@
 const firebase = require('firebase')
-const keys = require('../../../keys')
+const keys = require('../../../KEYS')
 
 const firebaseConfig = {
   apiKey: keys.apiKey,
