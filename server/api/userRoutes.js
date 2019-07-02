@@ -4,7 +4,9 @@ const {
   updateUser,
   deleteUser,
   createUser,
-  getUserByAuthId
+  getUserByAuthId,
+  getAllUserProblems,
+  addProblemToUser
 } = require('../db/queryFunctions/userQueryFunctions')
 const router = require('express').Router()
 const {auth} = require('../db/queryFunctions/index')
@@ -22,7 +24,8 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await getUserById(req.params.id)
-    res.send(user)
+    const problems = await getAllUserProblems(req.params.id)
+    res.send({...user, problems})
   } catch (error) {
     next(error)
   }
@@ -37,6 +40,28 @@ router.delete('/:id', async (req, res, next) => {
   try {
     await deleteUser(req.params.id)
     res.send('Delete successful!')
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/save/:userId', async (req, res, next) => {
+  try {
+    console.log('here', req.body)
+    const problem = req.body.problem
+    const problemId = problem.id
+    const isSolved = req.body.isSolved
+    const solution = req.body.solution
+    const userId = req.params.userId
+    await addProblemToUser(userId, problemId, {
+      ...problem,
+      isSolved: isSolved,
+      solution: solution
+    })
+    const user = await getUserById(userId)
+    const problems = await getAllUserProblems(userId)
+    user.problems = problems
+    res.send(user)
   } catch (error) {
     next(error)
   }
@@ -58,6 +83,7 @@ router.post('/signup', async (req, res, next) => {
           authId: user.user.uid,
           score: 0
         })
+        newUser.problems = []
         req.session.userId = newUser.id
         res.status(201).send(newUser)
       })
@@ -78,9 +104,10 @@ router.put('/login', async (req, res, next) => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        getUserByAuthId(user.user.uid).then(singleUser => {
+        getUserByAuthId(user.user.uid).then(async singleUser => {
           req.session.userId = singleUser.id
-          res.send(singleUser)
+          const problems = await getAllUserProblems(singleUser.id)
+          res.send({...singleUser, problems})
         })
       })
       .catch(error => {

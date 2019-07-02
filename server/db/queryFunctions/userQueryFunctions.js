@@ -1,10 +1,10 @@
 const {db} = require('./index')
 
-const updateUser = async (id, obj) => {
+const updateUser = async (id, properties) => {
   try {
     const updates = []
-    for (let el in obj) {
-      updates.push(el, obj[el])
+    for (let prop in properties) {
+      updates.push(prop, properties[prop])
     }
     await db
       .collection('users')
@@ -86,6 +86,27 @@ const addProblemToUser = async (userId, problemId, problemData) => {
   }
 }
 
+const getAllUserProblems = async userId => {
+  try {
+    const problems = []
+    await db
+      .collection('users')
+      .doc(`${userId}`)
+      .collection('userProblems')
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log('in the for each', doc)
+          console.log(doc.data())
+          problems.push({id: doc.id, ...doc.data()})
+        })
+      })
+    return problems
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const createUser = async obj => {
   try {
     await db.collection('users').add(obj)
@@ -103,5 +124,6 @@ module.exports = {
   getUserById,
   getAllUsers,
   addProblemToUser,
-  getUserByAuthId
+  getUserByAuthId,
+  getAllUserProblems
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {auth} from '../store'
+import {login, signup} from '../store/user'
 
 /**
  * COMPONENT
@@ -24,12 +24,27 @@ const AuthForm = props => {
           </label>
           <input name="password" type="password" />
         </div>
+        {name === 'signup' ? (
+          <div>
+            <label htmlFor="firstName">
+              <small>First Name</small>
+            </label>
+            <input name="firstName" type="text" />
+          </div>
+        ) : null}
+        {name === 'signup' ? (
+          <div>
+            <label htmlFor="lastName">
+              <small>Last Name</small>
+            </label>
+            <input name="lastName" type="text" />
+          </div>
+        ) : null}
         <div>
           <button type="submit">{displayName}</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
     </div>
   )
 }
@@ -44,16 +59,14 @@ const AuthForm = props => {
 const mapLogin = state => {
   return {
     name: 'login',
-    displayName: 'Login',
-    error: state.user.error
+    displayName: 'Login'
   }
 }
 
 const mapSignup = state => {
   return {
     name: 'signup',
-    displayName: 'Sign Up',
-    error: state.user.error
+    displayName: 'Sign Up'
   }
 }
 
@@ -64,7 +77,14 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      if (formName === 'login') {
+        dispatch(login(email, password))
+      } else {
+        const firstName = evt.target.firstName.value
+        const lastName = evt.target.lastName.value
+        console.log(firstName, lastName)
+        dispatch(signup(firstName, lastName, email, password))
+      }
     }
   }
 }
