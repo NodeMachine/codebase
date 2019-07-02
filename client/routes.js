@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, MainPage} from './components'
+import {Login, Signup, UserHome, CompanyHome, MainPage} from './components'
 import UserProfile from './components/userProfile'
 import ProblemList from './components/problemsList'
 import SingleProblem from './components/singleProblem'
@@ -26,6 +26,9 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/problems" component={ProblemList} />
         <Route path="/problems/:id" component={SingleProblem} />
+
+        <Route path="/companyhome" component={CompanyHome} />
+
         <Route path="/" component={MainPage} />
 
         {isLoggedIn && (
@@ -49,7 +52,9 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+
+    //was isLoggedIn: !!state.user.singleUser.id
+    isLoggedIn: !!state.user.singleUser.id
   }
 }
 

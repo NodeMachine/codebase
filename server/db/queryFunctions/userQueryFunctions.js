@@ -113,7 +113,7 @@ const createUser = async obj => {
     const user = await getUserByAuthId(obj.authId)
     return user
   } catch (error) {
-    console.log(error)
+    console.log('error crating user: ', error)
   }
 }
 
