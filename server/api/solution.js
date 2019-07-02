@@ -5,21 +5,6 @@ const {getProblemById} = require('../db/queryFunctions/problemQueryFunctions')
 
 module.exports = router
 
-// Hard coded test. Tests will be stored in the DB and retieved when needed.
-// const testConstructor = () => {
-//   return test => {
-//     console.log('>>> ', this)
-//     let el = document.getElementById('code-box')
-//     el.innerHTML += eval(test) + ' '
-//   }
-// }
-
-const superTest = () => {
-  console.log('>>> ', this)
-  let el = document.getElementById('code-box')
-  el.innerHTML += 'somthing' + ' '
-}
-
 // Function used to timeout async functions. Protects against infinite loops and stuff.
 function promiseTimeout(ms, promise) {
   return new Promise(function(resolve, reject) {
