@@ -63,12 +63,12 @@ router.post('/:id', async (req, res, next) => {
       ssr(testingEnvironmentPath, code, problem.tests)
         .then(result => {
           result = result.match(/\B>.*?<\/div/)[0]
-          result = result.slice(1, result.length - 5)
+          result = result.slice(1, result.length - 6)
           return result
         })
         .catch(err => console.log(err))
     )
-    res.send(testResult)
+    res.send(testResult.length ? testResult.split(' ') : ['Bad code'])
   } catch (error) {
     res.send('Your solution timed out.')
   }

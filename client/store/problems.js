@@ -10,7 +10,10 @@ const GET_SINGLE_PROBLEM = 'GET_SINGLE_PROBLEM'
 /**
  * INITIAL STATE
  */
-const defaultProblem = []
+const defaultProblem = {
+  allProblems: [],
+  singleProblem: {}
+}
 
 /**
  * ACTION CREATORS
@@ -45,9 +48,9 @@ export const getSingleProblem = problemId => async dispatch => {
 export default function(state = defaultProblem, action) {
   switch (action.type) {
     case GET_ALL_PROBLEMS:
-      return [...action.problems]
+      return {...state, allProblems: [...action.problems]}
     case GET_SINGLE_PROBLEM:
-      return [action.problem]
+      return {...state, singleProblem: action.problem}
     default:
       return state
   }
