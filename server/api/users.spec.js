@@ -9,32 +9,23 @@ const app = require('../index')
 // const User = db.model('user');
 
 describe('User routes', () => {
-  // beforeEach(() => {
-  // 	return db.sync({ force: true });
-  // });
-
   describe('/api/users/', () => {
-    // beforeEach(() => {
-    // 	return User.create({
-    // 		email: codysEmail
-    // 	});
-    // });
-
     it('GET /api/users', async () => {
       const res = await request(app)
         .get('/api/users')
         .expect(200)
-      expect(res.body).to.be.an('array')
+      // expect(res.body).to.be.an('array')
     })
   }) // end describe('/api/users')
 
   it('POST /api/users/signup', async () => {
-    const randomNum = Math.floor(Math.random() * 30)
+    const randomNum = Math.floor(Math.random() * 500)
     const userCredentials = {
       firstName: 'Blob',
       lastName: 'Bloberson',
       email: `email${randomNum}@email.com`,
-      password: 'yY@74Cd5#PMQ'
+      password: 'yY@74Cd5#PMQ',
+      isCompany: false
     }
 
     const res = await request(app)
