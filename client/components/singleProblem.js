@@ -21,6 +21,12 @@ class SingleProblem extends Component {
     this.props.getSingleProblem(this.props.match.params.id)
   }
 
+  componentDidUpdate() {
+    if (!this.state.code) {
+      this.setState({code: this.props.problem[0].defaultCode})
+    }
+  }
+
   handleChange(newValue) {
     this.setState({code: newValue})
   }
