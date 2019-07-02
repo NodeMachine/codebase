@@ -6,7 +6,8 @@ class AceCode extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      code: ''
+      code: '',
+      result: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -19,7 +20,10 @@ class AceCode extends React.Component {
   handleSubmit() {
     axios
       .post('/api/solution', this.state)
-      .then(result => alert(result.data))
+      .then(returnResult => {
+        console.log('returnResult: ', returnResult.data)
+        this.setState({result: returnResult.data})
+      })
       .catch(err => console.log(err))
   }
 
@@ -36,6 +40,10 @@ class AceCode extends React.Component {
           editorProps={{$blockScrolling: true}}
         />
         <button onClick={() => this.handleSubmit()}>Run code</button>
+        {/* <div>
+          This is a result window for now:
+          <p>{this.state.result}</p>
+        </div> */}
       </div>
     )
   }

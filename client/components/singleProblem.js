@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import AceCode from './acecode'
+import AceEditor from 'react-ace'
 import ProblemDescription from './problemDescription'
+import axios from 'axios'
 import {connect} from 'react-redux'
 import {getSingleProblem} from '../store/problems'
 import ResultWindow from './resultWindow'
@@ -9,25 +10,48 @@ class SingleProblem extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      code: ''
+      code: '',
+      result: ''
     }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
     this.props.getSingleProblem(this.props.match.params.id)
   }
 
+  handleChange(newValue) {
+    this.setState({code: newValue})
+  }
+
+  handleSubmit() {
+    axios
+      .post(`/api/solution/${this.props.problem[0].id}`, this.state)
+      .then(returnResult => {
+        this.setState({result: returnResult.data})
+      })
+      .catch(err => console.log(err))
+  }
+
   render() {
-    console.log('Props in single problem ', this.props)
     return (
-      <div style={style.outerDiv}>
-        <AceCode />
+      <div>
+        <AceEditor
+          mode="javascript"
+          theme="github"
+          onChange={this.handleChange}
+          name="UNIQUE_ID_OF_DIV"
+          value={this.state.code}
+          editorProps={{$blockScrolling: true}}
+        />
+        <button onClick={() => this.handleSubmit()}>Run code</button>
         <ProblemDescription
           prompt={
             this.props.problem.length ? this.props.problem[0].prompt : false
           }
         />
-        <ResultWindow />
+        <ResultWindow result={this.state.result} />
       </div>
     )
   }
