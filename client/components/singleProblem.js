@@ -15,10 +15,19 @@ class SingleProblem extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleReset = this.handleReset.bind(this)
   }
 
   componentDidMount() {
     this.props.getSingleProblem(this.props.match.params.id)
+  }
+
+  componentDidUpdate() {
+    if (!this.state.code) {
+      this.setState({
+        code: this.props.problem[0].defaultCode || 'NO CODE DEFINED'
+      })
+    }
   }
 
   handleChange(newValue) {
@@ -34,18 +43,23 @@ class SingleProblem extends Component {
       .catch(err => console.log(err))
   }
 
+  handleReset() {
+    this.setState({code: this.props.problem[0].defaultCode})
+  }
+
   render() {
     return (
       <div>
         <AceEditor
           mode="javascript"
-          theme="github"
+          theme="monokai"
           onChange={this.handleChange}
           name="UNIQUE_ID_OF_DIV"
           value={this.state.code}
           editorProps={{$blockScrolling: true}}
         />
         <button onClick={() => this.handleSubmit()}>Run code</button>
+        <button onClick={() => this.handleReset()}>Reset code</button>
         <ProblemDescription
           prompt={
             this.props.problem.length ? this.props.problem[0].prompt : false

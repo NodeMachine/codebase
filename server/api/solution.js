@@ -45,7 +45,6 @@ tests()`
   await page.evaluate(() => 'hi')
   const html = await page.content()
   await browser.close()
-  console.log(html)
   return html
 }
 
@@ -54,9 +53,7 @@ router.post('/:id', async (req, res, next) => {
   try {
     const code = req.body.code
     const problemId = req.params.id
-    console.log(problemId)
     const problem = await getProblemById(problemId)
-    console.log('problem', problem)
     const testingEnvironmentPath = `file:${path.join(
       __dirname,
       'testingEnviroment.html'
