@@ -25,11 +25,9 @@ class SingleProblem extends Component {
 
   componentDidUpdate() {
     if (!this.state.code) {
-      if (this.props.user && this.props.user.problems) {
+      if (this.props.user.problems) {
         for (let i = 0; i < this.props.user.problems.length; i++) {
-          if (
-            this.props.user.problems[i].id === this.this.props.problem[0].id
-          ) {
+          if (this.props.user.problems[i].id === this.props.problem[0].id) {
             this.setState({
               code: this.props.user.problems[i].solution || 'NO CODE DEFINED'
             })

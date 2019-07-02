@@ -1,6 +1,9 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
-const {getUserById} = require('../db/queryFunctions/userQueryFunctions')
+const {
+  getUserById,
+  getAllUserProblems
+} = require('../db/queryFunctions/userQueryFunctions')
 module.exports = router
 
 // router.post('/login', async (req, res, next) => {
@@ -41,8 +44,9 @@ module.exports = router
 
 router.get('/me', (req, res) => {
   if (req.session.userId) {
-    getUserById(req.session.userId).then(user => {
-      res.send(user)
+    getUserById(req.session.userId).then(async user => {
+      const problems = await getAllUserProblems(user.id)
+      res.send({...user, problems})
     })
   } else {
     res.send({})
