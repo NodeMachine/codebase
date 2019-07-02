@@ -37,7 +37,6 @@ const getProblemById = async id => {
       .doc(`${id}`)
       .get()
     const problem = {id: result.id, ...result.data()}
-    console.log('in this', problem)
     return problem
   } catch (error) {
     console.log(error)

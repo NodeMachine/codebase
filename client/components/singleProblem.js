@@ -23,7 +23,9 @@ class SingleProblem extends Component {
 
   componentDidUpdate() {
     if (!this.state.code) {
-      this.setState({code: this.props.problem[0].defaultCode})
+      this.setState({
+        code: this.props.problem[0].defaultCode || 'NO CODE DEFINED'
+      })
     }
   }
 
@@ -45,7 +47,7 @@ class SingleProblem extends Component {
       <div>
         <AceEditor
           mode="javascript"
-          theme="github"
+          theme="monokai"
           onChange={this.handleChange}
           name="UNIQUE_ID_OF_DIV"
           value={this.state.code}
