@@ -6,7 +6,11 @@ const ResultWindow = props => {
       ... and this is a result window!
       <ul>
         {props.result.length
-          ? props.result.map((result, ind) => <li key={ind}>{result}</li>)
+          ? props.result.map((result, ind) => (
+              <li key={ind}>{`${result.input}, ${result.expectedOutput}, ${
+                result.actualOutput
+              }`}</li>
+            ))
           : ''}
       </ul>
     </div>

@@ -53,22 +53,37 @@ router.post('/:id', async (req, res, next) => {
     const code = req.body.code
     const problemId = req.params.id
     const problem = await getProblemById(problemId)
+    const expectedOutput = problem.tests.filter((el, ind) => ind % 2 !== 0)
+    const tests = problem.tests.filter((el, ind) => ind % 2 === 0)
+    const inputs = tests.map(el => {
+      let input = el.match(/\(([^)]+)\)/)
+      return input[1]
+    })
     const testingEnvironmentPath = `file:${path.join(
       __dirname,
       'testingEnviroment.html'
     )}`
     let testResult = await promiseTimeout(
-      7000,
-      ssr(testingEnvironmentPath, code, problem.tests)
-        .then(result => {
-          result = result.match(/\B>.*?<\/div/)[0]
-          result = result.slice(1, result.length - 6)
-          return result
+      10000,
+      ssr(testingEnvironmentPath, code, tests)
+        .then(userOutput => {
+          userOutput = userOutput.match(/\B>.*?<\/div/)[0]
+          userOutput = userOutput.slice(1, userOutput.length - 6).split(' ')
+          console.log('USER OUTPUT ', userOutput)
+          return userOutput.map((output, ind) => {
+            const returnObj = {}
+            returnObj.input = inputs[ind]
+            returnObj.expectedOutput = expectedOutput[ind]
+            returnObj.actualOutput = output
+            returnObj.pass = returnObj.expectedOutput === returnObj.actualOutput
+            return returnObj
+          })
         })
         .catch(err => console.log(err))
     )
-    res.send(testResult.length ? testResult.split(' ') : ['Bad code'])
+    res.send(testResult.length ? testResult : ['Bad code'])
   } catch (error) {
+    console.log('ERROR ', error)
     res.send('Your solution timed out.')
   }
 })

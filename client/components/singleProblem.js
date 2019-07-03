@@ -14,7 +14,7 @@ class SingleProblem extends Component {
     super(props)
     this.state = {
       code: '',
-      result: ''
+      result: []
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -54,7 +54,7 @@ class SingleProblem extends Component {
       if (this.props.user) {
         const problem = this.props.problem
         const userId = this.props.user.id
-        const isSolved = data.every(val => val === 'true')
+        const isSolved = data.every(test => test.pass === true)
         const solution = this.state.code
         this.props.saveSolution(problem, userId, isSolved, solution)
       }
