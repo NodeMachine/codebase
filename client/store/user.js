@@ -128,11 +128,11 @@ export const deleteAccount = id => async dispatch => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_USER:
-      return {...state, singleUser: action.singleUser}
+      return {...state, error: '', singleUser: action.singleUser}
     case REMOVE_USER:
-      return {...state, singleUser: {}}
+      return {...state, error: '', singleUser: {}}
     case GET_USERS:
-      return {...state, allUsers: action.allUsers}
+      return {...state, error: '', allUsers: action.allUsers}
     case SET_ERROR:
       return {...state, error: action.error}
     default:
