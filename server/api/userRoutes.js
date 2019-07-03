@@ -93,11 +93,9 @@ router.post('/save/:userId', async (req, res, next) => {
 //USER SIGNUP ROUTE:
 router.post('/signup', async (req, res, next) => {
   try {
-    console.log('req.body in signup: ', req.body)
     const firstName = req.body.firstName
     const lastName = req.body.lastName
     const email = req.body.email
-    console.log('email in signup: ', email)
     const password = req.body.password
     auth
       .createUserWithEmailAndPassword(email, password)
@@ -114,9 +112,8 @@ router.post('/signup', async (req, res, next) => {
         res.status(201).send(newUser)
       })
       .catch(error => {
-        const errorCode = error.code
         const errorMessage = error.message
-        res.status(400).send(errorCode, errorMessage)
+        res.status(400).send(errorMessage)
       })
   } catch (error) {
     next(error)
@@ -140,9 +137,8 @@ router.put('/login', async (req, res, next) => {
         })
       })
       .catch(error => {
-        const errorCode = error.code
         const errorMessage = error.message
-        res.send(errorCode, errorMessage)
+        res.status(400).send(errorMessage)
       })
   } catch (error) {
     next(error)
