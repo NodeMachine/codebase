@@ -7,13 +7,15 @@ import history from '../history'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const GET_USERS = 'GET_USERS'
+const SET_ERROR = 'SET_ERROR'
 
 /**
  * INITIAL STATE
  */
 const initialState = {
   allUsers: [],
-  singleUser: {}
+  singleUser: {},
+  error: ''
 }
 
 /**
@@ -22,6 +24,7 @@ const initialState = {
 const getUser = singleUser => ({type: GET_USER, singleUser})
 const removeUser = () => ({type: REMOVE_USER})
 const gotAllUsers = allUsers => ({type: GET_USERS, allUsers})
+const gotError = error => ({type: SET_ERROR, error})
 
 /**
  * THUNK CREATORS
@@ -35,12 +38,21 @@ export const me = () => async dispatch => {
   }
 }
 
+export const getAllUsers = () => async dispatch => {
+  try {
+    const res = await axios.get('/api/users')
+    dispatch(gotAllUsers(res.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const login = (email, password) => async dispatch => {
   try {
     const res = await axios.put('/api/users/login', {email, password})
     dispatch(getUser(res.data))
   } catch (error) {
-    console.log(error)
+    dispatch(gotError(error.response.data))
   }
 }
 
@@ -69,7 +81,7 @@ export const signup = (
     })
     dispatch(getUser(res.data))
   } catch (error) {
-    console.log(error)
+    dispatch(gotError(error.response.data))
   }
 }
 
@@ -101,15 +113,6 @@ export const updateProfile = (id, obj) => async dispatch => {
   }
 }
 
-export const getAllUsers = () => async dispatch => {
-  try {
-    const res = await axios.get('/api/users')
-    dispatch(gotAllUsers(res.data))
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 export const deleteAccount = id => async dispatch => {
   try {
     await axios.delete(`/api/users/${id}`)
@@ -125,11 +128,13 @@ export const deleteAccount = id => async dispatch => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_USER:
-      return {...state, singleUser: action.singleUser}
+      return {...state, error: '', singleUser: action.singleUser}
     case REMOVE_USER:
-      return {...state, singleUser: {}}
+      return {...state, error: '', singleUser: {}}
     case GET_USERS:
-      return {...state, allUsers: action.allUsers}
+      return {...state, error: '', allUsers: action.allUsers}
+    case SET_ERROR:
+      return {...state, error: action.error}
     default:
       return state
   }
