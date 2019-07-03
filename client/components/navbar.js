@@ -8,6 +8,7 @@ import {logout} from '../store'
 const Navbar = ({handleClick, isLoggedIn, ourState}) => {
   console.log('ourState in navbar: ', ourState)
   console.log('isLoggedIn navbar: ', isLoggedIn)
+  //console.log('req.session.userId: ', req.session.userId);
   return (
     <div>
       <nav>
