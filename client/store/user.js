@@ -44,6 +44,16 @@ export const login = (email, password) => async dispatch => {
   }
 }
 
+export const logout = () => async dispatch => {
+  try {
+    await axios.post('/api/users/logout')
+    dispatch(removeUser())
+    dispatch(getAllUsers())
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const signup = (
   firstName,
   lastName,
@@ -97,16 +107,6 @@ export const getAllUsers = () => async dispatch => {
     dispatch(gotAllUsers(res.data))
   } catch (error) {
     console.log(error)
-  }
-}
-
-export const logout = () => async dispatch => {
-  try {
-    await axios.post('/api/users/logout')
-    dispatch(removeUser())
-    dispatch(getAllUsers())
-  } catch (err) {
-    console.error(err)
   }
 }
 

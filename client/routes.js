@@ -28,6 +28,7 @@ class Routes extends Component {
         <Route path="/problems/:id" component={SingleProblem} />
 
         <Route path="/companyhome" component={CompanyHome} />
+        <Route path="/profile" component={UserProfile} />
 
         <Route path="/" component={MainPage} />
 
@@ -38,7 +39,7 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route path="/profile" component={UserProfile} />
+        {/* <Route path="/profile" component={UserProfile} /> */}
         <Route component={Login} />
       </Switch>
     )

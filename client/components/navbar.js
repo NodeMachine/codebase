@@ -5,8 +5,10 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 //console.log("isLoggedIn navbar: ", isLoggedIn);
-const Navbar = ({handleClick, isLoggedIn}) => {
+const Navbar = ({handleClick, isLoggedIn, ourState}) => {
+  console.log('ourState in navbar: ', ourState)
   console.log('isLoggedIn navbar: ', isLoggedIn)
+  //console.log('req.session.userId: ', req.session.userId);
   return (
     <div>
       <nav>
@@ -37,8 +39,11 @@ const Navbar = ({handleClick, isLoggedIn}) => {
  * CONTAINER
  */
 const mapState = state => {
+  console.log('state in navbar: ', state)
   return {
-    isLoggedIn: !!state.user.id
+    ourState: state,
+    //isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.singleUser.authId
   }
 }
 
