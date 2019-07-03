@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getAllProblems} from '../store/problems'
+import {getAllProblems, clearSingleProblem} from '../store/problems'
 import {Link} from 'react-router-dom'
 
 // Until we have a CSS file
@@ -14,6 +14,7 @@ class ProblemList extends Component {
 
   componentDidMount() {
     this.props.getAllProblems()
+    this.props.clearSingleProblem()
   }
 
   render() {
@@ -49,7 +50,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getAllProblems: () => dispatch(getAllProblems())
+    getAllProblems: () => dispatch(getAllProblems()),
+    clearSingleProblem: () => dispatch(clearSingleProblem())
   }
 }
 
