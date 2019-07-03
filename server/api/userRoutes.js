@@ -52,9 +52,19 @@ router.get('/:id', async (req, res, next) => {
   })
 })
 
-router.delete('/logout', (req, res, next) => {
-  req.session.destroy()
-  res.status(204).end()
+//USER LOGOUT
+router.post('/logout', async (req, res, next) => {
+
+  try {
+    auth.signOut().then(result => {
+      console.log('Sign out was extremely successul!', result)
+    });
+    req.session.destroy()
+    //res.status(204).end()
+    res.send({})
+  } catch (error) {
+    console.error('There was an error signing out: ', error)
+  }
 })
 
 router.delete('/:id', async (req, res, next) => {
