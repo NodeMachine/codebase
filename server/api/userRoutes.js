@@ -90,12 +90,9 @@ router.post('/save/:userId', async (req, res, next) => {
 //USER SIGNUP ROUTE:
 router.post('/signup', async (req, res, next) => {
   try {
-    console.log('req.body in signup: ', req.body)
     const firstName = req.body.firstName
     const lastName = req.body.lastName
     const email = req.body.email
-    const isCompany = req.body.isCompany
-    console.log('email in signup: ', email)
     const password = req.body.password
     auth
       .createUserWithEmailAndPassword(email, password)
@@ -105,7 +102,6 @@ router.post('/signup', async (req, res, next) => {
           lastName: lastName,
           email: user.user.email,
           authId: user.user.uid,
-          isCompany: isCompany,
           score: 0
         })
         newUser.problems = []
