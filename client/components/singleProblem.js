@@ -6,6 +6,8 @@ import {connect} from 'react-redux'
 import {getSingleProblem} from '../store/problems'
 import {saveSolution} from '../store/user'
 import ResultWindow from './resultWindow'
+import 'brace/mode/javascript'
+import 'brace/theme/monokai'
 
 class SingleProblem extends Component {
   constructor(props) {
