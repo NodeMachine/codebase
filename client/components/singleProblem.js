@@ -33,7 +33,9 @@ class SingleProblem extends Component {
         this.setState({code: user.problems[problem.id].solution})
       } else {
         this.setState({
-          code: this.props.problem.defaultCode || 'NO CODE DEFINED'
+          code:
+            this.props.problem.defaultCode.replace(/\\n/g, '\n') ||
+            'NO CODE DEFINED'
         })
       }
     }
@@ -63,7 +65,7 @@ class SingleProblem extends Component {
   }
 
   handleReset() {
-    this.setState({code: this.props.problem.defaultCode})
+    this.setState({code: this.props.problem.defaultCode.replace(/\\n/g, '\n')})
   }
 
   render() {
