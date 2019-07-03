@@ -50,7 +50,7 @@ const getCompanyById = async companyId => {
   }
 }
 
-const addSavedUser = async (user, companyId) => {
+const addSavedUser = async (companyId, user) => {
   try {
     await db
       .collection('companies')
