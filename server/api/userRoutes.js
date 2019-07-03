@@ -32,19 +32,17 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   //auth.onAuthStateChanged(async user => {
-  if (user) {
-    const singleUser = await getUserByAuthId(user.uid)
-    if (singleUser.id === req.params.id) {
-      try {
-        const user = await getUserById(req.params.id)
-        const problems = await getAllUserProblems(req.params.id)
-        res.send({...user, problems})
-      } catch (error) {
-        next(error)
-      }
-    } else {
-      res.send('User is not admin!')
+  // const singleUser = await getUserByAuthId(user.uid)
+  if (req.session.userId === req.params.id) {
+    try {
+      const user = await getUserById(req.params.id)
+      const problems = await getAllUserProblems(req.params.id)
+      res.send({...user, problems})
+    } catch (error) {
+      next(error)
     }
+  } else {
+    res.send('You are not authorized to view this page!')
   }
 })
 
