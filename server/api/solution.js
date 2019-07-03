@@ -59,7 +59,6 @@ router.post('/:id', async (req, res, next) => {
       let input = el.match(/\(([^)]+)\)/)
       return input[1]
     })
-    console.log('INPUTS ', inputs[0])
     const testingEnvironmentPath = `file:${path.join(
       __dirname,
       'testingEnviroment.html'
