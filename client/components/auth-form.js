@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {login, signup} from '../store/user'
+import {Redirect} from 'react-router-dom'
 
 /**
  * COMPONENT
@@ -32,6 +33,7 @@ class AuthForm extends React.Component {
             handleSubmit(event)
             if (!this.props.error) {
               this.setState({email: '', password: ''})
+              this.props.history.push('/')
             }
           }}
           name={name}
