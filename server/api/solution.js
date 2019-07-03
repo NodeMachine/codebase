@@ -29,8 +29,7 @@ function promiseTimeout(ms, promise) {
 async function ssr(url, userCode, userProblemTests) {
   const testArr = userProblemTests.split(', ')
   const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox']
+    headless: true
   })
   const page = await browser.newPage()
   await page.goto(url, {waitUntil: 'networkidle0'})
