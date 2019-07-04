@@ -5,7 +5,7 @@ const ResultWindow = props => {
     <div>
       ... and this is a result window!
       <ul>
-        {props.result.length
+        {props.result && props.result.length
           ? props.result.map((result, ind) => (
               <li key={ind}>{`Function input: ${
                 result.input
@@ -16,7 +16,7 @@ const ResultWindow = props => {
                 result.pass ? 'Passing' : 'Failing'
               }`}</li>
             ))
-          : ``}
+          : `${props.error || ''}`}
       </ul>
     </div>
   )

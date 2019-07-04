@@ -51,7 +51,6 @@ class SingleProblem extends Component {
         `/api/solution/${this.props.problem.id}`,
         this.state
       )
-      console.log('DATA ', data)
       if (this.props.user.id) {
         const problem = this.props.problem
         const userId = this.props.user.id
@@ -61,8 +60,8 @@ class SingleProblem extends Component {
       }
       this.setState({result: data})
     } catch (error) {
-      // this.setState({result: 'Your code timed out'})
       console.error("Something went wrong submitting user's code", error)
+      this.setState({result: 'Your code timed out'})
     }
   }
 
@@ -84,7 +83,11 @@ class SingleProblem extends Component {
         <button onClick={() => this.handleSubmit()}>Run code</button>
         <button onClick={() => this.handleReset()}>Reset code</button>
         <ProblemDescription prompt={this.props.problem.prompt} />
-        <ResultWindow result={this.state.result} />
+        {Array.isArray(this.state.result) ? (
+          <ResultWindow result={this.state.result} />
+        ) : (
+          <ResultWindow error={this.state.result} />
+        )}
       </div>
     )
   }

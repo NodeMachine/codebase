@@ -64,12 +64,11 @@ router.post('/:id', async (req, res, next) => {
       'testingEnviroment.html'
     )}`
     let testResult = await promiseTimeout(
-      10000,
+      7000,
       ssr(testingEnvironmentPath, code, tests)
         .then(userOutput => {
           userOutput = userOutput.match(/\B>.*?<\/div/)[0]
           userOutput = userOutput.slice(1, userOutput.length - 6).split(' ')
-          console.log('USER OUTPUT ', userOutput)
           return userOutput.map((output, ind) => {
             const returnObj = {}
             returnObj.input = inputs[ind]
@@ -81,14 +80,11 @@ router.post('/:id', async (req, res, next) => {
         })
         .catch(err => console.log(err))
     )
-    console.log('TEST RES ', testResult)
     res.send(
-      testResult.length && testResult
-        ? testResult
-        : [{actualOutput: 'Bad code'}]
+      testResult.length && testResult[0].actualOutput ? testResult : 'Bad code'
     )
   } catch (error) {
     console.log('ERROR ', error)
-    res.send([{actualOutput: 'Your solution timed out.'}])
+    res.send('Your solution timed out.')
   }
 })
