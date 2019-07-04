@@ -5,9 +5,18 @@ const ResultWindow = props => {
     <div>
       ... and this is a result window!
       <ul>
-        {props.result.length
-          ? props.result.map((result, ind) => <li key={ind}>{result}</li>)
-          : ''}
+        {props.result && props.result.length
+          ? props.result.map((result, ind) => (
+              <li key={ind}>{`Function input: ${
+                result.input
+              } => Expected output: ${
+                result.expectedOutput
+              } // Actual output: ${result.actualOutput ||
+                'Check your code'} //${
+                result.pass ? 'Passing' : 'Failing'
+              }`}</li>
+            ))
+          : `${props.error || ''}`}
       </ul>
     </div>
   )

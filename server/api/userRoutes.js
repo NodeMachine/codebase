@@ -12,49 +12,52 @@ const router = require('express').Router()
 const {auth} = require('../db/queryFunctions/index')
 module.exports = router
 
-router.get('/', (req, res, next) => {
-  auth.onAuthStateChanged(async user => {
-    if (user) {
-      if (user.isAdmin) {
-        try {
-          const users = await getAllUsers()
-          res.send(users)
-        } catch (error) {
-          next(error)
-        }
-      } else {
-        res.send('User is not admin!')
-      }
-    } else {
-      res.send('Not logged in!')
+router.get('/', async (req, res, next) => {
+  console.log('req in router.get all users: ', req.session)
+  //auth.onAuthStateChanged(async user => {
+  if (req.session.isAdmin) {
+    try {
+      const users = await getAllUsers()
+      res.send(users)
+    } catch (error) {
+      next(error)
     }
-  })
+  } else {
+    res.send('User is not admin!')
+  }
+  //  else {
+  //   res.send('Not logged in!')
+  // }
 })
 
 router.get('/:id', async (req, res, next) => {
-  auth.onAuthStateChanged(async user => {
-    if (user) {
-      const singleUser = await getUserByAuthId(user.uid)
-      if (singleUser.id === req.params.id) {
-        try {
-          const user = await getUserById(req.params.id)
-          const problems = await getAllUserProblems(req.params.id)
-          res.send({...user, problems})
-        } catch (error) {
-          next(error)
-        }
-      } else {
-        res.send('User is not admin!')
-      }
-    } else {
-      res.send('Not logged in!')
+  //auth.onAuthStateChanged(async user => {
+  // const singleUser = await getUserByAuthId(user.uid)
+  if (req.session.userId === req.params.id) {
+    try {
+      const user = await getUserById(req.params.id)
+      const problems = await getAllUserProblems(req.params.id)
+      res.send({...user, problems})
+    } catch (error) {
+      next(error)
     }
-  })
+  } else {
+    res.send('You are not authorized to view this page!')
+  }
 })
 
-router.delete('/logout', (req, res, next) => {
-  req.session.destroy()
-  res.status(204).end()
+//USER LOGOUT
+router.post('/logout', async (req, res, next) => {
+  try {
+    auth.signOut().then(result => {
+      console.log('Sign out was extremely successul!', result)
+    })
+    req.session.destroy()
+    //res.status(204).end()
+    res.send({})
+  } catch (error) {
+    console.error('There was an error signing out: ', error)
+  }
 })
 
 router.delete('/:id', async (req, res, next) => {
@@ -109,9 +112,8 @@ router.post('/signup', async (req, res, next) => {
         res.status(201).send(newUser)
       })
       .catch(error => {
-        const errorCode = error.code
         const errorMessage = error.message
-        res.status(400).send(errorCode, errorMessage)
+        res.status(400).send(errorMessage)
       })
   } catch (error) {
     next(error)
@@ -128,15 +130,15 @@ router.put('/login', async (req, res, next) => {
       .then(user => {
         getUserByAuthId(user.user.uid).then(async singleUser => {
           req.session.userId = singleUser.id
+          req.session.isAdmin = singleUser.isAdmin
           console.log('req.session.userId: ', req.session.userId)
           const problems = await getAllUserProblems(singleUser.id)
           res.send({...singleUser, problems})
         })
       })
       .catch(error => {
-        const errorCode = error.code
         const errorMessage = error.message
-        res.send(errorCode, errorMessage)
+        res.status(400).send(errorMessage)
       })
   } catch (error) {
     next(error)

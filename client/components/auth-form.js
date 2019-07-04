@@ -2,51 +2,100 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {login, signup} from '../store/user'
+import {Redirect} from 'react-router-dom'
 
 /**
  * COMPONENT
  */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+class AuthForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      password: '',
+      email: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        {name === 'signup' ? (
+  handleChange(event) {
+    event.preventDefault()
+    this.setState({[event.target.name]: event.target.value})
+    console.log(this.state)
+  }
+
+  render() {
+    const {name, displayName, handleSubmit, error} = this.props
+
+    return (
+      <div>
+        <form
+          onSubmit={event => {
+            handleSubmit(event)
+            if (!this.props.error) {
+              this.setState({email: '', password: ''})
+              this.props.history.push('/')
+            }
+          }}
+          name={name}
+        >
           <div>
-            <label htmlFor="firstName">
-              <small>First Name</small>
+            <label htmlFor="email">
+              <small>Email</small>
             </label>
-            <input name="firstName" type="text" />
+            <input
+              name="email"
+              type="email"
+              onChange={this.handleChange}
+              value={this.state.email}
+            />
           </div>
-        ) : null}
-        {name === 'signup' ? (
           <div>
-            <label htmlFor="lastName">
-              <small>Last Name</small>
+            <label htmlFor="password">
+              <small>Password</small>
             </label>
-            <input name="lastName" type="text" />
+            <input
+              name="password"
+              type="password"
+              onChange={this.handleChange}
+              value={this.state.password}
+            />
+            <small>Passwords must be at least 6 characters.</small>
+            {}
           </div>
-        ) : null}
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-    </div>
-  )
+          {name === 'signup' ? (
+            <div>
+              <label htmlFor="firstName">
+                <small>First Name</small>
+              </label>
+              <input name="firstName" type="text" />
+            </div>
+          ) : null}
+          {name === 'signup' ? (
+            <div>
+              <label htmlFor="lastName">
+                <small>Last Name</small>
+              </label>
+              <input name="lastName" type="text" />
+            </div>
+          ) : null}
+          <div>
+            <button
+              type="submit"
+              disabled={
+                !(this.state.email.length && this.state.password.length >= 6)
+              }
+            >
+              {displayName}
+            </button>
+            {this.props.error ? (
+              <small style={{color: 'red'}}>{this.props.error}</small>
+            ) : null}
+          </div>
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+      </div>
+    )
+  }
 }
 
 /**
@@ -59,31 +108,36 @@ const AuthForm = props => {
 const mapLogin = state => {
   return {
     name: 'login',
-    displayName: 'Login'
+    displayName: 'Login',
+    error: state.user.error
   }
 }
 
 const mapSignup = state => {
   return {
     name: 'signup',
-    displayName: 'Sign Up'
+    displayName: 'Sign Up',
+    error: state.user.error
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      const email = evt.target.email.value
-      const password = evt.target.password.value
-      if (formName === 'login') {
-        dispatch(login(email, password))
-      } else {
-        const firstName = evt.target.firstName.value
-        const lastName = evt.target.lastName.value
-        console.log(firstName, lastName)
-        dispatch(signup(firstName, lastName, email, password))
+      try {
+        evt.preventDefault()
+        const formName = evt.target.name
+        const email = evt.target.email.value
+        const password = evt.target.password.value
+        if (formName === 'login') {
+          dispatch(login(email, password))
+        } else {
+          const firstName = evt.target.firstName.value
+          const lastName = evt.target.lastName.value
+          dispatch(signup(firstName, lastName, email, password))
+        }
+      } catch (error) {
+        console.log(error)
       }
     }
   }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
+import connect from 'react-redux'
 
-class companyProfile extends Component {
+class CompanyProfile extends Component {
   constructor(props) {
     super(props)
   }
@@ -9,3 +10,11 @@ class companyProfile extends Component {
     return <div>companyProfile</div>
   }
 }
+
+const mapStateToProps = state => {
+  return {}
+}
+
+const mapDispatchToProps = dispatch => {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyProfile)

@@ -14,7 +14,7 @@ class SingleProblem extends Component {
     super(props)
     this.state = {
       code: '',
-      result: ''
+      result: []
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -33,7 +33,9 @@ class SingleProblem extends Component {
         this.setState({code: user.problems[problem.id].solution})
       } else {
         this.setState({
-          code: this.props.problem.defaultCode || 'NO CODE DEFINED'
+          code:
+            this.props.problem.defaultCode.replace(/\\n/g, '\n') ||
+            'NO CODE DEFINED'
         })
       }
     }
@@ -49,21 +51,22 @@ class SingleProblem extends Component {
         `/api/solution/${this.props.problem.id}`,
         this.state
       )
-      if (this.props.user) {
+      if (this.props.user.id) {
         const problem = this.props.problem
         const userId = this.props.user.id
-        const isSolved = data.every(val => val === 'true')
+        const isSolved = data.every(test => test.pass === true)
         const solution = this.state.code
         this.props.saveSolution(problem, userId, isSolved, solution)
       }
       this.setState({result: data})
     } catch (error) {
       console.error("Something went wrong submitting user's code", error)
+      this.setState({result: 'Your code timed out'})
     }
   }
 
   handleReset() {
-    this.setState({code: this.props.problem.defaultCode})
+    this.setState({code: this.props.problem.defaultCode.replace(/\\n/g, '\n')})
   }
 
   render() {
@@ -80,7 +83,11 @@ class SingleProblem extends Component {
         <button onClick={() => this.handleSubmit()}>Run code</button>
         <button onClick={() => this.handleReset()}>Reset code</button>
         <ProblemDescription prompt={this.props.problem.prompt} />
-        <ResultWindow result={this.state.result} />
+        {Array.isArray(this.state.result) ? (
+          <ResultWindow result={this.state.result} />
+        ) : (
+          <ResultWindow error={this.state.result} />
+        )}
       </div>
     )
   }

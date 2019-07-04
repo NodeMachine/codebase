@@ -7,13 +7,15 @@ import history from '../history'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const GET_USERS = 'GET_USERS'
+const SET_ERROR = 'SET_ERROR'
 
 /**
  * INITIAL STATE
  */
 const initialState = {
   allUsers: [],
-  singleUser: {}
+  singleUser: {},
+  error: ''
 }
 
 /**
@@ -22,6 +24,7 @@ const initialState = {
 const getUser = singleUser => ({type: GET_USER, singleUser})
 const removeUser = () => ({type: REMOVE_USER})
 const gotAllUsers = allUsers => ({type: GET_USERS, allUsers})
+const gotError = error => ({type: SET_ERROR, error})
 
 /**
  * THUNK CREATORS
@@ -35,12 +38,31 @@ export const me = () => async dispatch => {
   }
 }
 
+export const getAllUsers = () => async dispatch => {
+  try {
+    const res = await axios.get('/api/users')
+    dispatch(gotAllUsers(res.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const login = (email, password) => async dispatch => {
   try {
     const res = await axios.put('/api/users/login', {email, password})
     dispatch(getUser(res.data))
   } catch (error) {
-    console.log(error)
+    dispatch(gotError(error.response.data))
+  }
+}
+
+export const logout = () => async dispatch => {
+  try {
+    await axios.post('/api/users/logout')
+    dispatch(removeUser())
+    dispatch(getAllUsers())
+  } catch (err) {
+    console.error(err)
   }
 }
 
@@ -59,7 +81,7 @@ export const signup = (
     })
     dispatch(getUser(res.data))
   } catch (error) {
-    console.log(error)
+    dispatch(gotError(error.response.data))
   }
 }
 
@@ -84,29 +106,10 @@ export const saveSolution = (
 export const updateProfile = (id, obj) => async dispatch => {
   try {
     await axios.post(`/api/users/update/${id}`, {update: obj})
-    const res = axios.get(`/api/users/${id}`)
+    const res = await axios.get(`/api/users/${id}`)
     dispatch(getUser(res.data))
   } catch (error) {
     console.log(error)
-  }
-}
-
-export const getAllUsers = () => async dispatch => {
-  try {
-    const res = await axios.get('/api/users')
-    dispatch(gotAllUsers(res.data))
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export const logout = () => async dispatch => {
-  try {
-    await axios.post('/api/users/logout')
-    dispatch(removeUser())
-    dispatch(getAllUsers())
-  } catch (err) {
-    console.error(err)
   }
 }
 
@@ -125,11 +128,13 @@ export const deleteAccount = id => async dispatch => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_USER:
-      return {...state, singleUser: action.singleUser}
+      return {...state, error: '', singleUser: action.singleUser}
     case REMOVE_USER:
-      return {...state, singleUser: {}}
+      return {...state, error: '', singleUser: {}}
     case GET_USERS:
-      return {...state, allUsers: action.allUsers}
+      return {...state, error: '', allUsers: action.allUsers}
+    case SET_ERROR:
+      return {...state, error: action.error}
     default:
       return state
   }
