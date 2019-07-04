@@ -48,6 +48,10 @@ class UserProfile extends Component {
   // eslint-disable-next-line complexity
   render() {
     const user = this.props.user
+    let problems = []
+    if (user.problems) {
+      problems = Object.values(user.problems)
+    }
     return (
       <div>
         <div className="row">
@@ -124,17 +128,18 @@ class UserProfile extends Component {
                           <button type="submit">Submit</button>
                         )}
                       </form>
-                      {!this.state.toggle ? (
-                        <button type="button" onClick={this.handleEdit}>
-                          Edit
-                        </button>
-                      ) : null}
                     </div>
 
                     <div className="col s3">
-                      <i className="small material-icons " style={styles.icon}>
-                        edit_circle
-                      </i>
+                      {!this.state.toggle ? (
+                        <i
+                          className="small material-icons "
+                          style={styles.icon}
+                          onClick={this.handleEdit}
+                        >
+                          edit_circle
+                        </i>
+                      ) : null}
                     </div>
                   </div>
                 </div>
@@ -144,7 +149,11 @@ class UserProfile extends Component {
           <div className="card">
             <div className="col s6 card-content grey lighten-4">
               <h2>Past Problems:</h2>
-              {/* <UserProblemsList userProblems={user.problems} /> */}
+              {problems.length ? (
+                <UserProblemsList problems={problems} />
+              ) : (
+                <h4>No problems yet!</h4>
+              )}
             </div>
           </div>
         </div>
