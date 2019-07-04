@@ -5,3 +5,7 @@ secrets.js
 .DS_Store
 npm-debug.log
 yarn-error.log
+seed.js
+KEYS.js
+key.js
+

@@ -4,36 +4,43 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>BOILERMAKER</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-)
+const Navbar = props => {
+  const {handleClick, isLoggedIn} = props
+  return (
+    <div>
+      <nav>
+        <Link to="/">Our Codewars Clone</Link>
+        {isLoggedIn ? (
+          <div className="right">
+            {/* The navbar will show these links after you log in */}
+            <Link to="/problems">Problems</Link>
+            <Link to="/profile">Profile</Link>
+            <Link to="/" onClick={handleClick}>
+              Logout
+            </Link>
+          </div>
+        ) : (
+          <div className="right">
+            {/* The navbar will show these links before you log in */}
+            <Link to="/problems">Problems</Link>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+          </div>
+        )}
+      </nav>
+      <hr />
+    </div>
+  )
+}
 
 /**
  * CONTAINER
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    ourState: state,
+    //isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.singleUser.id
   }
 }
 
@@ -46,11 +53,3 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(Navbar)
-
-/**
- * PROP TYPES
- */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}
