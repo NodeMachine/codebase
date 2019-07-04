@@ -19,3 +19,29 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.singleProblemContainer {
+  display: flex;
+}
+
+.codeSandboxContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex: 0 0 50%;
+}
+
+.buttonContainer {
+  display: flex;
+  flex: 0 0 100%;
+  justify-content: flex-end;
+}
+
+.aceContent {
+  flex: 1 1 100%;
+}
+
+.promptResultContainer {
+  display: flex;
+  flex-wrap: wrap;
+}

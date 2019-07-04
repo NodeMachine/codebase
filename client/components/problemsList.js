@@ -19,7 +19,7 @@ class ProblemList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="problemListContainer">
         <ul>
           {this.props.problems.map(el => {
             return (
