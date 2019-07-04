@@ -106,7 +106,7 @@ export const saveSolution = (
 export const updateProfile = (id, obj) => async dispatch => {
   try {
     await axios.post(`/api/users/update/${id}`, {update: obj})
-    const res = axios.get(`/api/users/${id}`)
+    const res = await axios.get(`/api/users/${id}`)
     dispatch(getUser(res.data))
   } catch (error) {
     console.log(error)
