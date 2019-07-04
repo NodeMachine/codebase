@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import UserProblemsList from './userProblemsList'
 import {connect} from 'react-redux'
+import {updateProfile} from '../store/user'
 
 // Until we have a CSS file
 const styles = {
@@ -11,8 +12,40 @@ const styles = {
 class UserProfile extends Component {
   constructor(props) {
     super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleEdit = this.handleEdit.bind(this)
+    this.state = {
+      toggle: false,
+      bio: '',
+      interests: '',
+      location: ''
+    }
   }
 
+  handleEdit(event) {
+    event.preventDefault()
+    const user = this.props.user
+    this.setState({
+      bio: user.bio || '',
+      interests: user.interests || '',
+      location: user.location || '',
+      toggle: true
+    })
+  }
+
+  handleChange(event) {
+    event.preventDefault()
+    this.setState({[event.target.name]: event.target.value})
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.update(this.props.user.id, this.state)
+    this.setState({toggle: false})
+  }
+
+  // eslint-disable-next-line complexity
   render() {
     const user = this.props.user
     return (
@@ -22,7 +55,10 @@ class UserProfile extends Component {
             <div className="col s6">
               <div className="row">
                 <div className="col s6 card-image">
-                  <img style={styles.photo} src={user.photo} />
+                  <img
+                    style={styles.photo}
+                    src={user && user.photo ? user.photo : null}
+                  />
                 </div>
 
                 <div className="col s6 card-content">
@@ -35,10 +71,64 @@ class UserProfile extends Component {
                 <div className="col s12 card-content">
                   <div className="row">
                     <div className="col s9">
-                      <h4>Location: {user.location}</h4>
-                      <h5>Bio: {user.bio}</h5>
-                      <h5>Interests: {user.interests}</h5>
-                      <h5>Email: {user.email}</h5>
+                      <form onSubmit={this.handleSubmit}>
+                        {!this.state.toggle ? (
+                          <div>
+                            <h5>
+                              Location: {user.location || 'Add a location'}
+                            </h5>
+                          </div>
+                        ) : (
+                          <div>
+                            <h5>Location:</h5>
+                            <input
+                              type="text"
+                              name="location"
+                              onChange={this.handleChange}
+                              placeholder={this.state.location}
+                            />
+                          </div>
+                        )}
+                        {!this.state.toggle ? (
+                          <div>
+                            <h5>Bio: {user.bio || 'Add a bio'}</h5>
+                          </div>
+                        ) : (
+                          <div>
+                            <h5>Bio:</h5>
+                            <input
+                              type="text"
+                              name="bio"
+                              onChange={this.handleChange}
+                              placeholder={this.state.bio}
+                            />
+                          </div>
+                        )}
+                        {!this.state.toggle ? (
+                          <div>
+                            <h5>Interests: {user.interests || 'Interests'}</h5>
+                          </div>
+                        ) : (
+                          <div>
+                            <h5>Interests:</h5>
+                            <input
+                              type="text"
+                              name="interests"
+                              onChange={this.handleChange}
+                              placeholder={this.state.interests}
+                            />
+                          </div>
+                        )}
+                        <h5>Email: {user.email}</h5>
+                        {this.state.toggle && (
+                          <button type="submit">Submit</button>
+                        )}
+                      </form>
+                      {!this.state.toggle ? (
+                        <button type="button" onClick={this.handleEdit}>
+                          Edit
+                        </button>
+                      ) : null}
                     </div>
 
                     <div className="col s3">
@@ -54,7 +144,7 @@ class UserProfile extends Component {
           <div className="card">
             <div className="col s6 card-content grey lighten-4">
               <h2>Past Problems:</h2>
-              <UserProblemsList userProblems={user.problems} />
+              {/* <UserProblemsList userProblems={user.problems} /> */}
             </div>
           </div>
         </div>
@@ -64,7 +154,11 @@ class UserProfile extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.singleUser
+  user: state.user.singleUser
 })
 
-export default connect(mapStateToProps)(UserProfile)
+const mapDispatchToProps = dispatch => ({
+  update: (id, obj) => dispatch(updateProfile(id, obj))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)

@@ -4,9 +4,8 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-//console.log("isLoggedIn navbar: ", isLoggedIn);
-const Navbar = ({handleClick, isLoggedIn, ourState}) => {
-  //console.log('req.session.userId: ', req.session.userId);
+const Navbar = props => {
+  const {handleClick, isLoggedIn} = props
   return (
     <div>
       <nav>
@@ -38,11 +37,10 @@ const Navbar = ({handleClick, isLoggedIn, ourState}) => {
  * CONTAINER
  */
 const mapState = state => {
-  console.log('state in navbar: ', state)
   return {
     ourState: state,
     //isLoggedIn: !!state.user.id
-    isLoggedIn: !!state.user.singleUser.authId
+    isLoggedIn: !!state.user.singleUser.id
   }
 }
 
@@ -55,11 +53,3 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(Navbar)
-
-/**
- * PROP TYPES
- */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}
