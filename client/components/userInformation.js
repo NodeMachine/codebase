@@ -102,9 +102,7 @@ class UserInformation extends Component {
         </div>
 
         <div>
-          <i>
-            <MdModeEdit onClick={this.handleEdit} />
-          </i>
+          <MdModeEdit onClick={this.handleEdit} />
           {/* <i className="small material-icons " onClick={this.handleEdit}>
 						edit_circle
 					</i> */}
