@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {updateProfile} from '../store/user'
-
-const styles = {
-  icon: {marginTop: 30}
-}
+import './userProfile.css'
+import {IconContext} from 'react-icons'
+import {MdModeEdit} from 'react-icons/md'
 
 class UserInformation extends Component {
   constructor(props) {
@@ -47,70 +46,66 @@ class UserInformation extends Component {
 
     if (this.state.editMode) {
       return (
-        <div className="row">
-          <div className="col s9">
-            <form onSubmit={this.handleSubmit}>
-              <div>
-                <h5>Location:</h5>
-                <input
-                  type="text"
-                  name="location"
-                  onChange={this.handleChange}
-                  placeholder={this.state.location}
-                />
-              </div>
-              <div>
-                <h5>Bio:</h5>
-                <input
-                  type="text"
-                  name="bio"
-                  onChange={this.handleChange}
-                  placeholder={this.state.bio}
-                />
-              </div>
-              <div>
-                <h5>Interests:</h5>
-                <input
-                  type="text"
-                  name="interests"
-                  onChange={this.handleChange}
-                  placeholder={this.state.interests}
-                />
-              </div>
-              <button type="submit">Submit</button>
-            </form>
-          </div>
+        <div>
+          <form
+            className="profile-description-form"
+            onSubmit={this.handleSubmit}
+          >
+            <div>
+              <h5>Location:</h5>
+              <input
+                type="text"
+                name="location"
+                onChange={this.handleChange}
+                placeholder={this.state.location}
+              />
+            </div>
+            <div>
+              <h5>Bio:</h5>
+              <input
+                type="text"
+                name="bio"
+                onChange={this.handleChange}
+                placeholder={this.state.bio}
+              />
+            </div>
+            <div>
+              <h5>Interests:</h5>
+              <input
+                type="text"
+                name="interests"
+                onChange={this.handleChange}
+                placeholder={this.state.interests}
+              />
+            </div>
+            <button type="submit">Submit</button>
+          </form>
         </div>
       )
     }
 
     return (
-      <div className="row">
-        <div className="col s9">
+      <div className="profile-description">
+        <div>
           <div>
-            <div>
-              <h5>Location: {user.location || 'Add a location'}</h5>
-            </div>
-            <div>
-              <h5>Bio: {user.bio || 'Add a bio'}</h5>
-            </div>
-            <div>
-              <h5>Interests: {user.interests || 'Interests'}</h5>
-            </div>
-            <div>
-              <h5>Email: {user.email}</h5>
-            </div>
+            <h5>Location: {user.location || 'Add a location'}</h5>
+          </div>
+          <div>
+            <h5>Bio: {user.bio || 'Add a bio'}</h5>
+          </div>
+          <div>
+            <h5>Interests: {user.interests || 'Interests'}</h5>
+          </div>
+          <div>
+            <h5>Email: {user.email}</h5>
           </div>
         </div>
 
-        <div className="col s3">
-          <i
-            className="small material-icons "
-            style={styles.icon}
-            onClick={this.handleEdit}
-          >
-            edit_circle
-          </i>
+        <div>
+          <MdModeEdit onClick={this.handleEdit} />
+          {/* <i className="small material-icons " onClick={this.handleEdit}>
+						edit_circle
+					</i> */}
         </div>
       </div>
     )
