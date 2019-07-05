@@ -1,4 +1,6 @@
-import React, {Component} from 'react'
+import React from 'react'
+import {IconContext} from 'react-icons'
+import {MdDone, MdClose} from 'react-icons/md'
 
 const ResultWindow = props => {
   return (
@@ -11,9 +13,18 @@ const ResultWindow = props => {
               <li key={ind}>
                 {`Input: ${result.input} => Expected: ${
                   result.expectedOutput
-                } // Actual: ${result.actualOutput || 'Check your code'} //${
-                  result.pass ? 'Passing' : 'Failing'
-                }`}
+                } // Actual: ${result.actualOutput || 'Check your code'}`}
+                <span>
+                  {result.pass ? (
+                    <IconContext.Provider value={{color: 'green'}}>
+                      <MdDone />
+                    </IconContext.Provider>
+                  ) : (
+                    <IconContext.Provider value={{color: 'red'}}>
+                      <MdClose />
+                    </IconContext.Provider>
+                  )}
+                </span>
                 <br />
               </li>
             ))
