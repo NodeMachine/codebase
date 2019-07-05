@@ -1,0 +1,41 @@
+/* Colors for CSS:
+Primary blue: #26C6DA
+Light blue: #6FF9FF
+Dark blue: #0095A8
+
+Primary grey: #263238
+Light grey: #4F5B62
+Dark grey: #000A12 */
+
+#form-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  margin-left: 3%;
+}
+
+#form-title {
+  color: #6ff9ff;
+  padding: 1%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+form input {
+  color: white;
+}
+
+form button {
+  background-color: #26c6da;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
