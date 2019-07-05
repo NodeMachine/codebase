@@ -2,10 +2,13 @@
   background-color: #000a12;
   display: flex;
   justify-content: space-between;
+  height: 50px;
+  align-items: baseline;
 }
 
-#navebar > h1 {
+#navbar > a {
   margin: 0px;
   padding: 0px;
   font-weight: 400;
+  /* align-self: baseline; */
 }

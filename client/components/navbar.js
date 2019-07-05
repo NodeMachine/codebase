@@ -19,6 +19,15 @@ const Navbar = props => {
         {isLoggedIn ? (
           <div className="right">
             {/* The navbar will show these links after you log in */}
+            <IconContext.Provider
+              value={{
+                color: '#26C6DA',
+                style: {marginLeft: '-10px'}
+              }}
+            >
+              <MdKeyboardArrowRight />
+              <MdKeyboardArrowRight />
+            </IconContext.Provider>
             <Link to="/problems">Problems</Link>
             <Link to="/profile">Profile</Link>
             <Link to="/" onClick={handleClick}>
