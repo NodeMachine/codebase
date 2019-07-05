@@ -1,9 +1,9 @@
-build:
-  docker:
-    web: Dockerfile
-services:
-  web:
-    security_opt:
-      - seccomp:"./chrome.json"
-    ports:
-      -"3001:8080"
+# build:
+#   docker:
+#     web: Dockerfile
+# services:
+#   web:
+#     security_opt:
+#       - seccomp:"./chrome.json"
+#     ports:
+#       -"3001:8080"
