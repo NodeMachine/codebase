@@ -60,6 +60,7 @@ class AuthForm extends React.Component {
               value={this.state.password}
             />
             <small>Passwords must be at least 6 characters.</small>
+            {/* <input type="checkbox" name="isCompany" value="isCompany"> Are you a company? </input> */}
             {}
           </div>
           {name === 'signup' ? (
