@@ -23,4 +23,5 @@
 
 .problem-list-item {
   flex: 0 0 25%;
+  padding: 20px 0 20px 0;
 }

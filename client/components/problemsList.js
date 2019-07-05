@@ -20,16 +20,16 @@ class ProblemList extends Component {
         <div className="problem-list-container">
           <div className="problem-list-title-container">
             <div className="problem-list-item">
-              <h5>Problem Name</h5>
+              <h3>Problem Name</h3>
             </div>
             <div className="problem-list-item">
-              <h5>Category</h5>
+              <h3>Category</h3>
             </div>
             <div className="problem-list-item">
-              <h5>Difficulty</h5>
+              <h3>Difficulty</h3>
             </div>
             <div className="problem-list-item">
-              <h5>Points</h5>
+              <h3>Points</h3>
             </div>
           </div>
           <hr />
@@ -43,17 +43,17 @@ class ProblemList extends Component {
                         pathname: `/problems/${el.id}`
                       }}
                     >
-                      <h6>{el.name}</h6>
+                      <h4>{el.name}</h4>
                     </Link>
                   </div>
                   <div className="problem-list-item">
-                    <h6>{el.category}</h6>
+                    <h4>{el.category}</h4>
                   </div>
                   <div className="problem-list-item">
-                    <h6>{el.points < 50 ? 'Easy' : 'Medium'}</h6>
+                    <h4>{el.points < 50 ? 'Easy' : 'Medium'}</h4>
                   </div>
                   <div className="problem-list-item">
-                    <h6>{el.points}</h6>
+                    <h4>{el.points}</h4>
                   </div>
                 </div>
                 <hr />
