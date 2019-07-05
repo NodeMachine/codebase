@@ -1,13 +1,26 @@
 #navbar {
-  background-color: #000a12;
+  background-color: none;
   display: flex;
   justify-content: space-between;
-  height: 50px;
   align-items: baseline;
+  position: absolute;
+  top: 0px;
+  left: 30px;
+  width: 95vw;
+  height: 100vh;
 }
 
 #navbar > a {
   margin: 0px;
   padding: 0px;
   font-weight: 400;
+}
+
+#navbar h1 {
+  font-weight: 400;
+  letter-spacing: 4px;
+}
+
+#navbar svg {
+  transform: translate(0px, 3px);
 }
