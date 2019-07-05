@@ -10,10 +10,8 @@
 # security_opt:
 #   - seccomp: chrome.json
 version: '3'
-services:
-  web:
-    build: .
-    ports:
-    - "5000:8080"
+build:
+  docker:
+    web: .
     security_opt:
     - seccomp:"chrome.json"
