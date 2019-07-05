@@ -50,7 +50,7 @@ const UserProfile = props => {
           </div>
         </div>
         <div className="card">
-          <div className="col s6 card-content grey lighten-4">
+          <div className="col s6 card-content black lighten-4">
             <h2>Past Problems:</h2>
             {problems.length ? (
               <UserProblemsList problems={problems} />
