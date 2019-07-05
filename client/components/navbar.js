@@ -7,8 +7,8 @@ import {logout} from '../store'
 const Navbar = props => {
   const {handleClick, isLoggedIn} = props
   return (
-    <div id="navbar">
-      <nav style={{backgroundColor: '#000a12'}}>
+    <div>
+      <nav>
         <Link to="/">Our Codewars Clone</Link>
         {isLoggedIn ? (
           <div className="right">
