@@ -1,12 +1,3 @@
-/* Colors for CSS:
-Primary blue: #26C6DA
-Light blue: #6FF9FF
-Dark blue: #0095A8
-
-Primary grey: #263238
-Light grey: #4F5B62
-Dark grey: #000A12 */
-
 #form-wrapper {
   display: flex;
   flex-direction: column;
@@ -17,6 +8,7 @@ Dark grey: #000A12 */
 #form-title {
   color: #6ff9ff;
   padding: 1%;
+  font-size: 55px;
 }
 
 form {
@@ -25,8 +17,30 @@ form {
   width: 50%;
 }
 
+form div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 1%;
+  border-bottom: #26c6da 1px solid;
+  align-items: flex-start;
+}
+
+form div:last-of-type {
+  border: 0;
+}
+
+form div small {
+  margin-top: 2%;
+}
+
 form input {
   color: white;
+  background-color: rgba(79, 91, 98, 0.1);
+  border: 0;
+  font-size: 20px;
+  height: 40px;
+  width: 100%;
 }
 
 form button {
@@ -38,4 +52,10 @@ form button {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  align-self: flex-start;
+}
+
+form button:disabled {
+  background-color: rgba(0, 168, 159, 0.2);
+  color: rgba(255, 255, 255, 0.4);
 }
