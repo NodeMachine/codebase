@@ -8,8 +8,8 @@ import './navbar.css'
 const Navbar = props => {
   const {handleClick, isLoggedIn} = props
   return (
-    <div id="navbar">
-      <nav>
+    <div>
+      <nav id="navbar">
         <Link to="/">Our Codewars Clone</Link>
         {isLoggedIn ? (
           <div className="right">
