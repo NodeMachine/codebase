@@ -13,7 +13,6 @@ const {auth} = require('../db/queryFunctions/index')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-  console.log('req in router.get all users: ', req.session)
   //auth.onAuthStateChanged(async user => {
   if (req.session.isAdmin) {
     try {
@@ -63,7 +62,7 @@ router.post('/logout', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     await deleteUser(req.params.id)
-    res.send('Delete successful!')
+    res.status(204).send('Delete successful!')
   } catch (error) {
     next(error)
   }
