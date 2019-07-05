@@ -1,8 +1,0 @@
-version: '3'
-services:
-  nodemachine:
-    build: .
-    ports:
-    - "5000:8080"
-    security_opt:
-    - seccomp:"chrome.json"
