@@ -9,7 +9,6 @@
 #   web: docker run --security-opt seccomp=chrome.json mercedesgm/capstone
 # security_opt:
 #   - seccomp: chrome.json
-version: '3'
 build:
   docker:
     web: .
