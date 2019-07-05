@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import './navbar.css'
 
 const Navbar = props => {
   const {handleClick, isLoggedIn} = props
   return (
     <div id="navbar">
-      <nav style={{backgroundColor: '#000a12'}}>
+      <nav>
         <Link to="/">Our Codewars Clone</Link>
         {isLoggedIn ? (
           <div className="right">

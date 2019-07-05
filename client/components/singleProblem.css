@@ -1,0 +1,32 @@
+.aceContent {
+  flex: 1 1 100%;
+}
+
+.promptResultContainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0% 1%;
+  width: 100%;
+}
+.promptResultContainer > div {
+  width: 100%;
+}
+
+.problemListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100vw;
+  justify-content: center;
+}
+
+.problemListItem {
+  flex: 1 0 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.problemListItem > h6 {
+  margin-left: 50px;
+}
