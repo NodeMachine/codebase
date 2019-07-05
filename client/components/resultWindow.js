@@ -1,4 +1,11 @@
-import React, {Component} from 'react'
+import React from 'react'
+import {IconContext} from 'react-icons'
+import {
+  MdDone,
+  MdClose,
+  MdKeyboardArrowRight,
+  MdTrendingFlat
+} from 'react-icons/md'
 
 const ResultWindow = props => {
   return (
@@ -7,14 +14,47 @@ const ResultWindow = props => {
       <ul>
         {props.result && props.result.length
           ? props.result.map((result, ind) => (
-              <li key={ind}>{`Function input: ${
-                result.input
-              } => Expected output: ${
-                result.expectedOutput
-              } // Actual output: ${result.actualOutput ||
-                'Check your code'} //${
-                result.pass ? 'Passing' : 'Failing'
-              }`}</li>
+              <li key={ind} className="resultItem">
+                <span>{`IN: ${result.input}`}</span>
+                <span>
+                  <IconContext.Provider
+                    value={{
+                      color: '#26C6DA',
+                      className: 'iconContainer'
+                    }}
+                  >
+                    <MdKeyboardArrowRight />
+                  </IconContext.Provider>
+                </span>
+                <span>{`Expected: ${result.expectedOutput}`}</span>
+                <span>
+                  <IconContext.Provider
+                    value={{color: '#26C6DA', className: 'iconContainer'}}
+                  >
+                    <MdTrendingFlat />
+                  </IconContext.Provider>
+                </span>
+                <span>
+                  {`Actual: ${result.actualOutput || 'Check your code'}`}
+                </span>
+
+                <span>
+                  {result.pass ? (
+                    <IconContext.Provider
+                      value={{color: '#73DA97', className: 'iconContainer'}}
+                    >
+                      <MdDone />
+                    </IconContext.Provider>
+                  ) : (
+                    <IconContext.Provider
+                      value={{color: '#DB350A', className: 'iconContainer'}}
+                    >
+                      <MdClose />
+                    </IconContext.Provider>
+                  )}
+                </span>
+                <br />
+              </li>
             ))
           : `${props.error || ''}`}
       </ul>

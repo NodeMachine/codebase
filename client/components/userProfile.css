@@ -1,0 +1,60 @@
+.user-profile-container {
+  display: flex;
+  flex-direction: row;
+}
+.user-profile-container img {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+.profile-left {
+  flex: 0 0 30%;
+  margin: 0 50px 0 50px;
+}
+
+.profile-main-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-right {
+  flex: 0 0 60%;
+  margin-right: 50px;
+}
+
+.profile-description {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-description svg {
+  margin-top: 22px;
+  font-size: 24px;
+}
+
+.profile-description-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-description-form button {
+  width: 10%;
+  align-self: center;
+}
+
+.user-problem {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.user-problem-item {
+  flex: 0 0 20%;
+}
+
+.user-problems ul {
+  padding: 0;
+  list-style-type: none;
+}

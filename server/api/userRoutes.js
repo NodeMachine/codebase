@@ -81,10 +81,17 @@ router.post('/save/:userId', async (req, res, next) => {
       isSolved: isSolved,
       solution: solution
     })
-    const user = await getUserById(userId)
     const problems = await getAllUserProblems(userId)
-    user.problems = problems
-    res.send(user)
+    let score = 0
+    for (let prob in problems) {
+      if (problems[prob].isSolved) {
+        score += problems[prob].points
+      }
+    }
+    await updateUser(userId, {score})
+    const updatedUser = await getUserById(userId)
+    updatedUser.problems = problems
+    res.send(updatedUser)
   } catch (error) {
     next(error)
   }

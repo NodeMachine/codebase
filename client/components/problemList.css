@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+.problem-list-container {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.problem-list-container hr {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.problem-list-item-container {
+  display: flex;
+}
+.problem-list-title-container {
+  display: flex;
+  margin: 20px 0 20px 0;
+}
+
+.problem-list-item {
+  flex: 0 0 25%;
+  padding: 20px 0 20px 0;
+}

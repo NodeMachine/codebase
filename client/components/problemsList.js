@@ -2,11 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getAllProblems, clearSingleProblem} from '../store/problems'
 import {Link} from 'react-router-dom'
+import './problemList.css'
 
-// Until we have a CSS file
-const styles = {
-  listItem: {display: 'flex'}
-}
 class ProblemList extends Component {
   constructor(props) {
     super(props)
@@ -19,24 +16,51 @@ class ProblemList extends Component {
 
   render() {
     return (
-      <div>
-        <ul>
+      <div className="container">
+        <div className="problem-list-container">
+          <div className="problem-list-title-container">
+            <div className="problem-list-item">
+              <h3>Problem Name</h3>
+            </div>
+            <div className="problem-list-item">
+              <h3>Category</h3>
+            </div>
+            <div className="problem-list-item">
+              <h3>Difficulty</h3>
+            </div>
+            <div className="problem-list-item">
+              <h3>Points</h3>
+            </div>
+          </div>
+          <hr />
           {this.props.problems.map(el => {
             return (
-              <li key={el.id} style={styles.listItem}>
-                <h6>{el.category}</h6>
-                <Link
-                  to={{
-                    pathname: `/problems/${el.id}`
-                  }}
-                >
-                  <h6>{el.name}</h6>
-                </Link>
-                <p>Difficulty: {el.points < 50 ? 'Easy' : 'Medium'}</p>
-              </li>
+              <div key={el.id}>
+                <div className="problem-list-item-container">
+                  <div className="problem-list-item">
+                    <Link
+                      to={{
+                        pathname: `/problems/${el.id}`
+                      }}
+                    >
+                      <h4>{el.name}</h4>
+                    </Link>
+                  </div>
+                  <div className="problem-list-item">
+                    <h4>{el.category}</h4>
+                  </div>
+                  <div className="problem-list-item">
+                    <h4>{el.points < 50 ? 'Easy' : 'Medium'}</h4>
+                  </div>
+                  <div className="problem-list-item">
+                    <h4>{el.points}</h4>
+                  </div>
+                </div>
+                <hr />
+              </div>
             )
           })}
-        </ul>
+        </div>
       </div>
     )
   }

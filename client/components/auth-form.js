@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {login, signup} from '../store/user'
 import {Redirect} from 'react-router-dom'
+import './auth-form.css'
 
 /**
  * COMPONENT
@@ -20,14 +21,14 @@ class AuthForm extends React.Component {
   handleChange(event) {
     event.preventDefault()
     this.setState({[event.target.name]: event.target.value})
-    console.log(this.state)
   }
 
   render() {
     const {name, displayName, handleSubmit, error} = this.props
 
     return (
-      <div>
+      <div id="form-wrapper">
+        <h2 id="form-title">{displayName}</h2>
         <form
           onSubmit={event => {
             handleSubmit(event)
