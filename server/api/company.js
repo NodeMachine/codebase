@@ -37,16 +37,25 @@ router.get('/:id', async (req, res, next) => {
   await getCompanyById(companyId)
 })
 
-router.post('/:companyId/user', async (req, res) => {
-  await addSavedUser(req.params.companyId, req.body.user)
+router.post('/:companyId/:userId', async (req, res) => {
+  console.log('addUser API reached!')
+  console.log(
+    'req.params in post user to company: ',
+    req.params.userId,
+    req.params.companyId
+  )
+  await addSavedUser(req.params.companyId, req.params.userId)
+  console.log('user has been saved to company!')
 })
 
-router.get('/:companyID/customproblem', async (req, res) => {
-  await getCustomProblems(req.params.companyId)
+router.get('/:companyId/customproblem', async (req, res) => {
+  const customProblems = await getCustomProblems(req.params.companyId)
+  res.send(customProblems)
 })
 
 router.get('/:companyId/users', async (req, res) => {
-  await getSavedUsers(req.params.companyId)
+  const result = await getSavedUsers(req.params.companyId)
+  res.send(result)
 })
 
 module.exports = router

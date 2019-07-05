@@ -50,13 +50,20 @@ const getCompanyById = async companyId => {
   }
 }
 
-const addSavedUser = async (companyId, user) => {
+const addSavedUser = async (companyId, userId) => {
   try {
+    const user = await db
+      .collection('users')
+      .doc(`${userId}`)
+      .get()
+
     await db
       .collection('companies')
       .doc(`${companyId}`)
       .collection('savedUsers')
-      .add(user)
+      .doc(userId)
+      .set(user.data())
+    // .set(user)
     console.log('User has been saved')
   } catch (error) {
     console.log('Error in adding saved user', error)
@@ -70,6 +77,7 @@ const getCustomProblems = async companyId => {
       .doc(`${companyId}`)
       .collection('customProblems')
       .get()
+
     const customProblems = result.docs.map(problem => {
       return {id: problem.id, ...problem.data()}
     })
