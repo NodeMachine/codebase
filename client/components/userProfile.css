@@ -29,8 +29,9 @@
   justify-content: space-between;
 }
 
-.profile-description i {
-  margin-top: 30px;
+.profile-description svg {
+  margin-top: 22px;
+  font-size: 24px;
 }
 
 .profile-description-form {
@@ -45,9 +46,15 @@
 
 .user-problem {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.user-problem-item {
+  flex: 0 0 20%;
 }
 
 .user-problems ul {
-  list-style: none;
+  padding: 0;
+  list-style-type: none;
 }

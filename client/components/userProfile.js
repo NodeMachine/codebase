@@ -38,7 +38,7 @@ const UserProfile = props => {
       </div>
 
       <div className="profile-right">
-        <h2>Past Problems:</h2>
+        <h2>Your Problems</h2>
         <hr />
         {problems.length ? (
           <UserProblemsList problems={problems} />

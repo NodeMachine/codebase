@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {updateProfile} from '../store/user'
 import './userProfile.css'
+import {IconContext} from 'react-icons'
+import {MdModeEdit} from 'react-icons/md'
 
 class UserInformation extends Component {
   constructor(props) {
@@ -100,9 +102,12 @@ class UserInformation extends Component {
         </div>
 
         <div>
-          <i className="small material-icons " onClick={this.handleEdit}>
-            edit_circle
+          <i>
+            <MdModeEdit onClick={this.handleEdit} />
           </i>
+          {/* <i className="small material-icons " onClick={this.handleEdit}>
+						edit_circle
+					</i> */}
         </div>
       </div>
     )

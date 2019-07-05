@@ -11,12 +11,23 @@ const UserProblemList = props => {
           return (
             <li key={indx}>
               <div className="user-problem">
-                <Link to={`/problems/${el.id}`}>{el.name}</Link>
-                <h5>{el.category}</h5>
-                <p>Difficulty: {el.points < 100 ? 'Easy' : 'Medium'}</p>
-                <p>{el.points}</p>
-                {el.isSolved ? <p>Completed</p> : <p>Pending</p>}
+                <div className="user-problem-item">
+                  <Link to={`/problems/${el.id}`}>{el.name}</Link>
+                </div>
+                <div className="user-problem-item">
+                  <h5>{el.category}</h5>
+                </div>
+                <div className="user-problem-item">
+                  <p>Difficulty: {el.points < 100 ? 'Easy' : 'Medium'}</p>
+                </div>
+                <div className="user-problem-item">
+                  <p>{el.points}</p>
+                </div>
+                <div className="user-problem-item">
+                  {el.isSolved ? <p>Completed</p> : <p>Pending</p>}
+                </div>
               </div>
+              <hr />
             </li>
           )
         })}
