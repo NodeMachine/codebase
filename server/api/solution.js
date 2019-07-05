@@ -27,7 +27,10 @@ function promiseTimeout(ms, promise) {
 
 // Function opens up a instance of Chrome, inserts the user's code via a script tag, evaluates the code against the tests, and returns the html document as a string.
 async function ssr(url, userCode, userProblemTests) {
-  const browser = await puppeteer.launch({headless: true})
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox']
+  })
   const page = await browser.newPage()
   await page.goto(url, {waitUntil: 'networkidle0'})
   await page.addScriptTag({content: `${userCode}`})
@@ -41,7 +44,7 @@ async function ssr(url, userCode, userProblemTests) {
 }
 tests()`
   })
-  await page.evaluate(() => 'hi')
+  await page.evaluate(() => 'running tests!')
   const html = await page.content()
   await browser.close()
   return html
