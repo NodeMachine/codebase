@@ -3,19 +3,18 @@ import React, {Component} from 'react'
 const ResultWindow = props => {
   return (
     <div>
-      <h4>Tests</h4>
-      <hr />
+      ... and this is a result window!
       <ul>
         {props.result && props.result.length
           ? props.result.map((result, ind) => (
-              <li key={ind}>
-                {`Input: ${result.input} => Expected: ${
-                  result.expectedOutput
-                } // Actual: ${result.actualOutput || 'Check your code'} //${
-                  result.pass ? 'Passing' : 'Failing'
-                }`}
-                <br />
-              </li>
+              <li key={ind}>{`Function input: ${
+                result.input
+              } => Expected output: ${
+                result.expectedOutput
+              } // Actual output: ${result.actualOutput ||
+                'Check your code'} //${
+                result.pass ? 'Passing' : 'Failing'
+              }`}</li>
             ))
           : `${props.error || ''}`}
       </ul>
