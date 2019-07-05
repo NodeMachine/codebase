@@ -4,29 +4,27 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-//console.log("isLoggedIn navbar: ", isLoggedIn);
-const Navbar = ({handleClick, isLoggedIn, ourState}) => {
-  console.log('ourState in navbar: ', ourState)
-  console.log('isLoggedIn navbar: ', isLoggedIn)
-  //console.log('req.session.userId: ', req.session.userId);
+const Navbar = props => {
+  const {handleClick, isLoggedIn} = props
   return (
-    <div>
-      <nav>
-        <a>Our Codewars Clone</a>
+    <div id="navbar">
+      <nav style={{backgroundColor: '#000a12'}}>
+        <Link to="/">Our Codewars Clone</Link>
         {isLoggedIn ? (
           <div className="right">
             {/* The navbar will show these links after you log in */}
-            <Link to="/home">Home</Link>
-            <a href="#" onClick={handleClick}>
+            <Link to="/problems">Problems</Link>
+            <Link to="/profile">Profile</Link>
+            <Link to="/" onClick={handleClick}>
               Logout
-            </a>
+            </Link>
           </div>
         ) : (
           <div className="right">
             {/* The navbar will show these links before you log in */}
+            <Link to="/problems">Problems</Link>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
-            <Link to="/profile">Profile</Link>
           </div>
         )}
       </nav>
@@ -39,11 +37,10 @@ const Navbar = ({handleClick, isLoggedIn, ourState}) => {
  * CONTAINER
  */
 const mapState = state => {
-  console.log('state in navbar: ', state)
   return {
     ourState: state,
     //isLoggedIn: !!state.user.id
-    isLoggedIn: !!state.user.singleUser.authId
+    isLoggedIn: !!state.user.singleUser.id
   }
 }
 
@@ -56,11 +53,3 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(Navbar)
-
-/**
- * PROP TYPES
- */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}

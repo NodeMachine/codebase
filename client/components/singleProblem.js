@@ -51,7 +51,7 @@ class SingleProblem extends Component {
         `/api/solution/${this.props.problem.id}`,
         this.state
       )
-      if (this.props.user) {
+      if (this.props.user.id) {
         const problem = this.props.problem
         const userId = this.props.user.id
         const isSolved = data.every(test => test.pass === true)
@@ -61,6 +61,7 @@ class SingleProblem extends Component {
       this.setState({result: data})
     } catch (error) {
       console.error("Something went wrong submitting user's code", error)
+      this.setState({result: 'Your code timed out'})
     }
   }
 
@@ -70,19 +71,31 @@ class SingleProblem extends Component {
 
   render() {
     return (
-      <div>
-        <AceEditor
-          mode="javascript"
-          theme="monokai"
-          onChange={this.handleChange}
-          name="UNIQUE_ID_OF_DIV"
-          value={this.state.code}
-          editorProps={{$blockScrolling: true}}
-        />
-        <button onClick={() => this.handleSubmit()}>Run code</button>
-        <button onClick={() => this.handleReset()}>Reset code</button>
-        <ProblemDescription prompt={this.props.problem.prompt} />
-        <ResultWindow result={this.state.result} />
+      <div className="singleProblemContainer">
+        <div className="codeSandboxContainer">
+          <AceEditor
+            mode="javascript"
+            theme="monokai"
+            onChange={this.handleChange}
+            name="UNIQUE_ID_OF_DIV"
+            value={this.state.code}
+            editorProps={{$blockScrolling: true}}
+            height="75vh"
+            width="50vw"
+          />
+          <div className="buttonContainer">
+            <button onClick={() => this.handleReset()}>Reset code</button>
+            <button onClick={() => this.handleSubmit()}>Run code</button>
+          </div>
+        </div>
+        <div className="promptResultContainer">
+          <ProblemDescription prompt={this.props.problem.prompt} />
+          {Array.isArray(this.state.result) ? (
+            <ResultWindow result={this.state.result} />
+          ) : (
+            <ResultWindow error={this.state.result} />
+          )}
+        </div>
       </div>
     )
   }

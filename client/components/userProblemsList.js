@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 // Until we have a CSS file
 const styles = {
@@ -6,15 +7,16 @@ const styles = {
 }
 
 const UserProblemList = props => {
+  console.log(props)
   return (
     <ul>
-      {props.problems.map(el => {
+      {props.problems.map((el, indx) => {
         return (
-          <li key={el.id}>
+          <li key={indx}>
             <div className="divider card" />
             <div className="row section card-content">
               <div className="col s8">
-                <h3>{el.title}</h3>
+                <Link to={`/problems/${el.id}`}>{el.name}</Link>
                 <h5>{el.category}</h5>
                 <p>Difficulty: {el.points < 100 ? 'Easy' : 'Medium'}</p>
               </div>

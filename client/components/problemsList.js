@@ -19,24 +19,27 @@ class ProblemList extends Component {
 
   render() {
     return (
-      <div>
-        <ul>
-          {this.props.problems.map(el => {
-            return (
-              <li key={el.id} style={styles.listItem}>
-                <h6>{el.category}</h6>
-                <Link
-                  to={{
-                    pathname: `/problems/${el.id}`
-                  }}
-                >
-                  <h6>{el.name}</h6>
-                </Link>
-                <p>Difficulty: {el.points < 50 ? 'Easy' : 'Medium'}</p>
-              </li>
-            )
-          })}
-        </ul>
+      <div className="problemListContainer">
+        {this.props.problems.map(el => {
+          return (
+            <div
+              key={el.id}
+              className="problemListItem"
+              style={styles.listItem}
+            >
+              <Link
+                to={{
+                  pathname: `/problems/${el.id}`
+                }}
+              >
+                <h6>{el.name}</h6>
+              </Link>
+              <h6>{el.category}</h6>
+              <h6>Difficulty: {el.points < 50 ? 'Easy' : 'Medium'}</h6>
+              <hr />
+            </div>
+          )
+        })}
       </div>
     )
   }
