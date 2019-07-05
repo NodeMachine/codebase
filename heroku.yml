@@ -1,9 +1,19 @@
-build:
-  docker:
-    web: Dockerfile
+# build:
+#   docker:
+#     web: Dockerfile
+#     security_opt:
+#       - seccomp: chrome.json
+#   security_opt:
+#     - seccomp: chrome.json
+# run:
+#   web: docker run --security-opt seccomp=chrome.json mercedesgm/capstone
+# security_opt:
+#   - seccomp: chrome.json
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+    - "5000:8080"
     security_opt:
-      - seccomp: chrome.json
-run:
-  web: docker run --security-opt seccomp=chrome.json mercedesgm/capstone
-security_opt:
-  - seccomp: chrome.json
+    - seccomp:"chrome.json"
