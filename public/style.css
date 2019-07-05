@@ -22,6 +22,21 @@ form div {
   display: inline-block;
 }
 
+/* input[type="checkbox"] {
+  width: 40px;
+  height: 30px;
+  background-color: white;
+} */
+
+#companyCheckbox {
+  display: inline-block;
+  width: 40px;
+  height: 30px;
+  background-color: white;
+  border: red 5px solid;
+  z-index: 999;
+}
+
 h4 {
   margin: 0px !important;
 }

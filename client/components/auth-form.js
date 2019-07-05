@@ -40,6 +40,16 @@ class AuthForm extends React.Component {
           name={name}
         >
           <div>
+            Are you a company?
+            <input
+              type="radio"
+              id="companyCheckbox"
+              name="isAdmin"
+              value="true"
+            />
+          </div>
+
+          <div>
             <label htmlFor="email">
               <small>Email</small>
             </label>
@@ -52,7 +62,7 @@ class AuthForm extends React.Component {
           </div>
           <div>
             <label htmlFor="password">
-              <small>Password</small>
+              <small>Password </small>
             </label>
             <input
               name="password"
@@ -61,8 +71,6 @@ class AuthForm extends React.Component {
               value={this.state.password}
             />
             <small>Passwords must be at least 6 characters.</small>
-            {/* <input type="checkbox" name="isCompany" value="isCompany"> Are you a company? </input> */}
-            {}
           </div>
           {name === 'signup' ? (
             <div>
