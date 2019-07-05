@@ -20,7 +20,6 @@ class AuthForm extends React.Component {
   handleChange(event) {
     event.preventDefault()
     this.setState({[event.target.name]: event.target.value})
-    console.log(this.state)
   }
 
   render() {
