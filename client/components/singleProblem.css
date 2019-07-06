@@ -1,3 +1,7 @@
+.singleProblemContainer {
+  margin-top: 10vh;
+}
+
 .promptResultContainer {
   display: flex;
   flex-wrap: wrap;
