@@ -56,7 +56,7 @@ export const UserAnalytics = props => {
       </div>
       <div>
         <p>Category breakdown:</p>
-        <PieChart width={400} height={400}>
+        <PieChart width={300} height={300}>
           <Pie
             dataKey="value"
             isAnimationActive={false}
