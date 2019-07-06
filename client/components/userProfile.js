@@ -20,7 +20,7 @@ const UserProfile = props => {
       <div className="profile-left">
         <hr />
         <div className="profile-main-info">
-          <h1>Rank: {user.score}</h1>
+          <h1>Points: {user.score}</h1>
           <img
             src={
               user && user.photo

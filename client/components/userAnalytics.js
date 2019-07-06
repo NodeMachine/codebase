@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {
   BarChart,
   Bar,
@@ -69,13 +69,20 @@ export const UserAnalytics = props => {
         <PieChart width={300} height={300} className="pie-chart-container">
           <Pie
             dataKey="value"
-            // isAnimationActive={true}
+            // isAnimationActive={false}
             data={categoriesData}
             // cx={200}
             // cy={200}
             outerRadius={80}
             fill="#26C6DA"
             label
+          />
+          <Legend
+            payload={categoriesData.map(item => ({
+              id: item.name,
+              type: 'square',
+              value: `${item.name}: ${item.value} pts`
+            }))}
           />
           <Tooltip />
         </PieChart>
