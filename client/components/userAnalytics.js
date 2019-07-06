@@ -4,18 +4,12 @@ import './userAnalytics.css'
 
 export const UserAnalytics = props => {
   const problems = props.problems
+
   const easy = problems.filter(problem => problem.points < 20).length
   const medium = problems.filter(
     problem => problem.points > 19 && problem.points < 60
   ).length
   const hard = problems.filter(problem => problem.points > 59).length
-
-  const categoriesData = []
-  problems.forEach(problem => {
-    const dataPoint = {name: problem.category, value: problem.points}
-    categoriesData.push(dataPoint)
-  })
-
   const difficultyData = [
     {
       name: 'Difficulty',
@@ -24,6 +18,17 @@ export const UserAnalytics = props => {
       hard: hard
     }
   ]
+
+  const categoriesData = []
+  problems.forEach(problem => {
+    const dataPoint = {name: problem.category, value: problem.points}
+    const idx = categoriesData.findIndex(datum => datum.name === dataPoint.name)
+    if (idx > -1) {
+      categoriesData[idx].value += dataPoint.value
+    } else {
+      categoriesData.push(dataPoint)
+    }
+  })
 
   return (
     <div className="charts-container">
@@ -52,7 +57,7 @@ export const UserAnalytics = props => {
         <PieChart width={300} height={300} className="pie-chart-container">
           <Pie
             dataKey="value"
-            isAnimationActive={false}
+            // isAnimationActive={true}
             data={categoriesData}
             // cx={200}
             // cy={200}
