@@ -41,51 +41,55 @@ export const UserAnalytics = props => {
 
   return (
     <div className="charts-container">
-      <p>Difficulty Breakdown</p>
       <div className="chart-item">
-        <BarChart
-          width={400}
-          height={150}
-          data={difficultyData}
-          layout="vertical"
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5
-          }}
-        >
-          <XAxis type="number" />
-          <YAxis type="category" dataKey="name" />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="easy" stackId="a" fill="#6FF9FF" />
-          <Bar dataKey="medium" stackId="a" fill="#26C6DA" />
-          <Bar dataKey="hard" stackId="a" fill="#0095A8" />
-        </BarChart>
+        <p>Difficulty Breakdown</p>
+        <div className="chartWrapper">
+          <BarChart
+            width={400}
+            height={150}
+            data={difficultyData}
+            layout="vertical"
+            margin={{
+              top: 20,
+              right: 30,
+              left: 20,
+              bottom: 5
+            }}
+          >
+            <XAxis type="number" dataKey="" tick={false} hide={true} />
+            <YAxis type="category" dataKey="" tick={false} hide={true} />/
+            <Tooltip />
+            <Legend align="center" verticalAlign="bottom" />
+            <Bar dataKey="easy" stackId="a" fill="#6FF9FF" />
+            <Bar dataKey="medium" stackId="a" fill="#26C6DA" />
+            <Bar dataKey="hard" stackId="a" fill="#0095A8" />
+          </BarChart>
+        </div>
       </div>
       <div className="chart-item">
         <p>Points by Category</p>
-        <PieChart width={300} height={300} className="pie-chart-container">
-          <Pie
-            dataKey="value"
-            // isAnimationActive={false}
-            data={categoriesData}
-            // cx={200}
-            // cy={200}
-            outerRadius={80}
-            fill="#26C6DA"
-            label
-          />
-          <Legend
-            payload={categoriesData.map(item => ({
-              id: item.name,
-              type: 'square',
-              value: `${item.name}: ${item.value} pts`
-            }))}
-          />
-          <Tooltip />
-        </PieChart>
+        <div className="chartWrapper">
+          <PieChart width={300} height={300} className="pie-chart-container">
+            <Pie
+              dataKey="value"
+              // isAnimationActive={false}
+              data={categoriesData}
+              // cx={200}
+              // cy={200}
+              outerRadius={80}
+              fill="#26C6DA"
+              label
+            />
+            <Legend
+              payload={categoriesData.map(item => ({
+                id: item.name,
+                type: 'square',
+                value: `${item.name}: ${item.value} pts`
+              }))}
+            />
+            <Tooltip />
+          </PieChart>
+        </div>
       </div>
     </div>
   )
