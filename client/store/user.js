@@ -110,7 +110,7 @@ export const updateProfilePic = (id, pic) => async dispatch => {
     const res = await axios.post(`/api/users/uploadpic/${id}`, data, {
       headers: {'Content-Type': 'multipart/form-data'}
     })
-    dispatch(getUser(res.data))
+    setTimeout(dispatch(getUser(res.data)), 2000)
   } catch (error) {
     console.log(error)
   }
