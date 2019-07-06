@@ -1,5 +1,14 @@
 import React, {Component} from 'react'
-import {BarChart, Bar, Tooltip, Legend, PieChart, Pie} from 'recharts'
+import {
+  BarChart,
+  Bar,
+  Tooltip,
+  Legend,
+  PieChart,
+  Pie,
+  XAxis,
+  YAxis
+} from 'recharts'
 import './userAnalytics.css'
 
 export const UserAnalytics = props => {
@@ -32,12 +41,13 @@ export const UserAnalytics = props => {
 
   return (
     <div className="charts-container">
+      <p>Difficulty Breakdown</p>
       <div className="chart-item">
-        <p>Difficulty Breakdown</p>
         <BarChart
-          width={200}
-          height={300}
+          width={400}
+          height={150}
           data={difficultyData}
+          layout="vertical"
           margin={{
             top: 20,
             right: 30,
@@ -45,6 +55,8 @@ export const UserAnalytics = props => {
             bottom: 5
           }}
         >
+          <XAxis type="number" />
+          <YAxis type="category" dataKey="name" />
           <Tooltip />
           <Legend />
           <Bar dataKey="easy" stackId="a" fill="#6FF9FF" />
