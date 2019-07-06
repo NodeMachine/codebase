@@ -73,9 +73,14 @@ router.post('/:id', async (req, res, next) => {
           userOutput = userOutput.slice(1, userOutput.length - 6).split(' ')
           return userOutput.map((output, ind) => {
             const returnObj = {}
-            returnObj.input = inputs[ind]
+            if (ind === 0) {
+              returnObj.input = 'typeof return value'
+              returnObj.actualOutput = '"' + output + '"'
+            } else {
+              returnObj.actualOutput = output
+              returnObj.input = inputs[ind]
+            }
             returnObj.expectedOutput = expectedOutput[ind]
-            returnObj.actualOutput = output
             returnObj.pass = returnObj.expectedOutput === returnObj.actualOutput
             return returnObj
           })
