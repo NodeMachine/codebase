@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getAllProblems, clearSingleProblem} from '../store/problems'
 import {Link} from 'react-router-dom'
+import {IconContext} from 'react-icons'
+import {MdKeyboardArrowRight} from 'react-icons/md'
 import './problemList.css'
 
 class ProblemList extends Component {
@@ -19,25 +21,35 @@ class ProblemList extends Component {
       <div className="container">
         <div className="problem-list-container">
           <div className="problem-list-title-container">
-            <div className="problem-list-item">
+            <div className="problemName title">
               <h3>Problem Name</h3>
             </div>
-            <div className="problem-list-item">
+            <div className="title">
               <h3>Category</h3>
             </div>
-            <div className="problem-list-item">
+            <div className="title">
               <h3>Difficulty</h3>
             </div>
-            <div className="problem-list-item">
+            <div className="title">
               <h3>Points</h3>
             </div>
+            <div id="titleHR">
+              <hr />
+            </div>
           </div>
-          <hr />
           {this.props.problems.map(el => {
             return (
               <div key={el.id}>
                 <div className="problem-list-item-container">
-                  <div className="problem-list-item">
+                  <div className="problem-list-item problemName">
+                    <IconContext.Provider
+                      value={{
+                        color: '#26C6DA',
+                        display: 'inline'
+                      }}
+                    >
+                      <MdKeyboardArrowRight />
+                    </IconContext.Provider>
                     <Link
                       to={{
                         pathname: `/problems/${el.id}`

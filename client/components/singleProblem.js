@@ -76,7 +76,6 @@ class SingleProblem extends Component {
   }
 
   render() {
-    console.log('LOADING', this.state.loading)
     return (
       <div className="singleProblemContainer">
         <div className="codeSandboxContainer">

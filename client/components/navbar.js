@@ -52,7 +52,7 @@ const Navbar = props => {
           </div>
         )}
       </nav>
-      <hr />
+      {/* <hr /> */}
     </div>
   )
 }
