@@ -1,6 +1,7 @@
 .user-profile-container {
   display: flex;
   flex-direction: row;
+  margin-top: 10vh;
 }
 .user-profile-container img {
   height: 150px;
@@ -46,7 +47,6 @@
 
 .user-problem {
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
 }
 
