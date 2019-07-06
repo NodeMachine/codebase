@@ -10,8 +10,8 @@ import {
 const ResultWindow = props => {
   return (
     <div>
-      <h4>Tests</h4>
-      <hr />
+      {/* <h4>Tests</h4>
+      <hr /> */}
       <ul>
         {props.result && props.result.length
           ? props.result.map((result, ind) => (
