@@ -10,13 +10,13 @@ import {
 const ResultWindow = props => {
   return (
     <div>
-      <h4>Tests</h4>
-      <hr />
+      {/* <h4>Tests</h4>
+      <hr /> */}
       <ul>
         {props.result && props.result.length
           ? props.result.map((result, ind) => (
               <li key={ind} className="resultItem">
-                <span>{`IN: ${result.input}`}</span>
+                <span>{`INPUT: ${result.input}`}</span>
                 <span>
                   <IconContext.Provider
                     value={{
@@ -35,9 +35,8 @@ const ResultWindow = props => {
                     <MdTrendingFlat />
                   </IconContext.Provider>
                 </span>
-                <span>
-                  {`Actual: ${result.actualOutput || 'Check your code'}`}
-                </span>
+                <span>{`Actual: ${result.actualOutput ||
+                  'Check your code'}`}</span>
 
                 <span>
                   {result.pass ? (
