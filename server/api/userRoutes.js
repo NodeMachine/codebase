@@ -204,7 +204,7 @@ router.post('/uploadpic/:id', form.single('image'), async (req, res, next) => {
     const user = await getUserById(userId)
     const problems = await getAllUserProblems(userId)
     user.problems = problems
-    setTimeout(res.send(user), 2000)
+    res.send(user)
   } catch (error) {
     next(error)
   }
