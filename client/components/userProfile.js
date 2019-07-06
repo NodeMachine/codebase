@@ -42,7 +42,7 @@ const UserProfile = props => {
         <hr />
         <h2>Your Problems</h2>
         <hr />
-        <p>Difficulty breakdown:</p>
+
         <UserAnalytics problems={problems} />
         <hr />
         {problems.length ? (
