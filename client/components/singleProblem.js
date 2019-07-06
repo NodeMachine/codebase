@@ -108,7 +108,7 @@ class SingleProblem extends Component {
                 <IoMdSync className="spinner" />
               </IconContext.Provider>
             ) : Array.isArray(this.state.result) ? (
-              <ResultWindow result={this.state.result} />
+              <ResultWindow results={this.state.result} />
             ) : (
               <ResultWindow error={this.state.result} />
             )}
