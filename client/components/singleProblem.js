@@ -30,8 +30,8 @@ class SingleProblem extends Component {
   }
 
   componentDidUpdate() {
-    const user = this.props.user
     const problem = this.props.problem
+    const user = this.props.user
     if (!this.state.code) {
       if (user.problems && user.problems[problem.id]) {
         this.setState({code: user.problems[problem.id].solution})
