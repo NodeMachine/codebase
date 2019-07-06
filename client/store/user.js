@@ -103,6 +103,19 @@ export const saveSolution = (
   }
 }
 
+export const updateProfilePic = (id, pic) => async dispatch => {
+  try {
+    let data = new FormData()
+    data.append('image', pic, pic.name)
+    const res = await axios.post(`/api/users/uploadpic/${id}`, data, {
+      headers: {'Content-Type': 'multipart/form-data'}
+    })
+    setTimeout(dispatch(getUser(res.data)), 2000)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const updateProfile = (id, obj) => async dispatch => {
   try {
     await axios.post(`/api/users/update/${id}`, {update: obj})
