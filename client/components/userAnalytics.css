@@ -1,0 +1,17 @@
+.charts-container {
+  display: flex;
+  padding: 10vh;
+}
+
+.chart-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 50%;
+}
+
+.pie-chart-container {
+  display: flex;
+  justify-content: center;
+}

@@ -2,6 +2,7 @@ import React from 'react'
 import UserProblemsList from './userProblemsList'
 import {connect} from 'react-redux'
 import UserInformation from './userInformation'
+import {UserAnalytics} from './userAnalytics'
 import {Redirect} from 'react-router-dom'
 import UploadProfilePic from './uploadProfilePic'
 import './userProfile.css'
@@ -18,6 +19,7 @@ const UserProfile = props => {
   return (
     <div className="user-profile-container">
       <div className="profile-left">
+        <hr />
         <div className="profile-main-info">
           <h1>Score: {user.score}</h1>
           <img
@@ -39,7 +41,11 @@ const UserProfile = props => {
       </div>
 
       <div className="profile-right">
+        <hr />
         <h2>Your Problems</h2>
+        <hr />
+
+        <UserAnalytics problems={problems} />
         <hr />
         {problems.length ? (
           <UserProblemsList problems={problems} />
