@@ -11,7 +11,7 @@
 
 .profile-left {
   flex: 0 0 30%;
-  margin: 0 50px 0 50px;
+  margin: 0 2% 0 2%;
 }
 
 .profile-main-info {
@@ -28,6 +28,17 @@
 .profile-description {
   display: flex;
   justify-content: space-between;
+}
+
+#text-box > div {
+  display: flex;
+  align-items: baseline;
+}
+
+#text-box p {
+  font-size: 14px;
+  font-weight: 200;
+  margin-left: 3%;
 }
 
 .profile-description svg {
@@ -57,4 +68,17 @@
 .user-problems ul {
   padding: 0;
   list-style-type: none;
+}
+
+#edit-picture-button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 0px;
+  border-bottom: 1px solid #26c6da;
+  margin-top: 1%;
+}
+
+#edit-picture-button:hover {
+  cursor: pointer;
 }

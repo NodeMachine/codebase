@@ -1,17 +1,36 @@
 .charts-container {
   display: flex;
-  padding: 10vh;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100%;
+  max-height: 45%;
 }
 
 .chart-item {
   display: flex;
+  min-height: 100%;
+  flex: 1 1 100%;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  flex: 0 0 50%;
+}
+
+.chart-item > div {
+  justify-content: center;
 }
 
 .pie-chart-container {
   display: flex;
+  justify-content: center;
+}
+
+/* .chart-item > p {
+  margin-bottom: auto;
+} */
+
+.chartWrapper {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
 }
