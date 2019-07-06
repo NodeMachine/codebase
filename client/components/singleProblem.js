@@ -100,23 +100,10 @@ class SingleProblem extends Component {
           <div>
             <h4>Tests</h4>
             <hr />
-
-            {/* {this.state.loading &&
-						this.state.result && (
-							<IconContext.Provider
-								value={{
-									color: 'white',
-									className: 'iconContainer'
-								}}
-							>
-								<IoMdSync className="spinner"></IoMdSync>
-							</IconContext.Provider>
-						)} */}
             {this.state.loading ? (
               <IconContext.Provider
                 value={{
-                  color: 'white',
-                  className: 'iconContainer'
+                  className: 'spinnerContainer'
                 }}
               >
                 <IoMdSync className="spinner" />
