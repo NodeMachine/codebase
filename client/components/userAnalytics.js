@@ -45,8 +45,8 @@ export const UserAnalytics = props => {
         <p>Difficulty Breakdown</p>
         <div className="chartWrapper">
           <BarChart
-            width={400}
-            height={150}
+            width={300}
+            height={100}
             data={difficultyData}
             layout="vertical"
             margin={{
@@ -69,14 +69,14 @@ export const UserAnalytics = props => {
       <div className="chart-item">
         <p>Points by Category</p>
         <div className="chartWrapper">
-          <PieChart width={300} height={300} className="pie-chart-container">
+          <PieChart width={250} height={200} className="pie-chart-container">
             <Pie
               dataKey="value"
               // isAnimationActive={false}
               data={categoriesData}
               // cx={200}
               // cy={200}
-              outerRadius={80}
+              outerRadius={50}
               fill="#26C6DA"
               label
             />
@@ -84,7 +84,8 @@ export const UserAnalytics = props => {
               payload={categoriesData.map(item => ({
                 id: item.name,
                 type: 'square',
-                value: `${item.name}: ${item.value} pts`
+                value: `${item.name}: ${item.value} pts`,
+                height: 0
               }))}
             />
             <Tooltip />

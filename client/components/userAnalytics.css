@@ -11,8 +11,12 @@
   min-height: 100%;
   flex: 1 1 100%;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+}
+
+.chart-item > div {
+  justify-content: center;
 }
 
 .pie-chart-container {
@@ -25,9 +29,8 @@
 } */
 
 .chartWrapper {
-  justify-self: center;
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%;
 }
