@@ -1,16 +1,7 @@
-# build:
-#   docker:
-#     web: Dockerfile
-#     security_opt:
-#       - seccomp: chrome.json
-#   security_opt:
-#     - seccomp: chrome.json
-# run:
-#   web: docker run --security-opt seccomp=chrome.json mercedesgm/capstone
-# security_opt:
-#   - seccomp: chrome.json
 build:
   docker:
-    web: .
-    security_opt:
-    - seccomp:"chrome.json"
+    web: Dockerfile
+run:
+  web: npm start
+  security_opt:
+  - seccomp:"chrome.json"
