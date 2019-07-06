@@ -10,6 +10,11 @@ const {
 } = require('../db/queryFunctions/userQueryFunctions')
 const router = require('express').Router()
 const {auth} = require('../db/queryFunctions/index')
+const AWS = require('aws-sdk')
+const {AWS3_ACCESS_KEY, AWS3_SECRET_ACCESS_KEY} = require('../../secrets')
+const multer = require('multer')
+const form = multer()
+
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -170,4 +175,37 @@ router.post('/update/:id', (req, res, next) => {
       res.send('Not logged in!')
     }
   })
+})
+
+const s3 = new AWS.S3({
+  accessKeyId: AWS3_ACCESS_KEY,
+  secretAccessKey: AWS3_SECRET_ACCESS_KEY
+})
+
+router.post('/uploadpic/:id', form.single('image'), async (req, res, next) => {
+  try {
+    const userId = req.params.id
+    const date = new Date()
+    console.log(date)
+    const params = {
+      Bucket: 'nodemachinecapstone',
+      Key: userId + date,
+      Body: req.file.buffer,
+      ContentType: req.file.mimetype,
+      ACL: 'public-read'
+    }
+    s3.upload(params, function(err, data) {
+      if (err) throw err
+      else return data.Location
+    })
+    await updateUser(userId, {
+      photo: `https://nodemachinecapstone.s3.amazonaws.com/${userId + date}`
+    })
+    const user = await getUserById(userId)
+    const problems = await getAllUserProblems(userId)
+    user.problems = problems
+    setTimeout(res.send(user), 2000)
+  } catch (error) {
+    next(error)
+  }
 })
