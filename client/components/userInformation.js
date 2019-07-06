@@ -86,18 +86,18 @@ class UserInformation extends Component {
 
     return (
       <div className="profile-description">
-        <div>
+        <div id="text-box">
           <div>
-            <h5>Location: {user.location || 'Add a location'}</h5>
+            <h5>Location: </h5> <p>{user.location || 'Add a location'}</p>
           </div>
           <div>
-            <h5>Bio: {user.bio || 'Add a bio'}</h5>
+            <h5>Bio: </h5> <p>{user.bio || 'Add a bio'}</p>
           </div>
           <div>
-            <h5>Interests: {user.interests || 'Interests'}</h5>
+            <h5>Interests: </h5> <p>{user.interests || 'Interests'}</p>
           </div>
           <div>
-            <h5>Email: {user.email}</h5>
+            <h5>Email: </h5> <p>{user.email}</p>
           </div>
         </div>
 

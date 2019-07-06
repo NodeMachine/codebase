@@ -34,7 +34,11 @@ class UploadProfilePic extends React.Component {
       )
     } else {
       return (
-        <button type="button" onClick={this.toggleEdit}>
+        <button
+          type="button"
+          onClick={this.toggleEdit}
+          id="edit-picture-button"
+        >
           Edit pic
         </button>
       )
