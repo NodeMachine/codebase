@@ -26,6 +26,17 @@ const deleteSavedUser = userId => {
 }
 
 //THUNK CREATORS:
+export const companyLogin = (email, password) => {
+  return async dispatch => {
+    try {
+      const result = await axios.put('api/company/login', {email, password})
+      console.log('result company login: ', result.data)
+    } catch (error) {
+      console.log('error loggin company in!')
+    }
+  }
+}
+
 export const addSavedUserThunk = (companyId, userId) => {
   console.log('addSavedUserThunk callled!')
   return async dispatch => {
@@ -36,6 +47,7 @@ export const addSavedUserThunk = (companyId, userId) => {
   }
 }
 
+//REDUCER:
 export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_SAVED_USER:

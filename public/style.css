@@ -18,25 +18,16 @@ nav a {
   margin: 1em;
 }
 
-form div {
-  margin: 1em;
-  display: inline-block;
+input[type='checkbox'] {
+  /* display: inline-block; */
+  width: 15px;
+  height: 15px;
+  /* background-color: white; */
 }
 
-/* input[type="checkbox"] {
-  width: 40px;
-  height: 30px;
+/* #companyCheckbox {
   background-color: white;
 } */
-
-#companyCheckbox {
-  display: inline-block;
-  width: 40px;
-  height: 30px;
-  background-color: white;
-  border: red 5px solid;
-  z-index: 999;
-}
 
 h4 {
   margin: 0px !important;
@@ -73,4 +64,9 @@ h4 {
 hr {
   border: none;
   border-top: 2px solid #26c6da;
+}
+
+form div {
+  margin: 1em;
+  display: inline-block;
 }

@@ -1,5 +1,7 @@
 const {db} = require('./index')
 
+const companyLogin = async (companyId, password) => {}
+
 const getAllCompanies = async () => {
   try {
     const result = await db.collection('companies').get()
@@ -46,7 +48,7 @@ const getCompanyById = async companyId => {
       console.log('Company does not exist.')
     }
   } catch (error) {
-    console.log('Error in getting company', error)
+    console.log('Error getting company by ID', error)
   }
 }
 
