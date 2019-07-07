@@ -52,7 +52,6 @@
 }
 
 .profile-description-form button {
-  width: 10%;
   align-self: center;
 }
 
@@ -81,4 +80,9 @@
 
 #edit-picture-button:hover {
   cursor: pointer;
+}
+
+.user-problem-item h4 {
+  text-decoration: underline;
+  text-decoration-color: #6ff9ff;
 }
