@@ -34,8 +34,6 @@ router.put('/login', async (req, res, next) => {
   }
 })
 
-//router.post('/signup', async (req, res, next) => {})
-
 //GET ALL COMPANIES FROM A FIREBASE DB:
 router.get('/', async (req, res, next) => {
   const allCompanies = await getAllCompanies()
@@ -44,17 +42,23 @@ router.get('/', async (req, res, next) => {
 
 //CREATE COMPANY:
 router.post('/signup', async (req, res, next) => {
-  console.log('company signup api reached, req.body: ', req.body)
-  const companyName = req.body.companyName
-  const companyInfo = req.body.companyInfo
-  const companyIndustry = req.body.companyIndustry
-  const email = req.body.email
-  const password = req.body.password
-  // await createCompany({
-  //   name: companyName,
-  //   companyInfo: companyInfo,
-  //   companyIndustry: companyIndustry
-  // })
+  try {
+    console.log('company signup api reached, req.body: ', req.body)
+    const companyName = req.body.companyName
+    const companyInfo = req.body.companyInfo
+    const companyIndustry = req.body.companyIndustry
+    const email = req.body.email
+    const password = req.body.password
+    await createCompany({
+      companyName: companyName,
+      companyInfo: companyInfo,
+      companyIndustry: companyIndustry,
+      email: email,
+      password: password
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 //CREATE CUSTOM PROBLEM FOR COMPANY:

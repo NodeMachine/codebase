@@ -186,9 +186,9 @@ const mapDispatch = dispatch => {
             dispatch(signup(firstName, lastName, email, password))
           } else {
             console.log('company in auth form!')
-            const companyName = evt.target.companyName
-            const companyInfo = evt.target.companyInfo
-            const companyIndustry = evt.target.companyIndustry
+            const companyName = evt.target.companyName.value
+            const companyInfo = evt.target.companyInfo.value
+            const companyIndustry = evt.target.companyIndustry.value
             dispatch(
               companySignup(
                 companyName,
