@@ -11,21 +11,11 @@ const DELETE_CUSTOM_PROBLEM = 'DELETE_CUSTOM_PROBLEM'
 const GET_CUSTOM_PROBLEMS = 'GET_CUSTOM_PROBLEMS'
 
 //ACTION CREATORS:
-const addSavedUser = user => {
-  return {
-    type: ADD_SAVED_USER,
-    user: user
-  }
-}
+const gotError = error => ({type: SET_ERROR, error})
+const addSavedUser = user => ({type: ADD_SAVED_USER, user: user})
+const deleteSavedUser = userId => ({type: DELETE_SAVED_USER, userId: userId})
 
-const deleteSavedUser = userId => {
-  return {
-    type: DELETE_SAVED_USER,
-    userId: userId
-  }
-}
-
-//THUNK CREATORS:
+//COMPANY LOGIN THUNK:
 export const companyLogin = (email, password) => {
   return async dispatch => {
     try {
@@ -37,8 +27,34 @@ export const companyLogin = (email, password) => {
   }
 }
 
+//COMPANY SIGNUP THUNK:
+export const companySignup = (
+  companyName,
+  companyInfo,
+  companyIndustry,
+  email,
+  password
+) => {
+  console.log('company signup thunk called: ', companyName)
+  return async dispatch => {
+    try {
+      const result = await axios.post('/api/company/signup', {
+        companyName,
+        companyInfo,
+        companyIndustry,
+        email,
+        password
+      })
+      console.log('result data in company signup thunk: ', result.data)
+    } catch (error) {
+      // dispatch(gotError(error.response.data));
+      console.log('Error in company signup thunk: ', error)
+    }
+  }
+}
+
 export const addSavedUserThunk = (companyId, userId) => {
-  console.log('addSavedUserThunk callled!')
+  console.log('addSavedUserThunk called!')
   return async dispatch => {
     const result = await axios.post(`api/company/${companyId}/${userId}`)
     console.log('addSavedUserThunk result: ', result)

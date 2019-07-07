@@ -1,7 +1,15 @@
+html {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
 body {
   font-family: Helvetica, sans-serif;
   background-color: #000a12;
   color: white;
+  margin: 0px;
+  padding: 0px;
+  min-height: 100%;
 }
 
 a {

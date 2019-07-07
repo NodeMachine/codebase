@@ -9,13 +9,16 @@ import ResultWindow from './resultWindow'
 import './singleProblem.css'
 import 'brace/mode/javascript'
 import 'brace/theme/monokai'
+import {IconContext} from 'react-icons'
+import {IoMdSync} from 'react-icons/io'
 
 class SingleProblem extends Component {
   constructor(props) {
     super(props)
     this.state = {
       code: '',
-      result: []
+      result: [],
+      loading: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -27,8 +30,8 @@ class SingleProblem extends Component {
   }
 
   componentDidUpdate() {
-    const user = this.props.user
     const problem = this.props.problem
+    const user = this.props.user
     if (!this.state.code) {
       if (user.problems && user.problems[problem.id]) {
         this.setState({code: user.problems[problem.id].solution})
@@ -47,6 +50,7 @@ class SingleProblem extends Component {
   }
 
   async handleSubmit() {
+    this.setState({loading: true})
     try {
       const {data} = await axios.post(
         `/api/solution/${this.props.problem.id}`,
@@ -59,6 +63,7 @@ class SingleProblem extends Component {
         const solution = this.state.code
         this.props.saveSolution(problem, userId, isSolved, solution)
       }
+      this.setState({loading: false})
       this.setState({result: data})
     } catch (error) {
       console.error("Something went wrong submitting user's code", error)
@@ -91,11 +96,23 @@ class SingleProblem extends Component {
         </div>
         <div className="promptResultContainer">
           <ProblemDescription prompt={this.props.problem.prompt} />
-          {Array.isArray(this.state.result) ? (
-            <ResultWindow result={this.state.result} />
-          ) : (
-            <ResultWindow error={this.state.result} />
-          )}
+          <div>
+            <h4>Tests</h4>
+            <hr />
+            {this.state.loading ? (
+              <IconContext.Provider
+                value={{
+                  className: 'spinnerContainer'
+                }}
+              >
+                <IoMdSync className="spinner" />
+              </IconContext.Provider>
+            ) : Array.isArray(this.state.result) ? (
+              <ResultWindow results={this.state.result} />
+            ) : (
+              <ResultWindow error={this.state.result} />
+            )}
+          </div>
         </div>
       </div>
     )

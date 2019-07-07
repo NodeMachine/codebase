@@ -2,11 +2,12 @@ import React from 'react'
 import UserProblemsList from './userProblemsList'
 import {connect} from 'react-redux'
 import UserInformation from './userInformation'
+import {UserAnalytics} from './userAnalytics'
 import {Redirect} from 'react-router-dom'
+import UploadProfilePic from './uploadProfilePic'
 import './userProfile.css'
 
 const UserProfile = props => {
-  console.log(props)
   const user = props.user
   let problems = []
   if (user.problems) {
@@ -18,8 +19,9 @@ const UserProfile = props => {
   return (
     <div className="user-profile-container">
       <div className="profile-left">
+        <hr />
         <div className="profile-main-info">
-          <h1>Rank: {user.score}</h1>
+          <h1>Score: {user.score}</h1>
           <img
             src={
               user && user.photo
@@ -27,6 +29,7 @@ const UserProfile = props => {
                 : 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
             }
           />
+          <UploadProfilePic />
           <h3>
             {user.firstName} {user.lastName}
           </h3>
@@ -38,7 +41,11 @@ const UserProfile = props => {
       </div>
 
       <div className="profile-right">
+        <hr />
         <h2>Your Problems</h2>
+        <hr />
+
+        <UserAnalytics problems={problems} />
         <hr />
         {problems.length ? (
           <UserProblemsList problems={problems} />
@@ -54,4 +61,8 @@ const mapStateToProps = state => ({
   user: state.user.singleUser
 })
 
-export default connect(mapStateToProps)(UserProfile)
+const mapDispatchToProps = dispatch => ({
+  profilepic: (id, pic) => dispatch(updateProfilePic(id, pic))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)

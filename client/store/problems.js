@@ -38,6 +38,8 @@ export const getAllProblems = () => async dispatch => {
 export const getSingleProblem = problemId => async dispatch => {
   try {
     const {data} = await axios.get(`/api/problems/${problemId}`)
+    console.log('HERE')
+
     dispatch(getSingleProblemAction(data))
   } catch (err) {
     console.error(err)

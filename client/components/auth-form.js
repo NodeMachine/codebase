@@ -96,6 +96,14 @@ class AuthForm extends React.Component {
                 <small>Company Name</small>
               </label>
               <input name="companyName" type="text" />
+              <label htmlFor="companyInfo">
+                <small>Company Info</small>
+              </label>
+              <input name="companyInfo" type="text" />
+              <label htmlFor="companyIndustry">
+                <small>Company Industry</small>
+              </label>
+              <input name="companyIndustry" type="text" />
             </div>
           ) : null}
 
@@ -159,6 +167,8 @@ const mapDispatch = dispatch => {
         const email = evt.target.email.value
         const password = evt.target.password.value
         const isCompany = evt.target.isCompany.checked
+        console.log('isCompany in handleSubmit: ', isCompany)
+
         if (formName === 'login') {
           //LOGIN FOR REGULAR USER:
           if (!isCompany) {
@@ -168,12 +178,26 @@ const mapDispatch = dispatch => {
             dispatch(companyLogin(email, password))
           }
         } else {
-          const firstName = evt.target.firstName.value
-          const lastName = evt.target.lastName.value
+          //IF COMPANY NAME IS SIGNUP:
           if (!isCompany) {
+            console.log('not a company in auth form!')
+            const firstName = evt.target.firstName.value
+            const lastName = evt.target.lastName.value
             dispatch(signup(firstName, lastName, email, password))
           } else {
-            dispatch(companySignup(companyName))
+            console.log('company in auth form!')
+            const companyName = evt.target.companyName
+            const companyInfo = evt.target.companyInfo
+            const companyIndustry = evt.target.companyIndustry
+            dispatch(
+              companySignup(
+                companyName,
+                companyInfo,
+                companyIndustry,
+                email,
+                password
+              )
+            )
           }
         }
       } catch (error) {

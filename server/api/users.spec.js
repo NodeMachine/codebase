@@ -38,7 +38,7 @@ describe('User routes', () => {
 
   it('PUT /api/users/login', async () => {
     const userCredentials = {
-      email: 'email20@email.com',
+      email: 'testing@test.com',
       password: 'yY@74Cd5#PMQ'
     }
 
@@ -48,6 +48,7 @@ describe('User routes', () => {
     const res = await authenticatedUser
       .put('/api/users/login')
       .send(userCredentials)
+    console.log('RES STATUS', res.statusCode)
     expect(res.statusCode).to.equal(200)
   })
 

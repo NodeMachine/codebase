@@ -12,7 +12,9 @@ const UserProblemList = props => {
             <li key={indx}>
               <div className="user-problem">
                 <div className="user-problem-item">
-                  <Link to={`/problems/${el.id}`}>{el.name}</Link>
+                  <Link to={`/problems/${el.id}`}>
+                    <h4>{el.name}</h4>
+                  </Link>
                 </div>
                 <div className="user-problem-item">
                   <h5>{el.category}</h5>
