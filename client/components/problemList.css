@@ -59,3 +59,8 @@
 .problemName {
   flex: 1 0 40%;
 }
+
+.problemName h4 {
+  text-decoration: underline;
+  text-decoration-color: #6ff9ff;
+}
