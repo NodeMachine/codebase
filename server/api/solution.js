@@ -88,7 +88,9 @@ router.post('/:id', async (req, res, next) => {
         .catch(err => console.log(err))
     )
     res.send(
-      testResult.length && testResult[0].actualOutput ? testResult : 'Bad code'
+      testResult.length && testResult[0].actualOutput !== '""'
+        ? testResult
+        : 'Bad code'
     )
   } catch (error) {
     console.log('ERROR ', error)
