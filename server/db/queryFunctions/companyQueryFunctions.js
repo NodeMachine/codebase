@@ -14,10 +14,12 @@ const getAllCompanies = async () => {
   }
 }
 
-const createCompany = async company => {
+const createCompany = async companyObject => {
   try {
-    await db.collection('companies').add(company)
+    await db.collection('companies').add(companyObject)
+    const company = await getCompanyByAuthId(companyObject.authId)
     console.log('Company has been added.')
+    return company
   } catch (error) {
     console.log('Error in creating company', error)
   }
@@ -177,6 +179,26 @@ const addUserSolutionToCustomProblem = async (
   }
 }
 
+const getCompanyByAuthId = async authId => {
+  try {
+    const results = await db
+      .collection('companies')
+      .where('authId', '===', `${authId}`)
+      .get()
+    let result
+    results.forEach(doc => {
+      if (doc) {
+        result = {id: doc.id, ...doc.data()}
+      } else {
+        console.log('Company does not exist')
+      }
+    })
+    return result
+  } catch (error) {
+    console.log('Error getting company by auth ID', error)
+  }
+}
+
 module.exports = {
   getAllCompanies,
   createCompany,
@@ -188,5 +210,6 @@ module.exports = {
   deleteSavedUser,
   deleteCustomProblem,
   updateCustomProblem,
-  addUserSolutionToCustomProblem
+  addUserSolutionToCustomProblem,
+  getCompanyByAuthId
 }
