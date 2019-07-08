@@ -5,8 +5,9 @@ import {Link} from 'react-router-dom'
 import {IconContext} from 'react-icons'
 import {MdKeyboardArrowRight} from 'react-icons/md'
 import './problemList.css'
+import {ProblemListItem} from './problemListItem'
 
-class ProblemList extends Component {
+class ProblemListPage extends Component {
   constructor(props) {
     super(props)
   }
@@ -37,41 +38,14 @@ class ProblemList extends Component {
               <hr />
             </div>
           </div>
-          {this.props.problems.map(el => {
-            return (
-              <div key={el.id}>
-                <div className="problem-list-item-container">
-                  <div className="problem-list-item problemName">
-                    <IconContext.Provider
-                      value={{
-                        color: '#26C6DA',
-                        display: 'inline'
-                      }}
-                    >
-                      <MdKeyboardArrowRight />
-                    </IconContext.Provider>
-                    <Link
-                      to={{
-                        pathname: `/problems/${el.id}`
-                      }}
-                    >
-                      <h4>{el.name}</h4>
-                    </Link>
-                  </div>
-                  <div className="problem-list-item">
-                    <h4>{el.category}</h4>
-                  </div>
-                  <div className="problem-list-item">
-                    <h4>{el.points < 50 ? 'Easy' : 'Medium'}</h4>
-                  </div>
-                  <div className="problem-list-item">
-                    <h4>{el.points}</h4>
-                  </div>
-                </div>
-                <hr />
-              </div>
-            )
-          })}
+          {this.props.problems
+            .filter(problem => {
+              if (!this.props.filter) return true
+              else return problem.category === this.props.filter
+            })
+            .map(el => {
+              return <ProblemListItem problem={el} key={el.id} />
+            })}
         </div>
       </div>
     )
@@ -91,4 +65,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(ProblemList)
+export default connect(mapState, mapDispatch)(ProblemListPage)
