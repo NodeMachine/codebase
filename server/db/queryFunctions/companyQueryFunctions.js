@@ -1,5 +1,6 @@
 const {db} = require('./index')
 const {getUserById} = require('./userQueryFunctions')
+const FieldValue = require('firebase-admin').firestore.FieldValue
 
 const companyLogin = async (companyId, password) => {}
 
@@ -53,20 +54,35 @@ const getCompanyById = async companyId => {
   }
 }
 
+// const addSavedUser = async (companyId, userId) => {
+//   try {
+//     const user = await db
+//       .collection('users')
+//       .doc(`${userId}`)
+//       .get()
+
+//     await db
+//       .collection('companies')
+//       .doc(`${companyId}`)
+//       .collection('savedUsers')
+//       .doc(userId)
+//       .set(user.data())
+//     // .set(user)
+//     console.log('User has been saved')
+//   } catch (error) {
+//     console.log('Error in adding saved user', error)
+//   }
+// }
 const addSavedUser = async (companyId, userId) => {
   try {
     const user = await db
-      .collection('users')
-      .doc(`${userId}`)
-      .get()
-
-    await db
       .collection('companies')
       .doc(`${companyId}`)
-      .collection('savedUsers')
-      .doc(userId)
-      .set(user.data())
-    // .set(user)
+      .get()
+
+    const {savedUsers} = user.data()
+    savedUsers.push(userId)
+    console.log('>>> ', savedUsers)
     console.log('User has been saved')
   } catch (error) {
     console.log('Error in adding saved user', error)
