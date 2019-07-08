@@ -48,7 +48,7 @@ export const companySignup = (
       console.log('result data in company signup thunk: ', result.data)
     } catch (error) {
       // dispatch(gotError(error.response.data));
-      console.log('Error in company signup thunk: ', error)
+      console.log('Error in company signup thunk: ', error.message)
     }
   }
 }

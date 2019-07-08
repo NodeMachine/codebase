@@ -40,7 +40,7 @@ router.get('/', async (req, res, next) => {
   res.send(allCompanies)
 })
 
-//CREATE COMPANY:
+//COMPANY SIGNUP ROUTE:
 router.post('/signup', async (req, res, next) => {
   try {
     console.log('company signup api reached, req.body: ', req.body)
@@ -49,12 +49,15 @@ router.post('/signup', async (req, res, next) => {
     const companyIndustry = req.body.companyIndustry
     const email = req.body.email
     const password = req.body.password
-    await createCompany({
-      companyName: companyName,
-      companyInfo: companyInfo,
-      companyIndustry: companyIndustry,
-      email: email,
-      password: password
+
+    auth.createUserWithEmailAndPassword(email, password).then(async user => {
+      await createCompany({
+        companyName: companyName,
+        companyInfo: companyInfo,
+        companyIndustry: companyIndustry,
+        email: email,
+        authId: user.user.uid
+      })
     })
   } catch (error) {
     next(error)
