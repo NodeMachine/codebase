@@ -16,12 +16,10 @@ const getAllCompanies = async () => {
   }
 }
 
-const createCompany = async companyObject => {
+const createCompany = async company => {
   try {
-    await db.collection('companies').add(companyObject)
-    const company = await getCompanyByAuthId(companyObject.authId)
+    await db.collection('companies').add(company)
     console.log('Company has been added.')
-    return company
   } catch (error) {
     console.log('Error in creating company', error)
   }
@@ -56,35 +54,19 @@ const getCompanyById = async companyId => {
   }
 }
 
-// const addSavedUser = async (companyId, userId) => {
-//   try {
-//     const user = await db
-//       .collection('users')
-//       .doc(`${userId}`)
-//       .get()
-
-//     await db
-//       .collection('companies')
-//       .doc(`${companyId}`)
-//       .collection('savedUsers')
-//       .doc(userId)
-//       .set(user.data())
-//     // .set(user)
-//     console.log('User has been saved')
-//   } catch (error) {
-//     console.log('Error in adding saved user', error)
-//   }
-// }
 const addSavedUser = async (companyId, userId) => {
   try {
-    const user = await db
+    const company = await db
       .collection('companies')
       .doc(`${companyId}`)
       .get()
 
-    const {savedUsers} = user.data()
+    const {savedUsers} = company.data()
     savedUsers.push(userId)
-    console.log('>>> ', savedUsers)
+    await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .update({savedUsers: savedUsers})
     console.log('User has been saved')
   } catch (error) {
     console.log('Error in adding saved user', error)
@@ -93,12 +75,17 @@ const addSavedUser = async (companyId, userId) => {
 
 const deleteSavedUser = async (companyId, userId) => {
   try {
+    const company = await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .get()
+
+    const {savedUsers} = company.data()
+    const updatedUserArr = savedUsers.filter(el => el !== userId)
     await db
       .collection('companies')
       .doc(`${companyId}`)
-      .collection('savedUsers')
-      .doc(userId)
-      .delete()
+      .update({savedUsers: updatedUserArr})
 
     return 'User has been deleted'
   } catch (error) {
@@ -142,83 +129,6 @@ const getSavedUsers = async companyId => {
   }
 }
 
-const deleteCustomProblem = async (companyId, problemId) => {
-  try {
-    await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .collection('customProblems')
-      .doc(`${problemId}`)
-      .delete()
-    return 'Custom problem was deleted'
-  } catch (error) {
-    console.log('Error in deleting problem', error)
-  }
-}
-
-const updateCustomProblem = async (companyId, problemId, updateObject) => {
-  try {
-    await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .collection('customProblem')
-      .doc(`${problemId}`)
-      .update(updateObject)
-    return 'Custom problem was updated'
-  } catch (error) {
-    console.log('Error in updating problem', error)
-  }
-}
-const addUserSolutionToCustomProblem = async (
-  companyId,
-  problemId,
-  userId,
-  name,
-  solution,
-  isSolved
-) => {
-  try {
-    const problem = await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .collection('customProblem')
-      .doc(`${problemId}`)
-      .get()
-      .data()
-    let users = problem.users
-    users[userId] = {name: name, solution: solution, isSolved: isSolved}
-    await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .collection('customProblem')
-      .doc(`${problemId}`)
-      .update(users)
-    return 'Solution added'
-  } catch (error) {
-    console.log('Error in adding user solution', error)
-  }
-}
-
-const getCompanyByAuthId = async authId => {
-  try {
-    const results = await db
-      .collection('companies')
-      .where('authId', '===', `${authId}`)
-      .get()
-    let result
-    results.forEach(doc => {
-      if (doc) {
-        result = {id: doc.id, ...doc.data()}
-      } else {
-        console.log('Company does not exist')
-      }
-    })
-    return result
-  } catch (error) {
-    console.log('Error getting company by auth ID', error)
-  }
-}
-
 module.exports = {
   getAllCompanies,
   createCompany,
@@ -227,9 +137,5 @@ module.exports = {
   addSavedUser,
   getCustomProblems,
   getSavedUsers,
-  deleteSavedUser,
-  deleteCustomProblem,
-  updateCustomProblem,
-  addUserSolutionToCustomProblem,
-  getCompanyByAuthId
+  deleteSavedUser
 }

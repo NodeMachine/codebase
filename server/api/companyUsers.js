@@ -13,12 +13,6 @@ const {
   deleteSavedUser
 } = require('../db/queryFunctions/companyQueryFunctions')
 
-//GET SINGLE COMPANY BY ID:
-// router.get('/:id', async (req, res, next) => {
-//   const companyId = req.params.id
-//   await getCompanyById(companyId)
-// })
-
 //ADD SAVED USER TO COMPANY:
 router.post('/:companyId/:userId', async (req, res) => {
   console.log('addUser API reached!')
@@ -41,14 +35,9 @@ router.delete('/:companyId/:userId', async (req, res) => {
     req.params.companyId
   )
   await deleteSavedUser(req.params.companyId, req.params.userId)
+  res.json('User deleted')
   console.log('user has been saved to company!')
 })
-
-//GET SAVED USERS FROM COMPANY:
-// router.get('/:companyId/users', async (req, res) => {
-//   const result = await getSavedUsers(req.params.companyId)
-//   res.send(result)
-// })
 
 //GET SAVED USERS FROM COMPANY:
 router.get('/:companyId', async (req, res) => {
