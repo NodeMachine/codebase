@@ -97,15 +97,13 @@ describe('User thunk creators', () => {
 
   describe('getAllUsers', () => {
     it('getAllUsers: eventually dispatches the GET_USERS action', async () => {
-      mockAxios
-        .onGet('/api/users')
-        .replyOnce(204, [
-          {
-            firstName: 'Testerson',
-            lastName: 'MockDonald',
-            email: 'testeroo@email.com'
-          }
-        ])
+      mockAxios.onGet('/api/users').replyOnce(204, [
+        {
+          firstName: 'Testerson',
+          lastName: 'MockDonald',
+          email: 'testeroo@email.com'
+        }
+      ])
       await store.dispatch(getAllUsers())
       const actions = store.getActions()
       expect(actions[0].type).to.be.equal('GET_USERS')
@@ -115,14 +113,12 @@ describe('User thunk creators', () => {
   describe('saveSolution', () => {
     it('saveSolution: eventually dispatches the GET_USERS action', async () => {
       const problem = {name: '99 Problems', prompt: 'I feel bad for you son'}
-      mockAxios
-        .onPost('/api/users/save/2pxqTVM3iGh066CHJ0tB')
-        .replyOnce(204, {
-          firstName: 'Testerson',
-          lastName: 'MockDonald',
-          email: 'testeroo@email.com',
-          problems: [problem]
-        })
+      mockAxios.onPost('/api/users/save/2pxqTVM3iGh066CHJ0tB').replyOnce(204, {
+        firstName: 'Testerson',
+        lastName: 'MockDonald',
+        email: 'testeroo@email.com',
+        problems: [problem]
+      })
       await store.dispatch(
         saveSolution(problem, '2pxqTVM3iGh066CHJ0tB', true, 'console.log()')
       )

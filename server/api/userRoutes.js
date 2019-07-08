@@ -134,6 +134,7 @@ router.post('/signup', async (req, res, next) => {
 //USER LOGIN ROUTE:
 router.put('/login', async (req, res, next) => {
   try {
+    console.log('req.body in user login: ', req.body)
     const email = req.body.email
     const password = req.body.password
     auth

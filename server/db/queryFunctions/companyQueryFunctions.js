@@ -1,5 +1,7 @@
 const {db} = require('./index')
 
+const companyLogin = async (companyId, password) => {}
+
 const getAllCompanies = async () => {
   try {
     const result = await db.collection('companies').get()
@@ -46,17 +48,24 @@ const getCompanyById = async companyId => {
       console.log('Company does not exist.')
     }
   } catch (error) {
-    console.log('Error in getting company', error)
+    console.log('Error getting company by ID', error)
   }
 }
 
-const addSavedUser = async (companyId, user) => {
+const addSavedUser = async (companyId, userId) => {
   try {
+    const user = await db
+      .collection('users')
+      .doc(`${userId}`)
+      .get()
+
     await db
       .collection('companies')
       .doc(`${companyId}`)
       .collection('savedUsers')
-      .add(user)
+      .doc(userId)
+      .set(user.data())
+    // .set(user)
     console.log('User has been saved')
   } catch (error) {
     console.log('Error in adding saved user', error)
@@ -70,6 +79,7 @@ const getCustomProblems = async companyId => {
       .doc(`${companyId}`)
       .collection('customProblems')
       .get()
+
     const customProblems = result.docs.map(problem => {
       return {id: problem.id, ...problem.data()}
     })

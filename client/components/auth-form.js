@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {login, signup} from '../store/user'
+import {companyLogin, companySignup} from '../store/company'
 import {Redirect} from 'react-router-dom'
 import './auth-form.css'
 
@@ -13,7 +14,8 @@ class AuthForm extends React.Component {
     super(props)
     this.state = {
       password: '',
-      email: ''
+      email: '',
+      isCompany: false
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -21,6 +23,11 @@ class AuthForm extends React.Component {
   handleChange(event) {
     event.preventDefault()
     this.setState({[event.target.name]: event.target.value})
+  }
+
+  isCompanyToggle() {
+    //this.setState({isCompany: !this.state.isCompany});
+    this.setState({isCompany: !this.state.isCompany})
   }
 
   render() {
@@ -40,6 +47,17 @@ class AuthForm extends React.Component {
           name={name}
         >
           <div>
+            <label htmlFor="isCompany">Are you a company? </label>
+            <input
+              type="checkbox"
+              id="companyCheckbox"
+              name="isCompany"
+              onChange={() => this.isCompanyToggle()}
+              // checked='true'
+            />
+          </div>
+
+          <div>
             <label htmlFor="email">
               <small>Email</small>
             </label>
@@ -52,7 +70,7 @@ class AuthForm extends React.Component {
           </div>
           <div>
             <label htmlFor="password">
-              <small>Password</small>
+              <small>Password </small>
             </label>
             <input
               name="password"
@@ -61,9 +79,9 @@ class AuthForm extends React.Component {
               value={this.state.password}
             />
             <small>Passwords must be at least 6 characters.</small>
-            {}
           </div>
-          {name === 'signup' ? (
+
+          {name === 'signup' && !this.state.isCompany ? (
             <div>
               <label htmlFor="firstName">
                 <small>First Name</small>
@@ -71,7 +89,25 @@ class AuthForm extends React.Component {
               <input name="firstName" type="text" />
             </div>
           ) : null}
-          {name === 'signup' ? (
+
+          {name === 'signup' && this.state.isCompany ? (
+            <div>
+              <label htmlFor="companyName">
+                <small>Company Name</small>
+              </label>
+              <input name="companyName" type="text" />
+              <label htmlFor="companyInfo">
+                <small>Company Info</small>
+              </label>
+              <input name="companyInfo" type="text" />
+              <label htmlFor="companyIndustry">
+                <small>Company Industry</small>
+              </label>
+              <input name="companyIndustry" type="text" />
+            </div>
+          ) : null}
+
+          {name === 'signup' && !this.state.isCompany ? (
             <div>
               <label htmlFor="lastName">
                 <small>Last Name</small>
@@ -130,12 +166,39 @@ const mapDispatch = dispatch => {
         const formName = evt.target.name
         const email = evt.target.email.value
         const password = evt.target.password.value
+        const isCompany = evt.target.isCompany.checked
+        console.log('isCompany in handleSubmit: ', isCompany)
+
         if (formName === 'login') {
-          dispatch(login(email, password))
+          //LOGIN FOR REGULAR USER:
+          if (!isCompany) {
+            dispatch(login(email, password))
+          } else {
+            console.log('email in submit: ', email)
+            dispatch(companyLogin(email, password))
+          }
         } else {
-          const firstName = evt.target.firstName.value
-          const lastName = evt.target.lastName.value
-          dispatch(signup(firstName, lastName, email, password))
+          //IF COMPANY NAME IS SIGNUP:
+          if (!isCompany) {
+            console.log('not a company in auth form!')
+            const firstName = evt.target.firstName.value
+            const lastName = evt.target.lastName.value
+            dispatch(signup(firstName, lastName, email, password))
+          } else {
+            console.log('company in auth form!')
+            const companyName = evt.target.companyName.value
+            const companyInfo = evt.target.companyInfo.value
+            const companyIndustry = evt.target.companyIndustry.value
+            dispatch(
+              companySignup(
+                companyName,
+                companyInfo,
+                companyIndustry,
+                email,
+                password
+              )
+            )
+          }
         }
       } catch (error) {
         console.log(error)
