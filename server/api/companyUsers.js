@@ -39,7 +39,7 @@ router.delete('/:companyId/:userId', async (req, res) => {
   console.log('user has been saved to company!')
 })
 
-//GET SAVED USERS FROM COMPANY:
+//GET ALL SAVED USERS FROM COMPANY:
 router.get('/:companyId', async (req, res) => {
   const result = await getSavedUsers(req.params.companyId)
   res.json(result)

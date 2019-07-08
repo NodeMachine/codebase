@@ -66,7 +66,8 @@ router.post('/signup', async (req, res, next) => {
         companyIndustry: companyIndustry,
         email: email,
         authId: user.user.uid,
-        customProblems: {}
+        customProblems: {},
+        savedUsers: []
       })
       res.send(company)
     })
