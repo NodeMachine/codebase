@@ -29,7 +29,7 @@ export const getAllCustomProblems = companyId => {
 export const addCustomProblem = (companyId, problem) => {
   return async dispatch => {
     try {
-      await axios.post(`/api/company/${companyId}/customproblem`, problem)
+      await axios.post(`/api/company/${companyId}/customproblem`, {problem})
       dispatch(getAllCustomProblems(companyId))
     } catch (error) {
       console.log(error)
@@ -48,10 +48,33 @@ export const removeCustomProblem = (companyId, problemId) => {
   }
 }
 
-export const updateCustomProblem = (companyId, problemId) => {
+export const updateCustomProblem = (companyId, problemId, update) => {
   return async dispatch => {
     try {
-      await axios.put(`/api/company/${companyId}/${problemId}`)
+      await axios.put(`/api/company/${companyId}/${problemId}`, {update})
+      dispatch(getAllCustomProblems(companyId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const saveSolutionToCustomProblem = (
+  companyId,
+  problemId,
+  userId,
+  name,
+  solution,
+  isSolved
+) => {
+  return async dispatch => {
+    try {
+      await axios.put(`/api/company/${companyId}/${problemId}`, {
+        userId,
+        name,
+        solution,
+        isSolved
+      })
       dispatch(getAllCustomProblems(companyId))
     } catch (error) {
       console.log(error)
