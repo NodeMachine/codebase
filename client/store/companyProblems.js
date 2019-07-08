@@ -30,7 +30,6 @@ export const addCustomProblem = (companyId, problem) => {
   return async dispatch => {
     try {
       await axios.post(`/api/company/${companyId}/customproblem`, problem)
-      // dispatch thunk
       dispatch(getAllCustomProblems(companyId))
     } catch (error) {
       console.log(error)
@@ -57,5 +56,15 @@ export const updateCustomProblem = (companyId, problemId) => {
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+//REDUCER:
+export default function(state = initialState, action) {
+  switch (action.type) {
+    case GET_CUSTOM_PROBLEMS:
+      return action.problems
+    default:
+      return state
   }
 }
