@@ -120,6 +120,63 @@ const getSavedUsers = async companyId => {
   }
 }
 
+const deleteCustomProblem = async (companyId, problemId) => {
+  try {
+    await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('customProblems')
+      .doc(`${problemId}`)
+      .delete()
+    return 'Custom problem was deleted'
+  } catch (error) {
+    console.log('Error in deleting problem', error)
+  }
+}
+
+const updateCustomProblem = async (companyId, problemId, updateObject) => {
+  try {
+    await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('customProblem')
+      .doc(`${problemId}`)
+      .update(updateObject)
+    return 'Custom problem was updated'
+  } catch (error) {
+    console.log('Error in updating problem', error)
+  }
+}
+const addUserSolutionToCustomProblem = async (
+  companyId,
+  problemId,
+  userId,
+  name,
+  solution,
+  isSolved
+) => {
+  try {
+    const problem = await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('customProblem')
+      .doc(`${problemId}`)
+      .get()
+      .data()
+    let users = problem.users
+    users[userId] = {name: name, solution: solution, isSolved: isSolved}
+    await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('customProblem')
+      .doc(`${problemId}`)
+      .update(users)
+    return 'Solution added'
+  } catch (error) {
+    console.log('Error in adding user solution', error)
+  }
+}
+
 module.exports = {
   getAllCompanies,
   createCompany,
@@ -128,5 +185,8 @@ module.exports = {
   addSavedUser,
   getCustomProblems,
   getSavedUsers,
-  deleteSavedUser
+  deleteSavedUser,
+  deleteCustomProblem,
+  updateCustomProblem,
+  addUserSolutionToCustomProblem
 }
