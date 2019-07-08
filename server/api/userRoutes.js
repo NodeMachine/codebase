@@ -134,7 +134,6 @@ router.post('/signup', async (req, res, next) => {
 //USER LOGIN ROUTE:
 router.put('/login', async (req, res, next) => {
   try {
-    console.log('req.body in user login: ', req.body)
     const email = req.body.email
     const password = req.body.password
     auth
@@ -143,7 +142,6 @@ router.put('/login', async (req, res, next) => {
         getUserByAuthId(user.user.uid).then(async singleUser => {
           req.session.userId = singleUser.id
           req.session.isAdmin = singleUser.isAdmin
-          console.log('req.session.userId: ', req.session.userId)
           const problems = await getAllUserProblems(singleUser.id)
           res.send({...singleUser, problems})
         })
