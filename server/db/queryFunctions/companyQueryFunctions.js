@@ -1,4 +1,5 @@
 const {db} = require('./index')
+const {getUserById} = require('./userQueryFunctions')
 
 const companyLogin = async (companyId, password) => {}
 
@@ -106,30 +107,18 @@ const getCustomProblems = async companyId => {
 
 const getSavedUsers = async companyId => {
   try {
-    const result = await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .collection('savedUsers')
-      .get()
-    const savedUsers = result.docs.map(user => {
-      return {id: user.id, ...user.data()}
-    })
-    return savedUsers
-  } catch (error) {
-    console.log('Error in getting saved users', error)
-  }
-}
-
-const getSavedUsersTest = async companyId => {
-  try {
-    const result = await db
+    const companyInfo = await db
       .collection('companies')
       .doc(`${companyId}`)
       .get()
-    result.forEach(user => {
-      console.log('USER TEST ', user.id)
+    const {savedUsers} = companyInfo.data()
+    const res = savedUsers.map(async el => {
+      const user = await getUserById(el)
+      el = user
+      return el
     })
-    // return savedUsers
+    const savedUsersArr = await Promise.all(res)
+    return savedUsersArr
   } catch (error) {
     console.log('Error in getting saved users', error)
   }
@@ -143,6 +132,5 @@ module.exports = {
   addSavedUser,
   getCustomProblems,
   getSavedUsers,
-  deleteSavedUser,
-  getSavedUsersTest
+  deleteSavedUser
 }

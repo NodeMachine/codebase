@@ -10,8 +10,7 @@ const {
   addSavedUser,
   getCustomProblems,
   getSavedUsers,
-  deleteSavedUser,
-  getSavedUsersTest
+  deleteSavedUser
 } = require('../db/queryFunctions/companyQueryFunctions')
 
 //GET SINGLE COMPANY BY ID:
@@ -53,8 +52,8 @@ router.delete('/:companyId/:userId', async (req, res) => {
 
 //GET SAVED USERS FROM COMPANY:
 router.get('/:companyId', async (req, res) => {
-  const result = await getSavedUsersTest(req.params.companyId)
-  res.send(result)
+  const result = await getSavedUsers(req.params.companyId)
+  res.json(result)
 })
 
 module.exports = router
