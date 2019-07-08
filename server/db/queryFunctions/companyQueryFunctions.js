@@ -72,6 +72,21 @@ const addSavedUser = async (companyId, userId) => {
   }
 }
 
+const deleteSavedUser = async (companyId, userId) => {
+  try {
+    await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('savedUsers')
+      .doc(userId)
+      .delete()
+
+    return 'User has been deleted'
+  } catch (error) {
+    console.log('Error in adding saved user', error)
+  }
+}
+
 const getCustomProblems = async companyId => {
   try {
     const result = await db
@@ -112,5 +127,6 @@ module.exports = {
   getCompanyById,
   addSavedUser,
   getCustomProblems,
-  getSavedUsers
+  getSavedUsers,
+  deleteSavedUser
 }
