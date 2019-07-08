@@ -1,0 +1,157 @@
+import axios from 'axios'
+
+const initialState = {
+  company: {},
+  error: ''
+}
+
+// ACTIONS
+const SET_ERROR = 'SET_ERROR'
+const SET_COMPANY = 'SET_COMPANY'
+const REMOVE_COMPANY = 'REMOVE_COMPANY'
+
+// ACTION CREATORS
+
+const setCompany = company => ({type: SET_COMPANY, company})
+const setError = error => ({type: REMOVE_COMPANY, error})
+const removeCompany = () => ({type: REMOVE_COMPANY})
+
+//THUNKS//
+// PROBLEM SECTIONS
+export const addCustomProblem = (companyId, problem) => {
+  return async dispatch => {
+    try {
+      await axios.post(`/api/company/${companyId}/customproblem`, {problem})
+      dispatch(setCompany(companyId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const removeCustomProblem = (companyId, problemId) => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/api/company/${companyId}/${problemId}`)
+      dispatch(setCompany(companyId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const updateCustomProblem = (companyId, problemId, update) => {
+  return async dispatch => {
+    try {
+      await axios.put(`/api/company/${companyId}/${problemId}`, {update})
+      dispatch(setCompany(companyId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const saveSolutionToCustomProblem = (
+  companyId,
+  problemId,
+  userId,
+  name,
+  solution,
+  isSolved
+) => {
+  return async dispatch => {
+    try {
+      await axios.put(`/api/company/${companyId}/${problemId}`, {
+        userId,
+        name,
+        solution,
+        isSolved
+      })
+      dispatch(setCompany(companyId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+// COMPANY SECTION
+
+export const companySignup = (
+  companyName,
+  companyInfo,
+  companyIndustry,
+  email,
+  password
+) => {
+  return async dispatch => {
+    try {
+      const result = await axios.post('/api/company/signup', {
+        companyName,
+        companyInfo,
+        companyIndustry,
+        email,
+        password
+      })
+      dispatch(setCompany(result.data))
+    } catch (error) {
+      dispatch(setError(error.response.data))
+    }
+  }
+}
+
+export const companyLogin = (email, password) => {
+  return async dispatch => {
+    try {
+      const result = await axios.put('/api/company/login', {email, password})
+      dispatch(setCompany(result.data))
+    } catch (error) {
+      dispatch(setError(error.response.data))
+    }
+  }
+}
+
+export const logout = () => async dispatch => {
+  try {
+    await axios.post('/api/company/logout')
+    dispatch(removeCompany())
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// COMPANY SAVED USER SECTION
+
+export const addSavedUser = (companyId, userId) => {
+  return async dispatch => {
+    try {
+      await axios.post(`/api/company/${companyId}/${userId}`)
+      dispatch(setCompany(companyId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const deleteSavedUser = (companyId, userId) => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/api/company/${companyId}/${userId}`)
+      dispatch(setCompany(companyId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export default function(state = initialState, action) {
+  switch (action.type) {
+    case SET_COMPANY:
+      return {error: '', company: action.company}
+    case REMOVE_COMPANY:
+      return {error: '', company: {}}
+    case SET_ERROR:
+      return {...state, error: action.error}
+    default:
+      return state
+  }
+}
