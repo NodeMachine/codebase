@@ -10,14 +10,15 @@ const {
   addSavedUser,
   getCustomProblems,
   getSavedUsers,
-  deleteSavedUser
+  deleteSavedUser,
+  getSavedUsersTest
 } = require('../db/queryFunctions/companyQueryFunctions')
 
 //GET SINGLE COMPANY BY ID:
-router.get('/:id', async (req, res, next) => {
-  const companyId = req.params.id
-  await getCompanyById(companyId)
-})
+// router.get('/:id', async (req, res, next) => {
+//   const companyId = req.params.id
+//   await getCompanyById(companyId)
+// })
 
 //ADD SAVED USER TO COMPANY:
 router.post('/:companyId/:userId', async (req, res) => {
@@ -28,6 +29,7 @@ router.post('/:companyId/:userId', async (req, res) => {
     req.params.companyId
   )
   await addSavedUser(req.params.companyId, req.params.userId)
+  res.json('User added')
   console.log('user has been saved to company!')
 })
 
@@ -44,8 +46,14 @@ router.delete('/:companyId/:userId', async (req, res) => {
 })
 
 //GET SAVED USERS FROM COMPANY:
-router.get('/:companyId/users', async (req, res) => {
-  const result = await getSavedUsers(req.params.companyId)
+// router.get('/:companyId/users', async (req, res) => {
+//   const result = await getSavedUsers(req.params.companyId)
+//   res.send(result)
+// })
+
+//GET SAVED USERS FROM COMPANY:
+router.get('/:companyId', async (req, res) => {
+  const result = await getSavedUsersTest(req.params.companyId)
   res.send(result)
 })
 

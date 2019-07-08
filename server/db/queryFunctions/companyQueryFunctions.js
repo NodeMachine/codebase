@@ -120,6 +120,21 @@ const getSavedUsers = async companyId => {
   }
 }
 
+const getSavedUsersTest = async companyId => {
+  try {
+    const result = await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .get()
+    result.forEach(user => {
+      console.log('USER TEST ', user.id)
+    })
+    // return savedUsers
+  } catch (error) {
+    console.log('Error in getting saved users', error)
+  }
+}
+
 module.exports = {
   getAllCompanies,
   createCompany,
@@ -128,5 +143,6 @@ module.exports = {
   addSavedUser,
   getCustomProblems,
   getSavedUsers,
-  deleteSavedUser
+  deleteSavedUser,
+  getSavedUsersTest
 }
