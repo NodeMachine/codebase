@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {login, signup} from '../store/user'
+import {login, signup, gotErrorThunk} from '../store/user'
 import {companyLogin, companySignup} from '../store/company'
 import {Redirect} from 'react-router-dom'
 import './auth-form.css'
@@ -15,15 +15,24 @@ class AuthForm extends React.Component {
     this.state = {
       password: '',
       email: '',
-      isCompany: false
+      isCompany: false,
+      error: this.props.error
     }
     this.handleChange = this.handleChange.bind(this)
+  }
+  componentWillUnmount() {
+    if (this.props.error) {
+      this.props.gotError('')
+    }
   }
 
   handleChange(event) {
     event.preventDefault()
+    // console.log("this.state.company.error: ", this.state.error);
+    if (this.props.error) {
+      this.props.gotError('')
+    }
     this.setState({
-      error: '',
       [event.target.name]: event.target.value
     })
   }
@@ -208,7 +217,8 @@ const mapDispatch = dispatch => {
       } catch (error) {
         console.log(error)
       }
-    }
+    },
+    gotError: error => dispatch(gotErrorThunk(error))
   }
 }
 
