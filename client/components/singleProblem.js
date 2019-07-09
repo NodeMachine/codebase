@@ -110,6 +110,14 @@ class SingleProblem extends Component {
     return (
       <div className="singleProblemContainer">
         <div className="codeSandboxContainer">
+          <div className="directions">
+            <h4>Directions</h4>
+            <hr />
+            <p>
+              Write your code inside the function definition. Please note that
+              the function does not need to be invoked.
+            </p>
+          </div>
           <AceEditor
             mode="javascript"
             theme="monokai"
