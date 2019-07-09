@@ -9,13 +9,8 @@ const MainPage = props => {
           <hr />
         </div>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          elementum leo eu accumsan tincidunt. Cras ac lectus nec elit venenatis
-          molestie. Maecenas facilisis vulputate dapibus. Morbi eu purus leo.
-          Phasellus ipsum felis, commodo vel mattis sed, laoreet sit amet
-          libero. Nam malesuada dui vel nibh volutpat, at efficitur sapien
-          vehicula. Sed tempor neque ut venenatis gravida. Praesent nec erat
-          odio.
+          Improve your coding skills, prepare for your next interview, and
+          showcase your skills to employers.
         </p>
       </div>
 
