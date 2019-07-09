@@ -60,18 +60,25 @@ router.post('/signup', async (req, res, next) => {
     const email = req.body.email
     const password = req.body.password
 
-    auth.createUserWithEmailAndPassword(email, password).then(async user => {
-      const company = await createCompany({
-        companyName: companyName,
-        companyInfo: companyInfo,
-        companyIndustry: companyIndustry,
-        email: email,
-        authId: user.user.uid,
-        customProblems: {},
-        savedUsers: []
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(async user => {
+        const company = await createCompany({
+          companyName: companyName,
+          companyInfo: companyInfo,
+          companyIndustry: companyIndustry,
+          email: email,
+          authId: user.user.uid,
+          customProblems: {},
+          savedUsers: []
+        })
+        console.log('RES COMPANY ', company)
+        res.send(company)
       })
-      res.send(company)
-    })
+      .catch(error => {
+        const errorMessage = error.message
+        res.status(401).send(errorMessage)
+      })
   } catch (error) {
     next(error)
   }

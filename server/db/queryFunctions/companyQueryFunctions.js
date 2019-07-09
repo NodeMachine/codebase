@@ -16,10 +16,31 @@ const getAllCompanies = async () => {
   }
 }
 
+const getCompanyByAuthId = async authid => {
+  try {
+    const results = await db
+      .collection('companies')
+      .where('authId', '==', `${authid}`)
+      .get()
+    let result
+    results.forEach(doc => {
+      if (doc) {
+        result = {id: doc.id, ...doc.data()}
+      } else {
+        console.log('User does not exist')
+      }
+    })
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const createCompany = async company => {
   try {
     await db.collection('companies').add(company)
-    console.log('Company has been added.')
+    const companyRes = await getCompanyByAuthId(company.authId)
+    return companyRes
   } catch (error) {
     console.log('Error in creating company', error)
   }

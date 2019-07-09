@@ -38,7 +38,7 @@ class AuthForm extends React.Component {
         <h2 id="form-title">{displayName}</h2>
         <form
           onSubmit={event => {
-            handleSubmit(event)
+            this.props.handleSubmit(event)
             if (!this.props.error) {
               this.setState({email: '', password: ''})
               this.props.history.push('/')
