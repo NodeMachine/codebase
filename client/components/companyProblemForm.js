@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-//import thunk!
+import {addCustomProblem} from '../store/company'
 
 class CompanyProblemForm extends React.Component {
   constructor(props) {
@@ -50,6 +50,8 @@ class CompanyProblemForm extends React.Component {
     problem.test.push(`${functionName}(${input3})`)
     problem.test.push(output3)
 
+    this.props.addProblem(this.props.id, problem)
+
     this.setState({
       typeOf: '',
       prompt: '',
@@ -61,7 +63,6 @@ class CompanyProblemForm extends React.Component {
       input3: '',
       output3: ''
     })
-    //  CALL THIS.STATE DISPATCH FUNCTION HERE
   }
 
   render() {
@@ -150,8 +151,13 @@ class CompanyProblemForm extends React.Component {
   }
 }
 
-mapDistpatchToProps = dispatch => ({
-  //dispatch goes here
+const mapStateToProps = state => ({
+  id: state.company.company.id
 })
 
-export default connect(null, mapDistpatchToProps)(CompanyProblemForm)
+const mapDistpatchToProps = dispatch => ({
+  addProblem: (companyId, problem) =>
+    dispatch(addCustomProblem(companyId, problem))
+})
+
+export default connect(mapStateToProps, mapDistpatchToProps)(CompanyProblemForm)

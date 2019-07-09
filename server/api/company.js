@@ -14,7 +14,8 @@ const {
   addUserSolutionToCustomProblem,
   deleteCustomProblem,
   getCompanyByAuthId,
-  deleteSavedUser
+  deleteSavedUser,
+  updateCompany
 } = require('../db/queryFunctions/companyQueryFunctions')
 
 //COMPANY LOGIN:
@@ -187,6 +188,17 @@ router.delete('/:companyId/:problemId', async (req, res, next) => {
   try {
     await deleteCustomProblem(req.params.companyId, req.params.problemId)
     res.send('Custom problem was removed')
+  } catch (error) {
+    next(error)
+  }
+})
+
+// UPDATE COMPANY
+router.put('/:companyId', async (req, res, next) => {
+  try {
+    await updateCompany(req.params.companyId, req.body.update)
+    const company = await getCompanyById(req.params.companyId)
+    res.send(company)
   } catch (error) {
     next(error)
   }
