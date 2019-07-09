@@ -32,7 +32,7 @@ const CompanyProfile = props => {
         <h2>Saved Users</h2>
         <hr />
         {company.savedUsers.length ? (
-          <CompanySavedUsersList />
+          <CompanySavedUsersList users={company.savedUsers} />
         ) : (
           <h4>No saved useres yet!</h4>
         )}
