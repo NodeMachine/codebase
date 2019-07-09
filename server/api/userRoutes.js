@@ -184,8 +184,7 @@ const s3 = new AWS.S3({
 router.post('/uploadpic/:id', form.single('image'), async (req, res, next) => {
   try {
     const userId = req.params.id
-    const date = new Date()
-    console.log(date)
+    const date = Date.now()
     const params = {
       Bucket: 'nodemachinecapstone',
       Key: userId + date,
