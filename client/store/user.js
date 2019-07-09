@@ -29,6 +29,14 @@ const gotError = error => ({type: SET_ERROR, error})
 /**
  * THUNK CREATORS
  */
+export const gotErrorThunk = error => {
+  console.log('gotErrorThunk called!, error: ', error)
+  return dispatch => {
+    console.log('about to dispatch gotError action! ')
+    dispatch(gotError(error))
+  }
+}
+
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
