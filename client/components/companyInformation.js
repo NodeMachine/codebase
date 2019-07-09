@@ -40,7 +40,6 @@ class CompanyInformation extends Component {
 
   render() {
     const company = this.props.company
-    console.log('COMPANY STATE', this.state)
     if (this.state.editMode) {
       return (
         <form className="profile-description-form" onSubmit={this.handleSubmit}>

@@ -186,19 +186,19 @@ router.post('/addSolution/:companyId/:problemId', async (req, res, next) => {
   }
 })
 
-// // UPDATE CUSTOM PROBLEM
-// router.put('/:companyId/:problemId', async (req, res, next) => {
-//   try {
-//     await updateCustomProblem(
-//       req.params.companyId,
-//       req.params.problemId,
-//       req.body.update
-//     )
-//     res.send('Problem updated!')
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+// UPDATE CUSTOM PROBLEM
+router.put('/:companyId/:problemId', async (req, res, next) => {
+  try {
+    await updateCustomProblem(
+      req.params.companyId,
+      req.params.problemId,
+      req.body.update
+    )
+    res.send('Problem updated!')
+  } catch (error) {
+    next(error)
+  }
+})
 
 // REMOVE CUSTOM PROBLEM
 router.delete('/:companyId/:problemId', async (req, res, next) => {
@@ -215,8 +215,8 @@ router.put('/:companyId', async (req, res, next) => {
   try {
     await updateCompany(req.params.companyId, req.body.update)
     const company = await getCompanyById(req.params.companyId)
-    res.send('Company added successfully')
-    // res.send(company);
+    console.log(company)
+    res.send(company)
   } catch (error) {
     next(error)
   }
