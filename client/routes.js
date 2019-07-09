@@ -7,6 +7,7 @@ import UserProfile from './components/userProfile'
 import ProblemList from './components/problemsList'
 import SingleProblem from './components/singleProblem'
 import {me} from './store'
+import {company} from './store/company'
 
 /**
  * COMPONENT
@@ -14,6 +15,7 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.loadCompanyData()
   }
 
   render() {
@@ -63,6 +65,9 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    loadCompanyData() {
+      dispatch(company())
     }
   }
 }
