@@ -100,6 +100,7 @@ export const companySignup = (
 }
 
 export const companyLogin = (email, password) => {
+  console.log('HERE')
   return async dispatch => {
     try {
       const result = await axios.put('/api/company/login', {email, password})
