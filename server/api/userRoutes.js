@@ -19,7 +19,7 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   //auth.onAuthStateChanged(async user => {
-  if (req.session.isAdmin) {
+  if (req.session.isAdmin || req.session.companyId) {
     try {
       const users = await getAllUsers()
       res.send(users)
