@@ -1,5 +1,4 @@
 import React from 'react'
-import ProblemsList from './problemsList'
 import './mainPage.css'
 
 const MainPage = props => {
