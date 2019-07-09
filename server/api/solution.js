@@ -2,6 +2,7 @@ const router = require('express').Router()
 const puppeteer = require('puppeteer')
 const path = require('path')
 const {getProblemById} = require('../db/queryFunctions/problemQueryFunctions')
+const {getCustomProblem} = require('../db/queryFunctions/companyQueryFunctions')
 
 module.exports = router
 
@@ -49,12 +50,17 @@ tests()`
   return html
 }
 
-// Post requests will eventually have an id parameter which will be used to query tests from the database
-router.post('/:id', async (req, res, next) => {
+router.post('/:id/:companyId?', async (req, res, next) => {
   try {
     const code = req.body.code
     const problemId = req.params.id
-    const problem = await getProblemById(problemId)
+    const companyId = req.params.companyId
+    let problem
+    if (companyId) {
+      problem = await getCustomProblem(companyId, problemId)
+    } else {
+      problem = await getProblemById(problemId)
+    }
     const expectedOutput = problem.tests.filter((el, ind) => ind % 2 !== 0)
     const tests = problem.tests.filter((el, ind) => ind % 2 === 0)
     const inputs = tests.map(el => {
