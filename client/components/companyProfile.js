@@ -1,9 +1,9 @@
 import React from 'react'
-import connect from 'react-redux'
+import {connect} from 'react-redux'
 import CompanyProblemsList from './companyProblemsList'
 import CompanySavedUsersList from './companySavedUsersList'
 import CompanyProblemForm from './companyProblemForm'
-import ComapnyInformation from './companyInformation'
+import CompanyInformation from './companyInformation'
 import {Redirect} from 'react-router-dom'
 import './userProfile.css'
 
@@ -21,7 +21,7 @@ const CompanyProfile = props => {
           <h1>{company.name}</h1>
         </div>
         <div>
-          <ComapnyInformation />
+          <CompanyInformation />
         </div>
         <div>
           <CompanyProblemForm />
