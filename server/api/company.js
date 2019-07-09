@@ -27,10 +27,9 @@ router.put('/login', async (req, res, next) => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        getCompanyByAuthId(user.user.uid).then(async company => {
+        getCompanyByAuthId(user.user.uid).then(company => {
           req.session.companyId = company.id
-          const customProblems = await getCustomProblems(company.id)
-          res.send({...company, customProblems})
+          res.send(company)
         })
       })
       .catch(error => {
@@ -73,6 +72,7 @@ router.post('/signup', async (req, res, next) => {
           authId: user.user.uid,
           savedUsers: []
         })
+        company.customProblems = []
         res.send(company)
       })
       .catch(error => {
@@ -103,8 +103,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const companyId = req.params.id
     const company = await getCompanyById(companyId)
-    const customProblems = await getCustomProblems(companyId)
-    res.send({...company, customProblems})
+    res.send(company)
   } catch (error) {
     next(error)
   }
@@ -214,7 +213,6 @@ router.put('/:companyId', async (req, res, next) => {
   try {
     await updateCompany(req.params.companyId, req.body.update)
     const company = await getCompanyById(req.params.companyId)
-    console.log(company)
     res.send(company)
   } catch (error) {
     next(error)

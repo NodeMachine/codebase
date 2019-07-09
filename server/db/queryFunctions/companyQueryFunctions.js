@@ -14,26 +14,6 @@ const getAllCompanies = async () => {
   }
 }
 
-const getCompanyByAuthId = async authid => {
-  try {
-    const results = await db
-      .collection('companies')
-      .where('authId', '==', `${authid}`)
-      .get()
-    let result
-    results.forEach(doc => {
-      if (doc) {
-        result = {id: doc.id, ...doc.data()}
-      } else {
-        console.log('User does not exist')
-      }
-    })
-    return result
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 const createCompany = async company => {
   try {
     await db.collection('companies').add(company)
@@ -41,23 +21,6 @@ const createCompany = async company => {
     return companyRes
   } catch (error) {
     console.log('Error in creating company', error)
-  }
-}
-
-const getCompanyById = async companyId => {
-  try {
-    const company = await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .get()
-    if (company.exists) {
-      //return {id: companyId, ...company.data}
-      return {id: company.id, ...company.data()}
-    } else {
-      console.log('Company does not exist.')
-    }
-  } catch (error) {
-    console.log('Error getting company by ID', error)
   }
 }
 
@@ -228,6 +191,47 @@ const updateCustomProblem = async (companyId, problemId, updateObject) => {
     return 'Custom problem was updated'
   } catch (error) {
     console.log('Error in updating problem', error)
+  }
+}
+
+const getCompanyByAuthId = async authid => {
+  try {
+    const results = await db
+      .collection('companies')
+      .where('authId', '==', `${authid}`)
+      .get()
+    let result
+    results.forEach(doc => {
+      if (doc) {
+        result = {id: doc.id, ...doc.data()}
+      } else {
+        console.log('User does not exist')
+      }
+    })
+    const problems = await getCustomProblems(result.id)
+    result.customProblems = problems
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getCompanyById = async companyId => {
+  try {
+    const data = await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .get()
+    if (data.exists) {
+      const problems = await getCustomProblems(companyId)
+      const company = {id: data.id, ...data.data()}
+      company.customProblems = problems
+      return company
+    } else {
+      console.log('Company does not exist.')
+    }
+  } catch (error) {
+    console.log('Error getting company by ID', error)
   }
 }
 

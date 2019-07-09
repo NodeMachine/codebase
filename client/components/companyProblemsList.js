@@ -3,6 +3,7 @@ import {addSavedUser, deleteSavedUser} from '../store/company'
 import {connect} from 'react-redux'
 
 const CompanyProblemsList = props => {
+  const id = props.company.id
   return (
     <ul>
       {props.problems.map(problem => {
@@ -10,34 +11,40 @@ const CompanyProblemsList = props => {
           <li key={problem.id}>
             <h3>{problem.name}</h3>
             <p>{problem.prompt}</p>
-            {/* <a>{problem.link || or something so that they can give url to user}</a> */}
+            <p onClick={() => document.execCommand('copy')}>
+              {`https://nodemachine.herokuapp.com/problems/${problem.id}/${id}`}
+            </p>
             <details>
-              {problem.users.map(user => {
-                return (
-                  <div key={user.id}>
-                    <p>user.name</p>
-                    <p>user.pass</p>
-                    {props.savedUsers.includes(user.id) ? (
-                      <button
-                        type="button"
-                        onClick={() => props.deleteUser(props.id, user.id)}
-                      >
-                        Remove user
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => props.addUser(props.id, user.id)}
-                      >
-                        Save user
-                      </button>
-                    )}
-                    <details>
-                      <code>user.solution</code>
-                    </details>
-                  </div>
-                )
-              })}
+              {problem.users && problem.users.length ? (
+                problem.users.map(user => {
+                  return (
+                    <div key={user.id}>
+                      <p>user.name</p>
+                      <p>user.pass</p>
+                      {props.savedUsers.includes(user.id) ? (
+                        <button
+                          type="button"
+                          onClick={() => props.deleteUser(props.id, user.id)}
+                        >
+                          Remove user
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => props.addUser(props.id, user.id)}
+                        >
+                          Save user
+                        </button>
+                      )}
+                      <details>
+                        <code>user.solution</code>
+                      </details>
+                    </div>
+                  )
+                })
+              ) : (
+                <p>No developers have submitted solution code.</p>
+              )}
             </details>
           </li>
         )
@@ -49,7 +56,7 @@ const CompanyProblemsList = props => {
 const mapStateToProps = state => ({
   problems: state.company.company.customProblems,
   savedUsers: state.company.company.savedUsers,
-  id: state.company.company.id
+  company: state.company.company
 })
 
 const mapDispatchToProps = dispatch => ({

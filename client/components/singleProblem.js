@@ -125,11 +125,16 @@ class SingleProblem extends Component {
             name="UNIQUE_ID_OF_DIV"
             value={this.state.code}
             editorProps={{$blockScrolling: true}}
-            height="75vh"
+            height="70vh"
             width="50vw"
           />
           <div className="buttonContainer">
-            <button type="button" onClick={() => this.handleReset()}>
+            <button
+              id="reset-code-button"
+              disabled={this.state.loading}
+              type="button"
+              onClick={() => this.handleReset()}
+            >
               Reset code
             </button>
             <button type="button" onClick={() => this.handleSubmit()}>
