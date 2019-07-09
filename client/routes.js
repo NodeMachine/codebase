@@ -8,6 +8,7 @@ import ProblemListPage from './components/problemsListPage'
 import SingleProblem from './components/singleProblem'
 import {me} from './store'
 import {company} from './store/company'
+import CompanyProfile from './components/companyProfile'
 
 /**
  * COMPONENT
@@ -30,6 +31,7 @@ class Routes extends Component {
 
         <Route path="/companyhome" component={CompanyHome} />
         <Route path="/profile" component={UserProfile} />
+        <Route path="/companyprofile" component={CompanyProfile} />
 
         <Route path="/" component={MainPage} />
 

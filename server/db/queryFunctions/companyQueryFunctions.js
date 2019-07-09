@@ -66,7 +66,7 @@ const getCompanyById = async companyId => {
       .doc(`${companyId}`)
       .get()
     if (company.exists) {
-      return company
+      return {id: company.id, ...company.data()}
     } else {
       console.log('Company does not exist.')
     }
