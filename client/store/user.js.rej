@@ -1,0 +1,12 @@
+diff a/client/store/user.js b/client/store/user.js	(rejected hunks)
+@@ -32,5 +32,5 @@ const gotError = error => ({type: SET_ERROR, error})
+-export const gotErrorThunk = (error) => {
+-  console.log("gotErrorThunk called!, error: ", error);
+-  return (dispatch) => {
+-    console.log('about to dispatch gotError action! ');
+-    dispatch(gotError(error));
++export const gotErrorThunk = error => {
++  console.log('gotErrorThunk called!, error: ', error)
++  return dispatch => {
++    console.log('about to dispatch gotError action! ')
++    dispatch(gotError(error))
