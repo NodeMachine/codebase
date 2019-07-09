@@ -146,7 +146,25 @@ class CompanyProblemForm extends React.Component {
             value={this.state.output3}
           />
         </div>
-        <button type="submit">Submit</button>
+
+        <button
+          type="submit"
+          disabled={
+            !(
+              this.state.typeOf &&
+              this.state.prompt &&
+              this.state.name &&
+              this.state.input1 &&
+              this.state.output1 &&
+              this.state.input2 &&
+              this.state.output2 &&
+              this.state.input3 &&
+              this.state.output3
+            )
+          }
+        >
+          Submit
+        </button>
       </form>
     )
   }

@@ -2,8 +2,6 @@ const {db} = require('./index')
 const {getUserById} = require('./userQueryFunctions')
 const FieldValue = require('firebase-admin').firestore.FieldValue
 
-const companyLogin = async (companyId, password) => {}
-
 const getAllCompanies = async () => {
   try {
     const result = await db.collection('companies').get()
@@ -46,19 +44,6 @@ const createCompany = async company => {
   }
 }
 
-const createCustomProblem = async (companyId, problem) => {
-  try {
-    await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .collection('customProblems')
-      .add(problem)
-    console.log('Custom problem has been added.')
-  } catch (error) {
-    console.log('Error in creating custom problem', error)
-  }
-}
-
 const getCompanyById = async companyId => {
   try {
     const company = await db
@@ -66,12 +51,28 @@ const getCompanyById = async companyId => {
       .doc(`${companyId}`)
       .get()
     if (company.exists) {
+      //return {id: companyId, ...company.data}
       return {id: company.id, ...company.data()}
     } else {
       console.log('Company does not exist.')
     }
   } catch (error) {
     console.log('Error getting company by ID', error)
+  }
+}
+
+const createCustomProblem = async (companyId, problem) => {
+  try {
+    await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('customProblems')
+      .add(problem)
+
+    const updatedCompany = await getCompanyById(companyId)
+    return updatedCompany
+  } catch (error) {
+    console.log('Error in creating custom problem', error)
   }
 }
 
@@ -88,7 +89,9 @@ const addSavedUser = async (companyId, userId) => {
       .collection('companies')
       .doc(`${companyId}`)
       .update({savedUsers: savedUsers})
-    console.log('User has been saved')
+
+    const updatedCompany = await getCompanyById(companyId)
+    return updatedCompany
   } catch (error) {
     console.log('Error in adding saved user', error)
   }
@@ -160,6 +163,8 @@ const updateCompany = async (companyId, properties) => {
       .collection('companies')
       .doc(`${companyId}`)
       .update(...updates)
+    const updatedCompany = await getCompanyById(companyId)
+    return updatedCompany
   } catch (error) {
     console.log('Error in updating company:', error)
   }

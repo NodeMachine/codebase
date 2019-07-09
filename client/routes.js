@@ -6,7 +6,7 @@ import {Login, Signup, UserHome, CompanyHome, MainPage} from './components'
 import UserProfile from './components/userProfile'
 import ProblemListPage from './components/problemsListPage'
 import SingleProblem from './components/singleProblem'
-import {me} from './store'
+import {me, companyMe} from './store'
 import {company} from './store/company'
 import CompanyProfile from './components/companyProfile'
 
@@ -29,7 +29,7 @@ class Routes extends Component {
         <Route exact path="/problems" component={ProblemListPage} />
         <Route path="/problems/:id?/:companyId?" component={SingleProblem} />
 
-        <Route path="/companyhome" component={CompanyHome} />
+        <Route path="/developers" component={CompanyHome} />
         <Route path="/profile" component={UserProfile} />
         <Route path="/companyprofile" component={CompanyProfile} />
 
@@ -66,6 +66,7 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      dispatch(companyMe())
     }
   }
 }
