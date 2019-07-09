@@ -8,6 +8,7 @@ import ProblemListPage from './components/problemsListPage'
 import SingleProblem from './components/singleProblem'
 import {me} from './store'
 import {company} from './store/company'
+import CompanyProfile from './components/companyProfile'
 
 /**
  * COMPONENT
@@ -26,10 +27,11 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/problems" component={ProblemListPage} />
-        <Route path="/problems/:id" component={SingleProblem} />
+        <Route path="/problems/:id?/:companyId?" component={SingleProblem} />
 
         <Route path="/developers" component={CompanyHome} />
         <Route path="/profile" component={UserProfile} />
+        <Route path="/companyprofile" component={CompanyProfile} />
 
         <Route path="/" component={MainPage} />
 

@@ -66,7 +66,7 @@ const getCompanyById = async companyId => {
       .doc(`${companyId}`)
       .get()
     if (company.exists) {
-      return company
+      return {id: company.id, ...company.data()}
     } else {
       console.log('Company does not exist.')
     }
@@ -158,10 +158,71 @@ const updateCompany = async (companyId, properties) => {
     }
     await db
       .collection('companies')
-      .doc(`${id}`)
+      .doc(`${companyId}`)
       .update(...updates)
   } catch (error) {
     console.log('Error in updating company:', error)
+  }
+}
+
+const getCustomProblem = async (companyId, problemId) => {
+  try {
+    const problemData = await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('customProblems')
+      .doc(`${problemId}`)
+      .get()
+
+    const problem = {id: problemData.id, ...problemData.data()}
+    delete problem.users
+    return problem
+  } catch (error) {
+    console.log('Error in getting single problem', error)
+  }
+}
+
+const addUserSolutionToCustomProblem = async (
+  companyId,
+  problemId,
+  userId,
+  name,
+  solution,
+  isSolved
+) => {
+  try {
+    const problemData = await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('customProblems')
+      .doc(`${problemId}`)
+      .get()
+    const problem = problemData.data()
+    let users = problem.users
+    users[userId] = {name: name, solution: solution, isSolved: isSolved}
+    await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('customProblems')
+      .doc(`${problemId}`)
+      .update({users})
+    return 'Solution added'
+  } catch (error) {
+    console.log('Error in adding user solution', error)
+  }
+}
+
+const updateCustomProblem = async (companyId, problemId, updateObject) => {
+  try {
+    await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('customProblems')
+      .doc(`${problemId}`)
+      .update(updateObject)
+    return 'Custom problem was updated'
+  } catch (error) {
+    console.log('Error in updating problem', error)
   }
 }
 
@@ -175,5 +236,8 @@ module.exports = {
   getSavedUsers,
   deleteSavedUser,
   updateCompany,
-  getCompanyByAuthId
+  getCompanyByAuthId,
+  getCustomProblem,
+  addUserSolutionToCustomProblem,
+  updateCustomProblem
 }
