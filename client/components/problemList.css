@@ -2,6 +2,7 @@
   margin-top: 10vh;
   display: flex;
   justify-content: center;
+  /* flex-direction: column; */
 }
 
 .container h3 {
@@ -63,4 +64,13 @@
 .problemName h4 {
   text-decoration: underline;
   text-decoration-color: #6ff9ff;
+}
+
+.filters {
+  display: flex;
+  margin-top: 10vh;
+  /* align-items: center; */
+  flex-direction: column;
+  width: 10%;
+  align-content: center;
 }
