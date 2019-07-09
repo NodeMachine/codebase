@@ -24,6 +24,7 @@ const CompanyProfile = props => {
           <CompanyInformation />
         </div>
         <div>
+          <h2>Create a problem:</h2>
           <CompanyProblemForm />
         </div>
       </div>

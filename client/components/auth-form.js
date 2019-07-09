@@ -29,13 +29,16 @@ class AuthForm extends React.Component {
   }
 
   isCompanyToggle() {
-    //this.setState({isCompany: !this.state.isCompany});
     this.setState({isCompany: !this.state.isCompany})
   }
 
   render() {
     const {name, displayName, handleSubmit, error} = this.props
-
+    if (this.props.company.id) {
+      this.props.history.push('/companyprofile')
+    } else if (this.props.user.id) {
+      this.props.history.push('/profile')
+    }
     return (
       <div id="form-wrapper">
         <h2 id="form-title">{displayName}</h2>
@@ -44,7 +47,6 @@ class AuthForm extends React.Component {
             this.props.handleSubmit(event)
             if (!this.props.error) {
               this.setState({email: '', password: ''})
-              this.props.history.push('/')
             }
           }}
           name={name}
@@ -149,7 +151,9 @@ const mapLogin = state => {
   return {
     name: 'login',
     displayName: 'Login',
-    error: state.user.error
+    error: state.user.error,
+    company: state.company.company,
+    user: state.user.singleUser
   }
 }
 
@@ -157,7 +161,9 @@ const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error
+    error: state.user.error,
+    company: state.company.company,
+    user: state.user.singleUser
   }
 }
 
@@ -170,25 +176,21 @@ const mapDispatch = dispatch => {
         const email = evt.target.email.value
         const password = evt.target.password.value
         const isCompany = evt.target.isCompany.checked
-        console.log('isCompany in handleSubmit: ', isCompany)
 
         if (formName === 'login') {
           //LOGIN FOR REGULAR USER:
           if (!isCompany) {
             dispatch(login(email, password))
           } else {
-            console.log('email in submit: ', email)
             dispatch(companyLogin(email, password))
           }
         } else {
           //IF COMPANY NAME IS SIGNUP:
           if (!isCompany) {
-            console.log('not a company in auth form!')
             const firstName = evt.target.firstName.value
             const lastName = evt.target.lastName.value
             dispatch(signup(firstName, lastName, email, password))
           } else {
-            console.log('company in auth form!')
             const companyName = evt.target.companyName.value
             const companyInfo = evt.target.companyInfo.value
             const companyIndustry = evt.target.companyIndustry.value
