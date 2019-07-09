@@ -17,11 +17,12 @@ const setError = error => ({type: REMOVE_COMPANY, error})
 const removeCompany = () => ({type: REMOVE_COMPANY})
 
 //THUNKS//
+
 // PROBLEM SECTIONS
 export const addCustomProblem = (companyId, problem) => {
   return async dispatch => {
     try {
-      await axios.post(`/api/company/${companyId}/customproblem`, {problem})
+      await axios.put(`/api/company/${companyId}/customproblem`, {problem})
       dispatch(setCompany(companyId))
     } catch (error) {
       console.log(error)
@@ -61,13 +62,13 @@ export const saveSolutionToCustomProblem = (
 ) => {
   return async dispatch => {
     try {
-      await axios.put(`/api/company/${companyId}/${problemId}`, {
+      await axios.post(`/api/company/addSolution/${companyId}/${problemId}`, {
         userId,
         name,
         solution,
         isSolved
       })
-      dispatch(setCompany(companyId))
+      // dispatch(setCompany(companyId))
     } catch (error) {
       console.log(error)
     }

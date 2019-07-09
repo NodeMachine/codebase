@@ -25,7 +25,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/problems" component={ProblemList} />
-        <Route path="/problems/:id" component={SingleProblem} />
+        <Route path="/problems/:id?/:companyId?" component={SingleProblem} />
 
         <Route path="/companyhome" component={CompanyHome} />
         <Route path="/profile" component={UserProfile} />

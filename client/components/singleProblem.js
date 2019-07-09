@@ -5,6 +5,7 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import {getSingleProblem} from '../store/problems'
 import {saveSolution} from '../store/user'
+import {saveSolutionToCustomProblem} from '../store/company'
 import ResultWindow from './resultWindow'
 import './singleProblem.css'
 import 'brace/mode/javascript'
@@ -26,7 +27,14 @@ class SingleProblem extends Component {
   }
 
   componentDidMount() {
-    this.props.getSingleProblem(this.props.match.params.id)
+    if (this.props.match.params.companyId) {
+      this.props.getSingleProblem(
+        this.props.match.params.id,
+        this.props.match.params.companyId
+      )
+    } else {
+      this.props.getSingleProblem(this.props.match.params.id)
+    }
   }
 
   componentDidUpdate() {
@@ -35,7 +43,7 @@ class SingleProblem extends Component {
     if (!this.state.code) {
       if (user.problems && user.problems[problem.id]) {
         this.setState({code: user.problems[problem.id].solution})
-      } else {
+      } else if (this.props.problem.defaultCode) {
         this.setState({
           code:
             this.props.problem.defaultCode.replace(/\\n/g, '\n') ||
@@ -52,21 +60,44 @@ class SingleProblem extends Component {
   async handleSubmit() {
     this.setState({loading: true})
     try {
-      const {data} = await axios.post(
-        `/api/solution/${this.props.problem.id}`,
-        this.state
-      )
+      const companyId = this.props.match.params.companyId
+      let result
+      if (!this.props.match.params.companyId) {
+        const {data} = await axios.post(
+          `/api/solution/${this.props.problem.id}`,
+          this.state
+        )
+        result = data
+      } else {
+        const {data} = await axios.post(
+          `/api/solution/${this.props.problem.id}/${companyId}`,
+          this.state
+        )
+        result = data
+      }
       if (this.props.user.id) {
+        const problemId = this.props.problem.id
         const problem = this.props.problem
         const userId = this.props.user.id
-        const isSolved = data.every(test => test.pass === true)
+        const name = this.props.user.firstName + ' ' + this.props.user.lastName
+        const isSolved = result.every(test => test.pass === true)
         const solution = this.state.code
-        this.props.saveSolution(problem, userId, isSolved, solution)
+        if (companyId) {
+          this.props.saveCustomSolution(
+            companyId,
+            problemId,
+            userId,
+            name,
+            solution,
+            isSolved
+          )
+        } else {
+          this.props.saveSolution(problem, userId, isSolved, solution)
+        }
       }
       this.setState({loading: false})
-      this.setState({result: data})
+      this.setState({result})
     } catch (error) {
-      console.error("Something went wrong submitting user's code", error)
       this.setState({result: 'Your code timed out'})
     }
   }
@@ -90,8 +121,12 @@ class SingleProblem extends Component {
             width="50vw"
           />
           <div className="buttonContainer">
-            <button onClick={() => this.handleReset()}>Reset code</button>
-            <button onClick={() => this.handleSubmit()}>Run code</button>
+            <button type="button" onClick={() => this.handleReset()}>
+              Reset code
+            </button>
+            <button type="button" onClick={() => this.handleSubmit()}>
+              Run code
+            </button>
           </div>
         </div>
         <div className="promptResultContainer">
@@ -119,12 +154,6 @@ class SingleProblem extends Component {
   }
 }
 
-const style = {
-  outerDiv: {
-    display: 'flex'
-  }
-}
-
 const mapState = state => {
   return {
     problem: state.problems.singleProblem,
@@ -134,9 +163,28 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getSingleProblem: problemId => dispatch(getSingleProblem(problemId)),
+    getSingleProblem: (problemId, companyId) =>
+      dispatch(getSingleProblem(problemId, companyId)),
     saveSolution: (problem, userId, isSolved, solution) =>
-      dispatch(saveSolution(problem, userId, isSolved, solution))
+      dispatch(saveSolution(problem, userId, isSolved, solution)),
+    saveCustomSolution: (
+      companyId,
+      problemId,
+      userId,
+      name,
+      solution,
+      isSolved
+    ) =>
+      dispatch(
+        saveSolutionToCustomProblem(
+          companyId,
+          problemId,
+          userId,
+          name,
+          solution,
+          isSolved
+        )
+      )
   }
 }
 

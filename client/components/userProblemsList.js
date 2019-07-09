@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom'
 import './userProfile.css'
 
 const UserProblemList = props => {
-  console.log(props)
   return (
     <div className="user-problems">
       <ul>
