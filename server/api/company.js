@@ -76,11 +76,11 @@ router.post('/signup', async (req, res, next) => {
           savedUsers: []
         })
         console.log('RES COMPANY ', company)
-        res.send(company)
+        res.status(201).send(company)
       })
       .catch(error => {
         const errorMessage = error.message
-        res.status(401).send(errorMessage)
+        res.status(400).send(errorMessage)
       })
   } catch (error) {
     next(error)
