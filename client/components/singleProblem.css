@@ -51,6 +51,10 @@ button {
   margin-left: 5px;
 }
 
+button:disabled {
+  opacity: 0.2;
+}
+
 ul {
   list-style: none;
   padding-left: 0;
