@@ -10,6 +10,25 @@ import {ProblemListItem} from './problemListItem'
 class ProblemListPage extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      filter: [
+        'arrays',
+        'dynamic programming',
+        'strings',
+        'sorting',
+        'data structures'
+      ]
+    }
+  }
+
+  addFilter = category => {
+    const updatedFilter = this.state.filter.concat(category)
+    this.setState({filter: updatedFilter})
+  }
+  removeFilter = category => {
+    const updatedFilter = this.state.filter.filter(el => el === category)
+    console.log('UPDATED FILTER', updatedFilter)
+    this.setState({filter: updatedFilter})
   }
 
   componentDidMount() {
@@ -17,9 +36,54 @@ class ProblemListPage extends Component {
     this.props.clearSingleProblem()
   }
 
+  handleClick = evt => {
+    console.log('STATE', this.state)
+    if (evt.target.checked) {
+      this.addFilter(evt.target.name)
+    } else {
+      this.removeFilter(evt.target.name)
+    }
+  }
   render() {
     return (
       <div className="container">
+        <div>
+          <input
+            type="checkbox"
+            name="strings"
+            onClick={this.handleClick}
+            checked
+          />
+          <label htmlFor="strings">Strings</label>
+          <input
+            type="checkbox"
+            name="arrays"
+            onClick={this.handleClick}
+            checked
+          />
+          <label htmlFor="arrays">Arrays</label>
+          <input
+            type="checkbox"
+            name="sorting"
+            onClick={this.handleClick}
+            checked
+          />
+          <label htmlFor="sorting">Sorting</label>
+          <input
+            type="checkbox"
+            name="data structures"
+            onClick={this.handleClick}
+            checked
+          />
+          <label htmlFor="data structures">Data Structures</label>
+          <input
+            type="checkbox"
+            name="dynamic programming"
+            onClick={this.handleClick}
+            defaultChecked={true}
+          />
+          <label htmlFor="dynamic programming">Dynamic Programming</label>
+        </div>
         <div className="problem-list-container">
           <div className="problem-list-title-container">
             <div className="problemName title">
@@ -40,8 +104,8 @@ class ProblemListPage extends Component {
           </div>
           {this.props.problems
             .filter(problem => {
-              if (!this.props.filter) return true
-              else return problem.category === this.props.filter
+              if (!this.state.filter.length) return true
+              else return this.state.filter.includes(problem.category)
             })
             .map(el => {
               return <ProblemListItem problem={el} key={el.id} />
