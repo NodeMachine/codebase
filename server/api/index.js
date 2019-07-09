@@ -4,7 +4,6 @@ module.exports = router
 router.use('/users', require('./userRoutes'))
 router.use('/solution', require('./solution'))
 router.use('/problems', require('./problems'))
-router.use('/companyUsers', require('./companyUsers'))
 router.use('/company', require('./company'))
 
 router.use((req, res, next) => {

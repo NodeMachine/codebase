@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getAllUsers} from '../store/user'
 import {Link} from 'react-router-dom'
-import {addSavedUserThunk} from '../store/company'
+import {addSavedUser} from '../store/company'
 
 ///PROGRAMMING/Fullstack_Academy/capstone/codebase/client/store/company.js
 ///PROGRAMMING/Fullstack_Academy/capstone/codebase/client/components/companyHome.js
@@ -76,7 +76,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getAllUsers: () => dispatch(getAllUsers()),
     addSavedUser: (companyId, userId) =>
-      dispatch(addSavedUserThunk(companyId, userId))
+      dispatch(addSavedUser(companyId, userId))
   }
 }
 

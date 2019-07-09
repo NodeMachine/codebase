@@ -1,4 +1,6 @@
 const {db} = require('./index')
+const {getUserById} = require('./userQueryFunctions')
+const FieldValue = require('firebase-admin').firestore.FieldValue
 
 const companyLogin = async (companyId, password) => {}
 
@@ -14,12 +16,31 @@ const getAllCompanies = async () => {
   }
 }
 
-const createCompany = async companyObject => {
+const getCompanyByAuthId = async authid => {
   try {
-    await db.collection('companies').add(companyObject)
-    const company = await getCompanyByAuthId(companyObject.authId)
-    console.log('Company has been added.')
-    return company
+    const results = await db
+      .collection('companies')
+      .where('authId', '==', `${authid}`)
+      .get()
+    let result
+    results.forEach(doc => {
+      if (doc) {
+        result = {id: doc.id, ...doc.data()}
+      } else {
+        console.log('User does not exist')
+      }
+    })
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const createCompany = async company => {
+  try {
+    await db.collection('companies').add(company)
+    const companyRes = await getCompanyByAuthId(company.authId)
+    return companyRes
   } catch (error) {
     console.log('Error in creating company', error)
   }
@@ -56,18 +77,17 @@ const getCompanyById = async companyId => {
 
 const addSavedUser = async (companyId, userId) => {
   try {
-    const user = await db
-      .collection('users')
-      .doc(`${userId}`)
+    const company = await db
+      .collection('companies')
+      .doc(`${companyId}`)
       .get()
 
+    const {savedUsers} = company.data()
+    savedUsers.push(userId)
     await db
       .collection('companies')
       .doc(`${companyId}`)
-      .collection('savedUsers')
-      .doc(userId)
-      .set(user.data())
-    // .set(user)
+      .update({savedUsers: savedUsers})
     console.log('User has been saved')
   } catch (error) {
     console.log('Error in adding saved user', error)
@@ -76,12 +96,17 @@ const addSavedUser = async (companyId, userId) => {
 
 const deleteSavedUser = async (companyId, userId) => {
   try {
+    const company = await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .get()
+
+    const {savedUsers} = company.data()
+    const updatedUserArr = savedUsers.filter(el => el !== userId)
     await db
       .collection('companies')
       .doc(`${companyId}`)
-      .collection('savedUsers')
-      .doc(userId)
-      .delete()
+      .update({savedUsers: updatedUserArr})
 
     return 'User has been deleted'
   } catch (error) {
@@ -108,94 +133,35 @@ const getCustomProblems = async companyId => {
 
 const getSavedUsers = async companyId => {
   try {
-    const result = await db
+    const companyInfo = await db
       .collection('companies')
       .doc(`${companyId}`)
-      .collection('savedUsers')
       .get()
-    const savedUsers = result.docs.map(user => {
-      return {id: user.id, ...user.data()}
+    const {savedUsers} = companyInfo.data()
+    const res = savedUsers.map(async el => {
+      const user = await getUserById(el)
+      el = user
+      return el
     })
-    return savedUsers
+    const savedUsersArr = await Promise.all(res)
+    return savedUsersArr
   } catch (error) {
     console.log('Error in getting saved users', error)
   }
 }
 
-const deleteCustomProblem = async (companyId, problemId) => {
+const updateCompany = async (companyId, properties) => {
   try {
+    const updates = []
+    for (let prop in properties) {
+      updates.push(prop, properties[prop])
+    }
     await db
       .collection('companies')
-      .doc(`${companyId}`)
-      .collection('customProblems')
-      .doc(`${problemId}`)
-      .delete()
-    return 'Custom problem was deleted'
+      .doc(`${id}`)
+      .update(...updates)
   } catch (error) {
-    console.log('Error in deleting problem', error)
-  }
-}
-
-const updateCustomProblem = async (companyId, problemId, updateObject) => {
-  try {
-    await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .collection('customProblem')
-      .doc(`${problemId}`)
-      .update(updateObject)
-    return 'Custom problem was updated'
-  } catch (error) {
-    console.log('Error in updating problem', error)
-  }
-}
-const addUserSolutionToCustomProblem = async (
-  companyId,
-  problemId,
-  userId,
-  name,
-  solution,
-  isSolved
-) => {
-  try {
-    const problem = await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .collection('customProblem')
-      .doc(`${problemId}`)
-      .get()
-      .data()
-    let users = problem.users
-    users[userId] = {name: name, solution: solution, isSolved: isSolved}
-    await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .collection('customProblem')
-      .doc(`${problemId}`)
-      .update(users)
-    return 'Solution added'
-  } catch (error) {
-    console.log('Error in adding user solution', error)
-  }
-}
-
-const getCompanyByAuthId = async authId => {
-  try {
-    const results = await db
-      .collection('companies')
-      .where('authId', '===', `${authId}`)
-      .get()
-    let result
-    results.forEach(doc => {
-      if (doc) {
-        result = {id: doc.id, ...doc.data()}
-      } else {
-        console.log('Company does not exist')
-      }
-    })
-    return result
-  } catch (error) {
-    console.log('Error getting company by auth ID', error)
+    console.log('Error in updating company:', error)
   }
 }
 
@@ -208,8 +174,6 @@ module.exports = {
   getCustomProblems,
   getSavedUsers,
   deleteSavedUser,
-  deleteCustomProblem,
-  updateCustomProblem,
-  addUserSolutionToCustomProblem,
+  updateCompany,
   getCompanyByAuthId
 }

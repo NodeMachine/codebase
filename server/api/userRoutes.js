@@ -37,7 +37,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   //auth.onAuthStateChanged(async user => {
   // const singleUser = await getUserByAuthId(user.uid)
-  if (req.session.userId === req.params.id) {
+  if (req.session.userId === req.params.id || req.session.companyId) {
     try {
       const user = await getUserById(req.params.id)
       const problems = await getAllUserProblems(req.params.id)
