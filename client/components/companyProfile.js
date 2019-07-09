@@ -40,7 +40,7 @@ const CompanyProfile = props => {
         <hr />
         <h2>Custom Problems</h2>
         <hr />
-        {company.customProblems.length ? (
+        {company.customProblems && company.customProblems.length ? (
           <CompanyProblemsList />
         ) : (
           <h4>No problems submitted yet.</h4>
