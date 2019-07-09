@@ -10,7 +10,13 @@ const CompanyProblemsList = props => {
           <li key={problem.id}>
             <h3>{problem.name}</h3>
             <p>{problem.prompt}</p>
-            {/* <a>{problem.link || or something so that they can give url to user}</a> */}
+            <a
+              href={`https://nodemachine.herokuapp.com/problems/${id}/${
+                props.id
+              }`}
+            >
+              Link link link
+            </a>
             <details>
               {problem.users.map(user => {
                 return (
