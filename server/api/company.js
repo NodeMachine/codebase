@@ -73,11 +73,9 @@ router.post('/signup', async (req, res, next) => {
           companyIndustry: companyIndustry,
           email: email,
           authId: user.user.uid,
-          customProblems: {},
           savedUsers: []
         })
-        console.log('RES COMPANY ', company)
-        res.status(201).send(company)
+        res.send(company)
       })
       .catch(error => {
         const errorMessage = error.message
@@ -89,10 +87,14 @@ router.post('/signup', async (req, res, next) => {
 })
 
 //CREATE CUSTOM PROBLEM FOR COMPANY:
-router.post('/:companyId/customproblem', async (req, res, next) => {
+router.post('/customproblem/:companyId/', async (req, res, next) => {
   try {
-    await createCustomProblem(req.params.companyId, req.body.problem)
-    res.status(204).send('custom problem created')
+    const problem = req.body
+    const updatedCompany = await createCustomProblem(
+      req.params.companyId,
+      problem
+    )
+    res.send(updatedCompany)
   } catch (error) {
     next(error)
   }
@@ -158,7 +160,6 @@ router.get(`/:companyId/:problemId`, async (req, res, next) => {
       req.params.companyId,
       req.params.problemId
     )
-    console.log(problem)
     res.send(problem)
   } catch (error) {
     next(error)

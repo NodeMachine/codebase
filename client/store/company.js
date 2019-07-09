@@ -31,8 +31,11 @@ export const company = () => async dispatch => {
 export const addCustomProblem = (companyId, problem) => {
   return async dispatch => {
     try {
-      await axios.put(`/api/company/${companyId}/customproblem`, {problem})
-      dispatch(setCompany(companyId))
+      const {data} = await axios.post(
+        `/api/company/customproblem/${companyId}/`,
+        problem
+      )
+      dispatch(setCompany(data))
     } catch (error) {
       console.log(error)
     }
@@ -42,8 +45,10 @@ export const addCustomProblem = (companyId, problem) => {
 export const removeCustomProblem = (companyId, problemId) => {
   return async dispatch => {
     try {
-      await axios.delete(`/api/company/${companyId}/${problemId}`)
-      dispatch(setCompany(companyId))
+      const {data} = await axios.delete(
+        `/api/company/${companyId}/${problemId}`
+      )
+      dispatch(setCompany(data))
     } catch (error) {
       console.log(error)
     }
@@ -53,8 +58,10 @@ export const removeCustomProblem = (companyId, problemId) => {
 export const updateCustomProblem = (companyId, problemId, update) => {
   return async dispatch => {
     try {
-      await axios.put(`/api/company/${companyId}/${problemId}`, {update})
-      dispatch(setCompany(companyId))
+      const {data} = await axios.put(`/api/company/${companyId}/${problemId}`, {
+        update
+      })
+      dispatch(setCompany(data))
     } catch (error) {
       console.log(error)
     }
@@ -102,14 +109,14 @@ export const companySignup = (
 ) => {
   return async dispatch => {
     try {
-      const result = await axios.post('/api/company/signup', {
+      const {data} = await axios.post('/api/company/signup', {
         companyName,
         companyInfo,
         companyIndustry,
         email,
         password
       })
-      dispatch(setCompany(result.data))
+      dispatch(setCompany(data))
     } catch (error) {
       dispatch(setError(error.response.data))
     }
@@ -119,8 +126,8 @@ export const companySignup = (
 export const companyLogin = (email, password) => {
   return async dispatch => {
     try {
-      const result = await axios.put('/api/company/login', {email, password})
-      dispatch(setCompany(result.data))
+      const {data} = await axios.put('/api/company/login', {email, password})
+      dispatch(setCompany(data))
     } catch (error) {
       dispatch(setError(error.response.data))
     }
@@ -130,8 +137,8 @@ export const companyLogin = (email, password) => {
 export const updateCompany = (id, update) => {
   return async dispatch => {
     try {
-      const res = await axios.put(`/api/company/${id}`, {update})
-      dispatch(setCompany(res.data))
+      const {data} = await axios.put(`/api/company/${id}`, {update})
+      dispatch(setCompany(data))
     } catch (error) {
       console.log(error)
     }
@@ -152,8 +159,8 @@ export const logout = () => async dispatch => {
 export const addSavedUser = (companyId, userId) => {
   return async dispatch => {
     try {
-      await axios.post(`/api/company/${companyId}/${userId}`)
-      dispatch(setCompany(companyId))
+      const {data} = await axios.post(`/api/company/${companyId}/${userId}`)
+      dispatch(setCompany(data))
     } catch (error) {
       console.log(error)
     }
@@ -163,8 +170,8 @@ export const addSavedUser = (companyId, userId) => {
 export const deleteSavedUser = (companyId, userId) => {
   return async dispatch => {
     try {
-      await axios.delete(`/api/company/${companyId}/${userId}`)
-      dispatch(setCompany(companyId))
+      const {data} = await axios.delete(`/api/company/${companyId}/${userId}`)
+      dispatch(setCompany(data))
     } catch (error) {
       console.log(error)
     }
