@@ -6,7 +6,7 @@ import {Login, Signup, UserHome, CompanyHome, MainPage} from './components'
 import UserProfile from './components/userProfile'
 import ProblemListPage from './components/problemsListPage'
 import SingleProblem from './components/singleProblem'
-import {me} from './store'
+import {me, companyMe} from './store'
 import {company} from './store/company'
 import CompanyProfile from './components/companyProfile'
 
@@ -66,6 +66,7 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      dispatch(companyMe())
     }
   }
 }

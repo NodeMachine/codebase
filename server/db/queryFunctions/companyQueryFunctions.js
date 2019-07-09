@@ -2,8 +2,6 @@ const {db} = require('./index')
 const {getUserById} = require('./userQueryFunctions')
 const FieldValue = require('firebase-admin').firestore.FieldValue
 
-const companyLogin = async (companyId, password) => {}
-
 const getAllCompanies = async () => {
   try {
     const result = await db.collection('companies').get()
@@ -53,6 +51,7 @@ const getCompanyById = async companyId => {
       .doc(`${companyId}`)
       .get()
     if (company.exists) {
+      //return {id: companyId, ...company.data}
       return {id: company.id, ...company.data()}
     } else {
       console.log('Company does not exist.')

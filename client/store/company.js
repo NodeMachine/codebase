@@ -13,7 +13,7 @@ const REMOVE_COMPANY = 'REMOVE_COMPANY'
 // ACTION CREATORS
 
 const setCompany = company => ({type: SET_COMPANY, company})
-const setError = error => ({type: REMOVE_COMPANY, error})
+const setError = error => ({type: SET_ERROR, error})
 const removeCompany = () => ({type: REMOVE_COMPANY})
 
 //THUNKS//
@@ -92,6 +92,13 @@ export const saveSolutionToCustomProblem = (
 }
 
 // COMPANY SECTION
+
+export const companyMe = () => {
+  return async dispatch => {
+    const result = await axios.get('auth/company')
+    dispatch(setCompany(result.data))
+  }
+}
 
 export const companySignup = (
   companyName,
