@@ -152,8 +152,8 @@ export const logout = () => async dispatch => {
 export const addSavedUser = (companyId, userId) => {
   return async dispatch => {
     try {
-      await axios.post(`/api/company/${companyId}/${userId}`)
-      // dispatch(setCompany(res.data))
+      const res = await axios.post(`/api/company/${companyId}/${userId}`)
+      dispatch(setCompany(res.data))
     } catch (error) {
       console.log(error)
     }

@@ -90,7 +90,9 @@ const addSavedUser = async (companyId, userId) => {
       .collection('companies')
       .doc(`${companyId}`)
       .update({savedUsers: savedUsers})
-    console.log('User has been saved')
+
+    const updatedCompany = await getCompanyById(companyId)
+    return updatedCompany
   } catch (error) {
     console.log('Error in adding saved user', error)
   }
