@@ -47,17 +47,7 @@ export const getAllUsers = () => async dispatch => {
   }
 }
 
-// export const login = (email, password, isCompany) => async dispatch => {
-//   try {
-//     const res = await axios.put('/api/users/login', {email, password})
-//     dispatch(getUser(res.data))
-//   } catch (error) {
-//     dispatch(gotError(error.response.data))
-//   }
-// }
-
 export const login = (email, password) => async dispatch => {
-  //LOGIN FOR REGULAR USERS:
   try {
     const res = await axios.put('/api/users/login', {email, password})
     dispatch(getUser(res.data))
