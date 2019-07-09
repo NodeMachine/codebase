@@ -7,6 +7,7 @@ import UserProfile from './components/userProfile'
 import ProblemListPage from './components/problemsListPage'
 import SingleProblem from './components/singleProblem'
 import {me} from './store'
+import {company} from './store/company'
 
 /**
  * COMPONENT

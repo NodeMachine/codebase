@@ -46,7 +46,7 @@ const CompanyNavbar = props => {
               <MdKeyboardArrowRight />
               <MdKeyboardArrowRight />
             </IconContext.Provider>
-            <Link to="/problems">Problems</Link>
+            <Link to="/developers">Developers</Link>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
