@@ -19,6 +19,15 @@ const removeCompany = () => ({type: REMOVE_COMPANY})
 //THUNKS//
 
 // PROBLEM SECTIONS
+export const company = () => async dispatch => {
+  try {
+    const res = await axios.get('/auth/company')
+    dispatch(setCompany(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const addCustomProblem = (companyId, problem) => {
   return async dispatch => {
     try {

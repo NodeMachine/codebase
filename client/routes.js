@@ -4,9 +4,10 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, CompanyHome, MainPage} from './components'
 import UserProfile from './components/userProfile'
-import ProblemList from './components/problemsList'
+import ProblemListPage from './components/problemsListPage'
 import SingleProblem from './components/singleProblem'
 import {me} from './store'
+import {company} from './store/company'
 
 /**
  * COMPONENT
@@ -24,7 +25,7 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route exact path="/problems" component={ProblemList} />
+        <Route exact path="/problems" component={ProblemListPage} />
         <Route path="/problems/:id?/:companyId?" component={SingleProblem} />
 
         <Route path="/companyhome" component={CompanyHome} />
