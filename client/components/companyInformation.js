@@ -12,8 +12,8 @@ class CompanyInformation extends Component {
     this.handleEdit = this.handleEdit.bind(this)
     this.state = {
       editMode: false,
-      info: '',
-      industry: ''
+      companyInfo: '',
+      companyIndustry: ''
     }
   }
 
@@ -21,8 +21,8 @@ class CompanyInformation extends Component {
     event.preventDefault()
     const company = this.props.company
     this.setState({
-      info: company.info || '',
-      industry: company.industry || '',
+      companyInfo: company.companyInfo || '',
+      companyIndustry: company.companyIndustry || '',
       editMode: true
     })
   }
@@ -40,6 +40,7 @@ class CompanyInformation extends Component {
 
   render() {
     const company = this.props.company
+    console.log('COMPANY STATE', this.state)
     if (this.state.editMode) {
       return (
         <form className="profile-description-form" onSubmit={this.handleSubmit}>
@@ -47,18 +48,18 @@ class CompanyInformation extends Component {
             <h5>Information:</h5>
             <input
               type="text"
-              name="info"
+              name="companyInfo"
               onChange={this.handleChange}
-              placeholder={this.state.info}
+              placeholder={this.state.companyInfo}
             />
           </div>
           <div>
             <h5>Industry:</h5>
             <input
               type="text"
-              name="industry"
+              name="companyIndustry"
               onChange={this.handleChange}
-              placeholder={this.state.industry}
+              placeholder={this.state.companyIndustry}
             />
           </div>
           <button type="submit">Submit</button>
@@ -70,11 +71,13 @@ class CompanyInformation extends Component {
           <div id="text-box">
             <div>
               <h5>Information: </h5>
-              <p>{company.information || "Add your company's information."}</p>
+              <p>{company.companyInfo || "Add your company's information."}</p>
             </div>
             <div>
               <h5>Industry: </h5>
-              <p>{company.industry || "Add your company's information."}</p>
+              <p>
+                {company.companyIndustry || "Add your company's information."}
+              </p>
             </div>
           </div>
           <div>

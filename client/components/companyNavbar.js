@@ -29,7 +29,7 @@ const CompanyNavbar = props => {
               <MdKeyboardArrowRight />
             </IconContext.Provider>
             <Link to="/developers">Developers</Link>
-            <Link to="/profile">Profile</Link>
+            <Link to="/companyprofile">Profile</Link>
             <Link to="/" onClick={handleClick}>
               Logout
             </Link>

@@ -200,7 +200,8 @@ router.put('/:companyId', async (req, res, next) => {
   try {
     await updateCompany(req.params.companyId, req.body.update)
     const company = await getCompanyById(req.params.companyId)
-    res.send(company)
+    res.send('Company added successfully')
+    // res.send(company);
   } catch (error) {
     next(error)
   }

@@ -158,7 +158,7 @@ const updateCompany = async (companyId, properties) => {
     }
     await db
       .collection('companies')
-      .doc(`${id}`)
+      .doc(`${companyId}`)
       .update(...updates)
   } catch (error) {
     console.log('Error in updating company:', error)
