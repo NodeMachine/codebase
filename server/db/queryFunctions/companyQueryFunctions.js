@@ -174,5 +174,6 @@ module.exports = {
   getCustomProblems,
   getSavedUsers,
   deleteSavedUser,
-  updateCompany
+  updateCompany,
+  getCompanyByAuthId
 }
