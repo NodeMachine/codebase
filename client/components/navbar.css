@@ -1,0 +1,27 @@
+#navbar {
+  background-color: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  position: absolute;
+  top: 0px;
+  left: 30px;
+  width: 95vw;
+  z-index: 999;
+  margin-bottom: 45px;
+}
+
+#navbar > a {
+  margin: 0px;
+  padding: 0px;
+  font-weight: 400;
+}
+
+#navbar h1 {
+  font-weight: 400;
+  letter-spacing: 4px;
+}
+
+#navbar svg {
+  transform: translate(0px, 3px);
+}

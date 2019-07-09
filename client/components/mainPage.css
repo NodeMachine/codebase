@@ -1,0 +1,23 @@
+#mainPageContainer {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+#leftColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 33%;
+  margin-left: 30px;
+  padding-right: 45px;
+}
+
+#rightColumn {
+  flex: 1 1 66%;
+  background-image: url('https://cdn.photographylife.com/wp-content/uploads/2019/06/Nikon-Z-14-30mm-f4-S-Sample-Photo-21.jpg');
+}
+
+#mainPageHR {
+  max-width: 10vw;
+}

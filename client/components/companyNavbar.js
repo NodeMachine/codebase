@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {logout} from '../store/company'
 import {IconContext} from 'react-icons'
 import {MdKeyboardArrowRight} from 'react-icons/md'
 
 import './navbar.css'
 
-const Navbar = props => {
+const CompanyNavbar = props => {
   const {handleClick, isLoggedIn} = props
   return (
     <div>
@@ -28,8 +28,8 @@ const Navbar = props => {
               <MdKeyboardArrowRight />
               <MdKeyboardArrowRight />
             </IconContext.Provider>
-            <Link to="/problems">Problems</Link>
-            <Link to="/profile">Profile</Link>
+            <Link to="/developers">Developers</Link>
+            <Link to="/companyprofile">Profile</Link>
             <Link to="/" onClick={handleClick}>
               Logout
             </Link>
@@ -46,7 +46,7 @@ const Navbar = props => {
               <MdKeyboardArrowRight />
               <MdKeyboardArrowRight />
             </IconContext.Provider>
-            <Link to="/problems">Problems</Link>
+            <Link to="/developers">Developers</Link>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
@@ -64,7 +64,7 @@ const mapState = state => {
   return {
     ourState: state,
     //isLoggedIn: !!state.user.id
-    isLoggedIn: !!state.user.singleUser.id
+    isLoggedIn: !!state.company.company.id
   }
 }
 
@@ -76,4 +76,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(CompanyNavbar)

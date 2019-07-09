@@ -1,0 +1,88 @@
+.user-profile-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 13vh;
+}
+.user-profile-container img {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+.profile-left {
+  flex: 0 0 30%;
+  margin: 0 2% 0 2%;
+}
+
+.profile-main-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-right {
+  flex: 0 0 60%;
+  margin-right: 50px;
+}
+
+.profile-description {
+  display: flex;
+  justify-content: space-between;
+}
+
+#text-box > div {
+  display: flex;
+  align-items: baseline;
+}
+
+#text-box p {
+  font-size: 14px;
+  font-weight: 200;
+  margin-left: 3%;
+}
+
+.profile-description svg {
+  margin-top: 22px;
+  font-size: 24px;
+}
+
+.profile-description-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-description-form button {
+  align-self: center;
+}
+
+.user-problem {
+  display: flex;
+  align-items: center;
+}
+
+.user-problem-item {
+  flex: 0 0 20%;
+}
+
+.user-problems ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+#edit-picture-button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 0px;
+  border-bottom: 1px solid #26c6da;
+  margin-top: 1%;
+}
+
+#edit-picture-button:hover {
+  cursor: pointer;
+}
+
+.user-problem-item h4 {
+  text-decoration: underline;
+  text-decoration-color: #6ff9ff;
+}

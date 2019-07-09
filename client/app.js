@@ -1,19 +1,23 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
-import {Navbar} from './components'
+import {Navbar, CompanyNavbar} from './components'
 import Routes from './routes'
-import AceCode from './components/aceCode'
-import 'materialize-css/dist/css/materialize.min.css'
-import 'materialize-css/dist/js/materialize.min.js'
 
-const App = () => {
+const App = props => {
   return (
     <div>
-      <Navbar />
-      {/* <AceCode /> */}
+      {props.company.id ? <CompanyNavbar /> : <Navbar />}
       <Routes />
     </div>
   )
 }
 
-export default App
+const mapState = state => {
+  return {
+    company: state.company.company,
+    user: state.user.singleUser
+  }
+}
+
+export default connect(mapState)(App)

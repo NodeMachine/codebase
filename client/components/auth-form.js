@@ -2,7 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {login, signup} from '../store/user'
+import {companyLogin, companySignup} from '../store/company'
 import {Redirect} from 'react-router-dom'
+import './auth-form.css'
 
 /**
  * COMPONENT
@@ -12,32 +14,54 @@ class AuthForm extends React.Component {
     super(props)
     this.state = {
       password: '',
-      email: ''
+      email: '',
+      isCompany: false
     }
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange(event) {
     event.preventDefault()
-    this.setState({[event.target.name]: event.target.value})
-    console.log(this.state)
+    this.setState({
+      error: '',
+      [event.target.name]: event.target.value
+    })
+  }
+
+  isCompanyToggle() {
+    this.setState({isCompany: !this.state.isCompany})
   }
 
   render() {
     const {name, displayName, handleSubmit, error} = this.props
-
+    if (this.props.company.id) {
+      this.props.history.push('/companyprofile')
+    } else if (this.props.user.id) {
+      this.props.history.push('/profile')
+    }
     return (
-      <div>
+      <div id="form-wrapper">
+        <h2 id="form-title">{displayName}</h2>
         <form
           onSubmit={event => {
-            handleSubmit(event)
+            this.props.handleSubmit(event)
             if (!this.props.error) {
               this.setState({email: '', password: ''})
-              this.props.history.push('/')
             }
           }}
           name={name}
         >
+          <div>
+            <label htmlFor="isCompany">Are you a company? </label>
+            <input
+              type="checkbox"
+              id="companyCheckbox"
+              name="isCompany"
+              onChange={() => this.isCompanyToggle()}
+              // checked='true'
+            />
+          </div>
+
           <div>
             <label htmlFor="email">
               <small>Email</small>
@@ -51,7 +75,7 @@ class AuthForm extends React.Component {
           </div>
           <div>
             <label htmlFor="password">
-              <small>Password</small>
+              <small>Password </small>
             </label>
             <input
               name="password"
@@ -60,9 +84,9 @@ class AuthForm extends React.Component {
               value={this.state.password}
             />
             <small>Passwords must be at least 6 characters.</small>
-            {}
           </div>
-          {name === 'signup' ? (
+
+          {name === 'signup' && !this.state.isCompany ? (
             <div>
               <label htmlFor="firstName">
                 <small>First Name</small>
@@ -70,7 +94,25 @@ class AuthForm extends React.Component {
               <input name="firstName" type="text" />
             </div>
           ) : null}
-          {name === 'signup' ? (
+
+          {name === 'signup' && this.state.isCompany ? (
+            <div>
+              <label htmlFor="companyName">
+                <small>Company Name</small>
+              </label>
+              <input name="companyName" type="text" />
+              <label htmlFor="companyInfo">
+                <small>Company Info</small>
+              </label>
+              <input name="companyInfo" type="text" />
+              <label htmlFor="companyIndustry">
+                <small>Company Industry</small>
+              </label>
+              <input name="companyIndustry" type="text" />
+            </div>
+          ) : null}
+
+          {name === 'signup' && !this.state.isCompany ? (
             <div>
               <label htmlFor="lastName">
                 <small>Last Name</small>
@@ -109,7 +151,9 @@ const mapLogin = state => {
   return {
     name: 'login',
     displayName: 'Login',
-    error: state.user.error
+    error: state.user.error,
+    company: state.company.company,
+    user: state.user.singleUser
   }
 }
 
@@ -117,7 +161,9 @@ const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error
+    error: state.user.error,
+    company: state.company.company,
+    user: state.user.singleUser
   }
 }
 
@@ -129,12 +175,35 @@ const mapDispatch = dispatch => {
         const formName = evt.target.name
         const email = evt.target.email.value
         const password = evt.target.password.value
+        const isCompany = evt.target.isCompany.checked
+
         if (formName === 'login') {
-          dispatch(login(email, password))
+          //LOGIN FOR REGULAR USER:
+          if (!isCompany) {
+            dispatch(login(email, password))
+          } else {
+            dispatch(companyLogin(email, password))
+          }
         } else {
-          const firstName = evt.target.firstName.value
-          const lastName = evt.target.lastName.value
-          dispatch(signup(firstName, lastName, email, password))
+          //IF COMPANY NAME IS SIGNUP:
+          if (!isCompany) {
+            const firstName = evt.target.firstName.value
+            const lastName = evt.target.lastName.value
+            dispatch(signup(firstName, lastName, email, password))
+          } else {
+            const companyName = evt.target.companyName.value
+            const companyInfo = evt.target.companyInfo.value
+            const companyIndustry = evt.target.companyIndustry.value
+            dispatch(
+              companySignup(
+                companyName,
+                companyInfo,
+                companyIndustry,
+                email,
+                password
+              )
+            )
+          }
         }
       } catch (error) {
         console.log(error)

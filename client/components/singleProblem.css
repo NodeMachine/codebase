@@ -1,0 +1,80 @@
+.singleProblemContainer {
+  margin-top: 15vh;
+}
+
+.promptResultContainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0% 1%;
+  width: 100%;
+}
+.promptResultContainer > div {
+  width: 100%;
+}
+
+.problemListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100vw;
+  justify-content: center;
+}
+
+.problemListItem {
+  flex: 1 0 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.problemListItem > h6 {
+  margin-left: 50px;
+}
+
+.resultItem {
+  display: flex;
+  /* justify-content: space-around; */
+  margin-bottom: 30px;
+}
+
+.resultItem > span {
+  margin-right: 15px;
+}
+
+.iconContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+button {
+  margin-left: 5px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.spinnerContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.spinner {
+  color: white;
+  font-size: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}

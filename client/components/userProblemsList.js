@@ -1,40 +1,39 @@
 import React from 'react'
-
-// Until we have a CSS file
-const styles = {
-  icon: {marginTop: 30}
-}
+import {Link} from 'react-router-dom'
+import './userProfile.css'
 
 const UserProblemList = props => {
-  console.log(props)
   return (
-    <ul>
-      {props.problems.map((el, indx) => {
-        return (
-          <li key={indx}>
-            <div className="divider card" />
-            <div className="row section card-content">
-              <div className="col s8">
-                <a href={`/problems/${el.id}`}>{el.name}</a>
-                <h5>{el.category}</h5>
-                <p>Difficulty: {el.points < 100 ? 'Easy' : 'Medium'}</p>
+    <div className="user-problems">
+      <ul>
+        {props.problems.map((el, indx) => {
+          return (
+            <li key={indx}>
+              <div className="user-problem">
+                <div className="user-problem-item">
+                  <Link to={`/problems/${el.id}`}>
+                    <h4>{el.name}</h4>
+                  </Link>
+                </div>
+                <div className="user-problem-item">
+                  <h5>{el.category}</h5>
+                </div>
+                <div className="user-problem-item">
+                  <p>Difficulty: {el.points < 100 ? 'Easy' : 'Medium'}</p>
+                </div>
+                <div className="user-problem-item">
+                  <p>{el.points}</p>
+                </div>
+                <div className="user-problem-item">
+                  {el.isSolved ? <p>Completed</p> : <p>Pending</p>}
+                </div>
               </div>
-              <div className="col s4 " style={styles.icon}>
-                {el.isSolved ? (
-                  <i className="medium material-icons green-text">
-                    check_circle
-                  </i>
-                ) : (
-                  <i className="medium material-icons orange-text ">
-                    check_circle
-                  </i>
-                )}
-              </div>
-            </div>
-          </li>
-        )
-      })}
-    </ul>
+              <hr />
+            </li>
+          )
+        })}
+      </ul>
+    </div>
   )
 }
 

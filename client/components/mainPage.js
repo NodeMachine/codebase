@@ -1,27 +1,27 @@
-import React, {Component} from 'react'
-import ProblemsList from './problemsList'
+import React from 'react'
+import './mainPage.css'
 
-class MainPage extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      problems: [
-        {id: 1, title: 'Sum two digits', points: 80, category: 'arrays'},
-        {id: 2, title: 'Return a string', points: 1, category: 'strings'}
-      ]
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <div id="big-block">
-          <h1>Welcome</h1>
+const MainPage = props => {
+  return (
+    <div id="mainPageContainer">
+      <div id="leftColumn">
+        <div id="mainPageHR">
+          <hr />
         </div>
-        <ProblemsList problems={this.state.problems} />
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+          elementum leo eu accumsan tincidunt. Cras ac lectus nec elit venenatis
+          molestie. Maecenas facilisis vulputate dapibus. Morbi eu purus leo.
+          Phasellus ipsum felis, commodo vel mattis sed, laoreet sit amet
+          libero. Nam malesuada dui vel nibh volutpat, at efficitur sapien
+          vehicula. Sed tempor neque ut venenatis gravida. Praesent nec erat
+          odio.
+        </p>
       </div>
-    )
-  }
+
+      <div id="rightColumn" />
+    </div>
+  )
 }
 
 export default MainPage

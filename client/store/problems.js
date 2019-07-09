@@ -21,7 +21,7 @@ const defaultProblem = {
  */
 const getAllProblemsAction = problems => ({type: GET_ALL_PROBLEMS, problems})
 const getSingleProblemAction = problem => ({type: GET_SINGLE_PROBLEM, problem})
-const clearSingleProblemAction = problem => ({type: CLEAR_SINGLE_PROBLEM})
+const clearSingleProblemAction = () => ({type: CLEAR_SINGLE_PROBLEM})
 
 /**
  * THUNK CREATORS
@@ -35,10 +35,16 @@ export const getAllProblems = () => async dispatch => {
   }
 }
 
-export const getSingleProblem = problemId => async dispatch => {
+export const getSingleProblem = (problemId, companyId) => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/problems/${problemId}`)
-    dispatch(getSingleProblemAction(data))
+    console.log(companyId)
+    if (companyId) {
+      const {data} = await axios.get(`/api/company/${companyId}/${problemId}`)
+      dispatch(getSingleProblemAction(data))
+    } else {
+      const {data} = await axios.get(`/api/problems/${problemId}`)
+      dispatch(getSingleProblemAction(data))
+    }
   } catch (err) {
     console.error(err)
   }
