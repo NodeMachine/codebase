@@ -46,19 +46,6 @@ const createCompany = async company => {
   }
 }
 
-const createCustomProblem = async (companyId, problem) => {
-  try {
-    await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .collection('customProblems')
-      .add(problem)
-    console.log('Custom problem has been added.')
-  } catch (error) {
-    console.log('Error in creating custom problem', error)
-  }
-}
-
 const getCompanyById = async companyId => {
   try {
     const company = await db
@@ -72,6 +59,21 @@ const getCompanyById = async companyId => {
     }
   } catch (error) {
     console.log('Error getting company by ID', error)
+  }
+}
+
+const createCustomProblem = async (companyId, problem) => {
+  try {
+    await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('customProblems')
+      .add(problem)
+
+    const updatedCompany = await getCompanyById(companyId)
+    return updatedCompany
+  } catch (error) {
+    console.log('Error in creating custom problem', error)
   }
 }
 
@@ -160,6 +162,8 @@ const updateCompany = async (companyId, properties) => {
       .collection('companies')
       .doc(`${companyId}`)
       .update(...updates)
+    const updatedCompany = await getCompanyById(companyId)
+    return updatedCompany
   } catch (error) {
     console.log('Error in updating company:', error)
   }
