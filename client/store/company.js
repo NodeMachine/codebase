@@ -85,6 +85,13 @@ export const saveSolutionToCustomProblem = (
 
 // COMPANY SECTION
 
+export const companyMe = () => {
+  return async dispatch => {
+    const result = await axios.get('auth/company')
+    dispatch(setCompany(result.data))
+  }
+}
+
 export const companySignup = (
   companyName,
   companyInfo,
