@@ -28,7 +28,7 @@ class Routes extends Component {
         <Route exact path="/problems" component={ProblemListPage} />
         <Route path="/problems/:id" component={SingleProblem} />
 
-        <Route path="/companyhome" component={CompanyHome} />
+        <Route path="/developers" component={CompanyHome} />
         <Route path="/profile" component={UserProfile} />
 
         <Route path="/" component={MainPage} />

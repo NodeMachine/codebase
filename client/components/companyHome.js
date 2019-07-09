@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getAllUsers} from '../store/user'
-import {Link} from 'react-router-dom'
-import {addSavedUser} from '../store/company'
+import DeveloperListItem from './developerListItem'
 
 ///PROGRAMMING/Fullstack_Academy/capstone/codebase/client/store/company.js
 ///PROGRAMMING/Fullstack_Academy/capstone/codebase/client/components/companyHome.js
@@ -26,37 +25,20 @@ class CompanyHome extends Component {
   render() {
     return (
       <div>
-        <div>Welcome, company {this.props.companyName}</div>
+        <div>Welcome, company {this.props.company.companyName || ''}</div>
         <div>Here are all the users with ranking:</div>
         <ol>
-          {this.props.users.map(user => {
-            return (
-              <li id="user" key={user.id}>
-                <h6>
-                  {/* <Link> */}
-                  {user.firstName} {user.lastName}
-                  {/* </Link>{' '} */}
-                  {user.score}
-                  {/* <form onSubmit={this.handleSubmit}> */}
-                  {/* action={`/${this.props.companyId}/${user.id}`} */}
-                  {/* <button onClick={() => this.onClickHandler(user.id)}>SAVE</button> */}
-                  <button
-                    onClick={() => {
-                      console.log(
-                        'this.props.companyId: ',
-                        this.props.companyId
-                      )
-                      console.log('user.id: ', user.id)
-                      this.props.addSavedUser(this.props.companyId, user.id)
-                    }}
-                  >
-                    SAVE USER
-                  </button>
-                  {/* </form> */}
-                </h6>
-              </li>
-            )
-          })}
+          {this.props.users.length
+            ? this.props.users.map(user => {
+                return (
+                  <DeveloperListItem
+                    user={user}
+                    key={user.id}
+                    company={this.props.company}
+                  />
+                )
+              })
+            : ''}
         </ol>
       </div>
     )
@@ -64,20 +46,49 @@ class CompanyHome extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('companyHome state: ', state)
   return {
-    companyName: state.user.singleUser.firstName,
-    users: state.user.allUsers,
-    companyId: state.user.singleUser.id
+    company: state.company.company,
+    users: state.user.allUsers
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllUsers: () => dispatch(getAllUsers()),
-    addSavedUser: (companyId, userId) =>
-      dispatch(addSavedUser(companyId, userId))
+    getAllUsers: () => dispatch(getAllUsers())
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyHome)
+
+{
+  /* <div>Welcome, company {this.props.companyName}</div> */
+}
+{
+  /* <div>Here are all the users with ranking:</div> */
+}
+{
+  /* <ol>
+  {this.props.users
+    ? this.props.users.map(user => {
+        return (
+          <li id="user" key={user.id}>
+            <h6>
+              {user.firstName} {user.lastName}
+              {user.score}
+            </h6>
+          </li>
+        )
+      })
+    : ''}
+  <button
+    type="submit"
+    onClick={() => {
+      console.log('this.props.companyId: ', this.props.companyId)
+      console.log('user.id: ', user.id)
+      this.props.addSavedUser(this.props.companyId, user.id)
+    }}
+  >
+    SAVE USER
+  </button>
+</ol> */
+}

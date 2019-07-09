@@ -112,8 +112,8 @@ router.get('/:id', async (req, res, next) => {
 //ADD SAVED USER TO COMPANY:
 router.post('/:companyId/:userId', async (req, res, next) => {
   try {
-    await addSavedUser(req.params.companyId, req.params.userId)
-    res.send('User saved to company')
+    const data = await addSavedUser(req.params.companyId, req.params.userId)
+    res.send(data)
   } catch (error) {
     next(error)
   }
