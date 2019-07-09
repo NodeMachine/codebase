@@ -1,9 +1,16 @@
 import React from 'react'
+import axios from 'axios'
+import {deleteSavedUser} from '../store/company'
+import {connect} from 'react-redux'
 
 const CompanySavedUsersList = props => {
+  const savedUsersArray = props.user.savedUsers.map(async userId => {
+    const user = await axios.get(`/api/users/${userId}`)
+    return user
+  })
   return (
     <ul>
-      {props.savedUsers.map(user => {
+      {savedUsersArray.map(user => {
         return (
           <li key={user.id}>
             <h3>
@@ -12,8 +19,10 @@ const CompanySavedUsersList = props => {
             <p>{user.score}</p>
             <button
               type="button"
-              onClick={() => props.removeUser(props.id, user.id)}
-            />
+              onClick={() => props.deleteUser(props.company.id, user.id)}
+            >
+              Remove User
+            </button>
             <details>
               <h4>User solutions</h4>
               <details>
@@ -37,4 +46,15 @@ const CompanySavedUsersList = props => {
   )
 }
 
-export default CompanySavedUsersList
+const mapStateToProps = state => ({
+  company: state.company.company
+})
+
+const mapDispatchToProps = dispatch => ({
+  deleteUser: (companyId, userId) =>
+    dispatch(deleteSavedUser(companyId, userId))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  CompanySavedUsersList
+)

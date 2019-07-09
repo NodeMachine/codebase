@@ -110,6 +110,17 @@ export const companyLogin = (email, password) => {
   }
 }
 
+export const updateCompany = (id, update) => {
+  return async dispatch => {
+    try {
+      const res = await axios.put(`/api/company/${id}`, {update})
+      dispatch(setCompany(res.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 export const logout = () => async dispatch => {
   try {
     await axios.post('/api/company/logout')

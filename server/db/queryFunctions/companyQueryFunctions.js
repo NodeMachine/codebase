@@ -129,6 +129,21 @@ const getSavedUsers = async companyId => {
   }
 }
 
+const updateCompany = async (companyId, properties) => {
+  try {
+    const updates = []
+    for (let prop in properties) {
+      updates.push(prop, properties[prop])
+    }
+    await db
+      .collection('companies')
+      .doc(`${id}`)
+      .update(...updates)
+  } catch (error) {
+    console.log('Error in updating company:', error)
+  }
+}
+
 module.exports = {
   getAllCompanies,
   createCompany,
@@ -137,5 +152,6 @@ module.exports = {
   addSavedUser,
   getCustomProblems,
   getSavedUsers,
-  deleteSavedUser
+  deleteSavedUser,
+  updateCompany
 }
