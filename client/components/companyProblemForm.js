@@ -146,6 +146,7 @@ class CompanyProblemForm extends React.Component {
             value={this.state.output3}
           />
         </div>
+        <button type="submit">Submit</button>
       </form>
     )
   }

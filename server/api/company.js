@@ -28,8 +28,6 @@ router.put('/login', async (req, res, next) => {
       .signInWithEmailAndPassword(email, password)
       .then(user => {
         getCompanyByAuthId(user.user.uid).then(async company => {
-          console.log('COMPANY', company.id)
-
           req.session.companyId = company.id
           const customProblems = await getCustomProblems(company.id)
           res.send({...company, customProblems})
