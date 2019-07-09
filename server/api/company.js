@@ -73,6 +73,8 @@ router.post('/signup', async (req, res, next) => {
           savedUsers: []
         })
         company.customProblems = []
+        req.session.companyId = company.id
+
         res.send(company)
       })
       .catch(error => {
