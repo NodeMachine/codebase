@@ -22,12 +22,15 @@ class ProblemListPage extends Component {
   }
 
   addFilter = category => {
-    const updatedFilter = this.state.filter.concat(category)
-    this.setState({filter: updatedFilter})
+    if (!this.state.filter.includes(category)) {
+      const updatedFilter = this.state.filter.concat(category)
+      this.setState({filter: updatedFilter})
+    }
   }
   removeFilter = category => {
-    const updatedFilter = this.state.filter.filter(el => el === category)
-    console.log('UPDATED FILTER', updatedFilter)
+    const updatedFilter = this.state.filter.filter(el => {
+      return el !== category
+    })
     this.setState({filter: updatedFilter})
   }
 
@@ -37,7 +40,6 @@ class ProblemListPage extends Component {
   }
 
   handleClick = evt => {
-    console.log('STATE', this.state)
     if (evt.target.checked) {
       this.addFilter(evt.target.name)
     } else {
@@ -52,28 +54,28 @@ class ProblemListPage extends Component {
             type="checkbox"
             name="strings"
             onClick={this.handleClick}
-            checked
+            defaultChecked={true}
           />
           <label htmlFor="strings">Strings</label>
           <input
             type="checkbox"
             name="arrays"
             onClick={this.handleClick}
-            checked
+            defaultChecked={true}
           />
           <label htmlFor="arrays">Arrays</label>
           <input
             type="checkbox"
             name="sorting"
             onClick={this.handleClick}
-            checked
+            defaultChecked={true}
           />
           <label htmlFor="sorting">Sorting</label>
           <input
             type="checkbox"
             name="data structures"
             onClick={this.handleClick}
-            checked
+            defaultChecked={true}
           />
           <label htmlFor="data structures">Data Structures</label>
           <input
