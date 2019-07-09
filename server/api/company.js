@@ -15,7 +15,8 @@ const {
   deleteCustomProblem,
   getCompanyByAuthId,
   deleteSavedUser,
-  updateCompany
+  updateCompany,
+  getCustomProblem
 } = require('../db/queryFunctions/companyQueryFunctions')
 
 //COMPANY LOGIN:
@@ -150,22 +151,22 @@ router.get('/:companyId/users', async (req, res, next) => {
   }
 })
 
-// UPDATE CUSTOM PROBLEM
-router.put('/:companyId/:problemId', async (req, res, next) => {
+// GET CUSTOM PROBLEM
+router.get(`/:companyId/:problemId`, async (req, res, next) => {
   try {
-    await updateCustomProblem(
+    const problem = await getCustomProblem(
       req.params.companyId,
-      req.params.problemId,
-      req.body.update
+      req.params.problemId
     )
-    res.send('Problem updated!')
+    console.log(problem)
+    res.send(problem)
   } catch (error) {
     next(error)
   }
 })
 
 // SAVE USER SOLUTION FOR CUSTOM PROBLEM
-router.put('/:companyId/:problemId', async (req, res, next) => {
+router.post('/addSolution/:companyId/:problemId', async (req, res, next) => {
   try {
     const name = req.body.name
     const solution = req.body.solution
@@ -184,6 +185,20 @@ router.put('/:companyId/:problemId', async (req, res, next) => {
     next(error)
   }
 })
+
+// // UPDATE CUSTOM PROBLEM
+// router.put('/:companyId/:problemId', async (req, res, next) => {
+//   try {
+//     await updateCustomProblem(
+//       req.params.companyId,
+//       req.params.problemId,
+//       req.body.update
+//     )
+//     res.send('Problem updated!')
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 // REMOVE CUSTOM PROBLEM
 router.delete('/:companyId/:problemId', async (req, res, next) => {
