@@ -8,10 +8,14 @@ const DeveloperListItem = props => {
 
   return (
     <li className="developer-list-item" key={user.id}>
-      <h6>
+      <h5>
+        Developer Name: <br />
         {user.firstName} {user.lastName}
+      </h5>
+      <h5>
+        Developer Score:<br />
         {user.score}
-      </h6>
+      </h5>
       <button
         type="button"
         onClick={evt => {
@@ -21,6 +25,7 @@ const DeveloperListItem = props => {
       >
         SAVE USER
       </button>
+      <hr />
     </li>
   )
 }

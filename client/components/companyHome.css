@@ -1,0 +1,14 @@
+#developer-list-container {
+  display: flex;
+  flex: 1 0 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.developer-list-item {
+  display: flex;
+  flex: 1 0 100%;
+  justify-content: center;
+  flex-direction: row;
+}
