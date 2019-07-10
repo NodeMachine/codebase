@@ -63,6 +63,7 @@ router.post('/:id/:companyId?', async (req, res, next) => {
     } else {
       problem = await getProblemById(problemId)
     }
+    console.log(problem)
     const expectedOutput = problem.tests.filter((el, ind) => ind % 2 !== 0)
     const tests = problem.tests.filter((el, ind) => ind % 2 === 0)
     const inputs = tests.map(el => {
