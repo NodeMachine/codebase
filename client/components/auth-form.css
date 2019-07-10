@@ -1,14 +1,22 @@
 #form-wrapper {
   display: flex;
+  margin-top: 20vh;
   flex-direction: column;
-  /* align-items: center; */
   margin-left: 3%;
 }
 
 #form-title {
-  color: #6ff9ff;
-  padding: 1%;
-  font-size: 55px;
+  color: white;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+#title-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  padding-left: 20px;
+  margin-bottom: 7vh;
 }
 
 form {
@@ -58,6 +66,12 @@ form button {
 form button:disabled {
   background-color: rgba(0, 168, 159, 0.2);
   color: rgba(255, 255, 255, 0.4);
+}
+
+#checkbox-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
 #companyCheckbox {

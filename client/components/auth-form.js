@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {login, signup, gotErrorThunk} from '../store/user'
 import {companyLogin, companySignup} from '../store/company'
+import {IconContext} from 'react-icons'
+import {MdKeyboardArrowRight} from 'react-icons/md'
 import {Redirect} from 'react-router-dom'
 import './auth-form.css'
 
@@ -50,7 +52,19 @@ class AuthForm extends React.Component {
     }
     return (
       <div id="form-wrapper">
-        <h2 id="form-title">{displayName}</h2>
+        <div id="title-wrapper">
+          <IconContext.Provider
+            value={{
+              color: '#26C6DA',
+              style: {marginLeft: '-10px'}
+            }}
+          >
+            <MdKeyboardArrowRight />
+            <MdKeyboardArrowRight />
+          </IconContext.Provider>
+          <h4 id="form-title">{displayName}</h4>
+        </div>
+
         <form
           onSubmit={event => {
             this.props.handleSubmit(event)
