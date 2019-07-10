@@ -13,9 +13,18 @@
   padding-right: 45px;
 }
 
+#leftColumn > p {
+  margin-top: 30px;
+  padding-right: 8vw;
+  letter-spacing: 1px;
+  line-height: 1.5em;
+}
+
 #rightColumn {
   flex: 1 1 66%;
-  background-image: url('https://cdn.photographylife.com/wp-content/uploads/2019/06/Nikon-Z-14-30mm-f4-S-Sample-Photo-21.jpg');
+  background-image: url('https://i.imgur.com/DFlD97m.jpg');
+  background-position: center;
+  background-size: 1080px 1080px;
 }
 
 #mainPageHR {
