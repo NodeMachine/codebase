@@ -27,15 +27,9 @@ nav a {
 }
 
 input[type='checkbox'] {
-  /* display: inline-block; */
   width: 15px;
   height: 15px;
-  /* background-color: white; */
 }
-
-/* #companyCheckbox {
-  background-color: white;
-} */
 
 h4 {
   margin: 0px !important;
@@ -77,4 +71,8 @@ hr {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+button:hover {
+  cursor: pointer;
 }
