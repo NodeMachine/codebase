@@ -27,22 +27,25 @@ class CompanySavedUsersList extends React.Component {
             ? this.state.savedUsersArray.map(user => {
                 return (
                   <li key={user.id}>
-                    <h3>
-                      {user.firstName || ''} {user.LastName || ''}
-                    </h3>
-                    <p>{user.score || ''}</p>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        this.props.deleteUser(this.props.company.id, user.id)
-                      }
-                    >
-                      Remove User
-                    </button>
-                    <details>
-                      <h4>User solutions</h4>
+                    <div className="saved-users">
+                      <h3>
+                        {user.firstName || ''} {user.LastName || ''}
+                      </h3>
+                      <p>{user.score || ''}</p>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          this.props.deleteUser(this.props.company.id, user.id)
+                        }
+                      >
+                        Remove User
+                      </button>
+                    </div>
+                    <div>
                       <details>
-                        {/* {user.problems.length
+                        <h4>User solutions</h4>
+                        <details>
+                          {/* {user.problems.length
                   ? user.problems.map(problem => {
                       return (
                         <div key={problem.id}>
@@ -55,8 +58,9 @@ class CompanySavedUsersList extends React.Component {
                       )
                     })
                   : 'No problems yet.'} */}
+                        </details>
                       </details>
-                    </details>
+                    </div>
                   </li>
                 )
               })

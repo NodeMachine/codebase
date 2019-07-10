@@ -14,7 +14,7 @@ const CompanyProfile = props => {
   }
 
   return (
-    <div className="user-profile-container">
+    <div className="company-profile-container">
       <div className="profile-left">
         <hr />
         <div className="profile-main-info">

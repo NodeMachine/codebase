@@ -1,4 +1,4 @@
-.user-profile-container {
+.company-profile-container {
   display: flex;
   flex-direction: row;
   margin-top: 13vh;
@@ -55,34 +55,21 @@
   align-self: center;
 }
 
-.user-problem {
+.saved-users {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
 }
-
-.user-problem-item {
-  flex: 0 0 20%;
+.saved-users button {
+  align-self: center;
 }
-
-.user-problems ul {
-  padding: 0;
-  list-style-type: none;
-}
-
-#edit-picture-button {
-  background: none;
+button {
+  background-color: #26c6da;
   border: none;
   color: white;
-  padding: 0px;
-  border-bottom: 1px solid #26c6da;
-  margin-top: 1%;
-}
-
-#edit-picture-button:hover {
-  cursor: pointer;
-}
-
-.user-problem-item h4 {
-  text-decoration: underline;
-  text-decoration-color: #6ff9ff;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  align-self: flex-start;
 }
