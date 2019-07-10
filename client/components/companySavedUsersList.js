@@ -10,57 +10,62 @@ class CompanySavedUsersList extends React.Component {
       savedUsersArray: []
     }
   }
+
   async componentDidMount() {
-    const promiseList = this.props.users.map(async userId => {
-      const {data} = await axios.get(`/api/users/${userId}`)
-      return data
-    })
-    const newArr = await Promise.all(promiseList)
-    this.setState({savedUsersArray: newArr})
+    if (this.props.savedUsers.length) {
+      const promiseList = this.props.savedUsers.map(async userId => {
+        const {data} = await axios.get(`/api/users/${userId}`)
+        return data
+      })
+      const newArr = await Promise.all(promiseList)
+      this.setState({savedUsersArray: newArr})
+    }
   }
 
   render() {
+    const savedUsersArray = this.state.savedUsersArray
     return (
       <div>
         <ul>
-          {this.state.savedUsersArray.length
-            ? this.state.savedUsersArray.map(user => {
+          {savedUsersArray.length
+            ? savedUsersArray.map(user => {
+                console.log(user)
                 return (
                   <li key={user.id}>
-                    <div className="saved-users">
-                      <h3>
-                        {user.firstName || ''} {user.LastName || ''}
-                      </h3>
-                      <p>{user.score || ''}</p>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          this.props.deleteUser(this.props.company.id, user.id)
-                        }
-                      >
-                        Remove User
-                      </button>
-                    </div>
-                    <div>
+                    <h3>
+                      {user.firstName || ''} {user.LastName || ''}
+                    </h3>
+                    <p>{user.score || ''}</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        this.props.deleteUser(this.props.companyId, user.id)
+                        const updatedUsersArray = savedUsersArray.filter(el => {
+                          return el.id !== user.id
+                        })
+                        this.setState({savedUsersArray: updatedUsersArray})
+                      }}
+                    >
+                      Remove User
+                    </button>
+                    <details>
+                      <h4>User solutions</h4>
                       <details>
-                        <h4>User solutions</h4>
-                        <details>
-                          {/* {user.problems.length
-                  ? user.problems.map(problem => {
-                      return (
-                        <div key={problem.id}>
-                          <p>{problem.name || ''}</p>
-                          <p>{problem.isSolved || ''}</p>
-                          <details>
-                            <code>{problem.solution || ''}</code>
-                          </details>
-                        </div>
-                      )
-                    })
-                  : 'No problems yet.'} */}
-                        </details>
+                        {user.problems && user.problems.length
+                          ? user.problems.map(problem => {
+                              return (
+                                <div key={problem.id}>
+                                  <p>{problem.name || ''}</p>
+                                  <p>{problem.isSolved || ''}</p>
+                                  <details>
+                                    <code>{problem.solution || ''}</code>
+                                  </details>
+                                </div>
+                              )
+                            })
+                          : 'No problems yet.'}
                       </details>
-                    </div>
+                    </details>
                   </li>
                 )
               })
@@ -71,64 +76,16 @@ class CompanySavedUsersList extends React.Component {
   }
 }
 
-// const mapStateToProps = state => ({
-//   company: state.company.company
-// })
+const mapStateToProps = state => ({
+  companyId: state.company.company.id,
+  savedUsers: state.company.company.savedUsers
+})
 
 const mapDispatchToProps = dispatch => ({
   deleteUser: (companyId, userId) =>
     dispatch(deleteSavedUser(companyId, userId))
 })
 
-export default connect(null, mapDispatchToProps)(CompanySavedUsersList)
-
-{
-  /* <div>
-<ul>
-  {savedUsersArray.length
-    ? savedUsersArray.map(user => {
-        return (
-          <li key={user.id}>
-            <h3>
-              {user.firstName || ''} {user.LastName || ''}
-            </h3>
-            {/* <p>{user.score || ''}</p>
-            <button
-              type="button"
-              onClick={() => props.deleteUser(props.company.id, user.id)}
-            >
-              Remove User
-            </button> */
-}
-{
-  /* <details> */
-}
-{
-  /* <h4>User solutions</h4> */
-}
-{
-  /* <details>
-          {user.problems.length
-            ? user.problems.map(problem => {
-                return (
-                  <div key={problem.id}>
-                    <p>{problem.name || ''}</p>
-                    <p>{problem.isSolved || ''}</p>
-                    <details>
-                      <code>{problem.solution || ''}</code>
-                    </details>
-                  </div>
-                )
-              })
-            : 'No problems yet.'}
-        </details> */
-}
-{
-  /* </details> */
-}
-// </li>
-// )
-// })
-// : ''}
-// </ul>
-// </div> */}
+export default connect(mapStateToProps, mapDispatchToProps)(
+  CompanySavedUsersList
+)
