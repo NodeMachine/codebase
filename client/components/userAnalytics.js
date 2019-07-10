@@ -69,7 +69,7 @@ export const UserAnalytics = props => {
       <div className="chart-item">
         <p>Points by Category</p>
         <div className="chartWrapper">
-          <PieChart width={250} height={200} className="pie-chart-container">
+          <PieChart width={250} height={250} className="pie-chart-container">
             <Pie
               dataKey="value"
               // isAnimationActive={false}
