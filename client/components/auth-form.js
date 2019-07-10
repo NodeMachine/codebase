@@ -29,7 +29,6 @@ class AuthForm extends React.Component {
 
   handleChange(event) {
     event.preventDefault()
-    // console.log("this.state.company.error: ", this.state.error);
     if (this.props.error) {
       this.props.gotError('')
     }
@@ -61,7 +60,7 @@ class AuthForm extends React.Component {
           }}
           name={name}
         >
-          <div style={{style: 'inline'}}>
+          <div>
             <label htmlFor="isCompany">
               <small>Are you a company?</small>
             </label>
