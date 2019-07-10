@@ -49,7 +49,8 @@ class ProblemListPage extends Component {
   render() {
     return (
       <div className="container">
-        <div>
+        <div className="filters">
+          <h3>Filters: </h3>
           <input
             type="checkbox"
             name="strings"
