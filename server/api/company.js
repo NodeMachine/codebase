@@ -124,9 +124,11 @@ router.post('/:companyId/:userId', async (req, res, next) => {
 //REMOVE SAVED USER TO COMPANY:
 router.delete('/:companyId/:userId', async (req, res, next) => {
   try {
-    await deleteSavedUser(req.params.companyId, req.params.userId)
-    res.json('User deleted')
-    console.log('user has been saved to company!')
+    const updatedCompany = await deleteSavedUser(
+      req.params.companyId,
+      req.params.userId
+    )
+    res.json(updatedCompany)
   } catch (error) {
     next(error)
   }
