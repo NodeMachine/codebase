@@ -5,7 +5,6 @@ import {addSavedUser} from '../store/company'
 const DeveloperListItem = props => {
   const user = props.user
   const company = props.company
-  console.log('USER ', user)
   return (
     <li className="developer-list-item" key={user.id}>
       <h5 className="developer-info name">
