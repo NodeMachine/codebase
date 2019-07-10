@@ -1,5 +1,5 @@
 .container {
-  margin-top: 10vh;
+  margin-top: 20vh;
   display: flex;
   justify-content: center;
 }
@@ -37,8 +37,18 @@
   padding: 20px 0 20px 0;
 }
 
+.problem-list-item svg {
+  transform: translate(0px, 3px);
+}
+
 .problem-list-item:not(.title) > h4 {
   font-weight: 100;
+}
+
+.problem-list-item > span {
+  display: inline-block;
+  border-bottom: 1px solid black;
+  padding-bottom: 2px;
 }
 
 #titleHR {
@@ -60,8 +70,13 @@
 }
 
 .problemName h4 {
-  text-decoration: underline;
-  text-decoration-color: #6ff9ff;
+  font-weight: 200;
+  border-bottom: 1px solid rgba(38, 198, 218, 0.3);
+  padding-bottom: 2px;
+}
+
+.problemName h4:hover {
+  border-bottom: 1px solid rgba(38, 198, 218, 1);
 }
 
 .filters {
