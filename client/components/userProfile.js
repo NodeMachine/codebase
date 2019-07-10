@@ -10,9 +10,12 @@ import './userProfile.css'
 const UserProfile = props => {
   const user = props.user
   let problems = []
+  let solvedProblems = []
   if (user.problems) {
     problems = Object.values(user.problems)
+    solvedProblems = problems.filter(problem => problem.isSolved === true)
   }
+
   if (!user.id) {
     return <Redirect to="/" />
   }
@@ -44,8 +47,8 @@ const UserProfile = props => {
         <hr />
         <h2>Your Problems</h2>
         <hr />
-        {problems.length ? (
-          <UserAnalytics problems={problems} />
+        {solvedProblems.length ? (
+          <UserAnalytics solvedProblems={solvedProblems} />
         ) : (
           <h4> Solve some problems to see analytics.</h4>
         )}
