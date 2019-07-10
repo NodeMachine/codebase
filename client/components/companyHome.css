@@ -55,6 +55,6 @@
   font-size: 10px;
 }
 
-.developer-list-item > button.delete {
-  background-color: #db350a;
+.delete {
+  background-color: #db350a !important;
 }

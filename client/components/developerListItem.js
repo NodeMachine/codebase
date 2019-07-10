@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {addSavedUser, deleteSavedUser} from '../store/company'
+import {ToastsContainer, ToastsStore} from 'react-toasts'
 
 const DeveloperListItem = props => {
   const user = props.user
@@ -15,26 +16,34 @@ const DeveloperListItem = props => {
       <h5 className="developer-info">{user.bio}</h5>
       <h5 className="developer-info">{user.location}</h5>
       {savedUsers.includes(user.id) ? (
-        <button
-          className="delete"
-          type="button"
-          onClick={evt => {
-            evt.preventDefault(props.removeUser(company.id, user.id))
-          }}
-        >
-          {' '}
-          DELETE DEVELOPER
-        </button>
+        <div>
+          <button
+            className="delete"
+            type="button"
+            onClick={evt => {
+              evt.preventDefault(props.removeUser(company.id, user.id))
+              ToastsStore.error('Developer deleted!')
+            }}
+          >
+            {' '}
+            DELETE DEVELOPER
+          </button>
+          <ToastsContainer store={ToastsStore} />
+        </div>
       ) : (
-        <button
-          type="button"
-          onClick={evt => {
-            evt.preventDefault()
-            props.addSavedUser(company.id, user.id)
-          }}
-        >
-          SAVE DEVELOPER
-        </button>
+        <div>
+          <button
+            type="button"
+            onClick={evt => {
+              evt.preventDefault()
+              props.addSavedUser(company.id, user.id)
+              ToastsStore.success('Developer saved!')
+            }}
+          >
+            SAVE DEVELOPER
+          </button>
+          <ToastsContainer store={ToastsStore} />
+        </div>
       )}
       <hr />
     </li>
