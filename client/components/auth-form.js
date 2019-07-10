@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -28,7 +29,6 @@ class AuthForm extends React.Component {
 
   handleChange(event) {
     event.preventDefault()
-    // console.log("this.state.company.error: ", this.state.error);
     if (this.props.error) {
       this.props.gotError('')
     }
@@ -61,13 +61,14 @@ class AuthForm extends React.Component {
           name={name}
         >
           <div>
-            <label htmlFor="isCompany">Are you a company? </label>
+            <label htmlFor="isCompany">
+              <small>Are you a company?</small>
+            </label>
             <input
               type="checkbox"
               id="companyCheckbox"
               name="isCompany"
               onChange={() => this.isCompanyToggle()}
-              // checked='true'
             />
           </div>
 
@@ -110,17 +111,24 @@ class AuthForm extends React.Component {
                 <small>Company Name</small>
               </label>
               <input name="companyName" type="text" />
+            </div>
+          ) : null}
+          {name === 'signup' && this.state.isCompany ? (
+            <div>
               <label htmlFor="companyInfo">
                 <small>Company Info</small>
               </label>
               <input name="companyInfo" type="text" />
+            </div>
+          ) : null}
+          {name === 'signup' && this.state.isCompany ? (
+            <div>
               <label htmlFor="companyIndustry">
                 <small>Company Industry</small>
               </label>
               <input name="companyIndustry" type="text" />
             </div>
           ) : null}
-
           {name === 'signup' && !this.state.isCompany ? (
             <div>
               <label htmlFor="lastName">
@@ -136,7 +144,9 @@ class AuthForm extends React.Component {
                 !(this.state.email.length && this.state.password.length >= 6)
               }
             >
-              {displayName}
+              {this.state.isCompany
+                ? `Company ${displayName}`
+                : `Developer ${displayName}`}
             </button>
             {this.props.error ? (
               <small style={{color: 'red'}}>{this.props.error}</small>
