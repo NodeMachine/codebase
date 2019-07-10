@@ -14,7 +14,10 @@ const CompanyNavbar = props => {
     <div>
       <nav id="navbar">
         <Link to="/">
-          <h1>NodeMachine</h1>
+          <h1>
+            <span className="bracket">{`${'{'}`}</span>NodeMachine
+            <span className="bracket">{`${'}'}`}</span>
+          </h1>
         </Link>
         {isLoggedIn ? (
           <div className="right">
