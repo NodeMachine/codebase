@@ -5,7 +5,7 @@ import CompanySavedUsersList from './companySavedUsersList'
 import CompanyProblemForm from './companyProblemForm'
 import CompanyInformation from './companyInformation'
 import {Redirect} from 'react-router-dom'
-import './userProfile.css'
+import './companyProfile.css'
 
 const CompanyProfile = props => {
   const company = props.company
@@ -18,26 +18,25 @@ const CompanyProfile = props => {
       <div className="profile-left">
         <hr />
         <div className="profile-main-info">
-          <h1>{company.name}</h1>
+          <h1>{company.companyName}</h1>
         </div>
         <div>
           <CompanyInformation />
         </div>
         <div>
-          <h2>Create a problem:</h2>
-          <CompanyProblemForm />
+          <hr />
+          <h2>Saved Users</h2>
+          <hr />
+          {company.savedUsers.length ? (
+            <CompanySavedUsersList users={company.savedUsers} />
+          ) : (
+            <h4>No saved useres yet!</h4>
+          )}
         </div>
       </div>
       <div className="profile-right">
         <hr />
-        <h2>Saved Users</h2>
-        <hr />
-        {company.savedUsers.length ? (
-          <CompanySavedUsersList users={company.savedUsers} />
-        ) : (
-          <h4>No saved useres yet!</h4>
-        )}
-        <hr />
+
         <h2>Custom Problems</h2>
         <hr />
         {company.customProblems && company.customProblems.length ? (
@@ -45,6 +44,12 @@ const CompanyProfile = props => {
         ) : (
           <h4>No problems submitted yet.</h4>
         )}
+        <div>
+          <hr />
+          <h2>Create Custom Problem</h2>
+          <hr />
+          <CompanyProblemForm />
+        </div>
       </div>
     </div>
   )
