@@ -36,14 +36,6 @@ const CompanyProfile = props => {
       </div>
       <div className="profile-right">
         <hr />
-        <h2>Saved Users</h2>
-        <hr />
-        {company.savedUsers.length ? (
-          <CompanySavedUsersList />
-        ) : (
-          <h4>No saved users yet!</h4>
-        )}
-        <hr />
         <h2>Custom Problems</h2>
         <hr />
         {company.customProblems && company.customProblems.length ? (

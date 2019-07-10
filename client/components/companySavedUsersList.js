@@ -32,22 +32,26 @@ class CompanySavedUsersList extends React.Component {
                 console.log(user)
                 return (
                   <li key={user.id}>
-                    <h3>
-                      {user.firstName || ''} {user.LastName || ''}
-                    </h3>
-                    <p>{user.score || ''}</p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        this.props.deleteUser(this.props.companyId, user.id)
-                        const updatedUsersArray = savedUsersArray.filter(el => {
-                          return el.id !== user.id
-                        })
-                        this.setState({savedUsersArray: updatedUsersArray})
-                      }}
-                    >
-                      Remove User
-                    </button>
+                    <div className="saved-users">
+                      <h3>
+                        {user.firstName || ''} {user.LastName || ''}
+                      </h3>
+                      <p>{user.score || ''}</p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          this.props.deleteUser(this.props.companyId, user.id)
+                          const updatedUsersArray = savedUsersArray.filter(
+                            el => {
+                              return el.id !== user.id
+                            }
+                          )
+                          this.setState({savedUsersArray: updatedUsersArray})
+                        }}
+                      >
+                        Remove User
+                      </button>
+                    </div>
                     <details>
                       <h4>User solutions</h4>
                       <details>
