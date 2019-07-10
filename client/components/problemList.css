@@ -66,8 +66,35 @@
 
 .filters {
   display: flex;
-  margin-top: 10vh;
   flex-direction: column;
-  width: 10%;
-  align-content: center;
+  width: 15%;
+  justify-content: flex-start;
+  align-items: baseline;
+  margin-right: 10vw;
+}
+
+.filters > h3 {
+  padding-top: 20px;
+}
+
+.filters > hr {
+  min-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  margin-right: auto;
+  margin-bottom: 25px;
+}
+
+.checkbox-item {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.checkbox-item > label {
+  font-size: 14px;
+  margin-top: 2px;
+  font-weight: 200;
 }
