@@ -73,3 +73,11 @@ button {
   font-size: 16px;
   align-self: flex-start;
 }
+
+.company-profile-container form {
+  background-color: #263238;
+}
+
+.custom-problem-form button {
+  align-self: center;
+}

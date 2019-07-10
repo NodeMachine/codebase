@@ -67,105 +67,108 @@ class CompanyProblemForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSumbit}>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            name="name"
-            onChange={this.handleChange}
-            value={this.state.name}
-          />
-        </div>
-        <div>
-          <label htmlFor="prompt">Prompt:</label>
-          <input
-            type="text"
-            name="prompt"
-            onChange={this.handleChange}
-            value={this.state.prompt}
-          />
-        </div>
-        <div>
-          <label htmlFor="typeOf">Expected output data type:</label>
-          <input
-            type="text"
-            name="typeOf"
-            onChange={this.handleChange}
-            value={this.state.typeOf}
-          />
-        </div>
-        <div>
-          <h3>Test One:</h3>
-          <label htmlFor="input1">Input:</label>
-          <input
-            type="text"
-            name="input1"
-            onChange={this.handleChange}
-            value={this.state.input1}
-          />
-          <label htmlFor="output1">Expected output:</label>
-          <input
-            type="text"
-            name="output1"
-            onChange={this.handleChange}
-            value={this.state.output1}
-          />
-        </div>
-        <div>
-          <h3>Test Two:</h3>
-          <label htmlFor="input2">Input:</label>
-          <input
-            type="text"
-            name="input2"
-            onChange={this.handleChange}
-            value={this.state.input2}
-          />
-          <label htmlFor="output2">Expected output:</label>
-          <input
-            type="text"
-            name="output2"
-            onChange={this.handleChange}
-            value={this.state.output2}
-          />
-        </div>
-        <div>
-          <h3>Test Three:</h3>
-          <label htmlFor="input3">Input:</label>
-          <input
-            type="text"
-            name="input3"
-            onChange={this.handleChange}
-            value={this.state.input3}
-          />
-          <label htmlFor="output3">Expected output:</label>
-          <input
-            type="text"
-            name="output3"
-            onChange={this.handleChange}
-            value={this.state.output3}
-          />
-        </div>
+      <div className="custom-problem-form">
+        <form onSubmit={this.handleSumbit}>
+          <div>
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              name="name"
+              onChange={this.handleChange}
+              value={this.state.name}
+            />
+          </div>
+          <div>
+            <label htmlFor="prompt">Prompt:</label>
+            <input
+              type="text"
+              name="prompt"
+              onChange={this.handleChange}
+              value={this.state.prompt}
+            />
+          </div>
+          <div>
+            <label htmlFor="typeOf">Expected output data type:</label>
+            <input
+              type="text"
+              name="typeOf"
+              onChange={this.handleChange}
+              value={this.state.typeOf}
+            />
+            <small>Example: number, string, boolean</small>
+          </div>
+          <div>
+            <h3>Test One:</h3>
+            <label htmlFor="input1">Input:</label>
+            <input
+              type="text"
+              name="input1"
+              onChange={this.handleChange}
+              value={this.state.input1}
+            />
+            <label htmlFor="output1">Expected output:</label>
+            <input
+              type="text"
+              name="output1"
+              onChange={this.handleChange}
+              value={this.state.output1}
+            />
+          </div>
+          <div>
+            <h3>Test Two:</h3>
+            <label htmlFor="input2">Input:</label>
+            <input
+              type="text"
+              name="input2"
+              onChange={this.handleChange}
+              value={this.state.input2}
+            />
+            <label htmlFor="output2">Expected output:</label>
+            <input
+              type="text"
+              name="output2"
+              onChange={this.handleChange}
+              value={this.state.output2}
+            />
+          </div>
+          <div>
+            <h3>Test Three:</h3>
+            <label htmlFor="input3">Input:</label>
+            <input
+              type="text"
+              name="input3"
+              onChange={this.handleChange}
+              value={this.state.input3}
+            />
+            <label htmlFor="output3">Expected output:</label>
+            <input
+              type="text"
+              name="output3"
+              onChange={this.handleChange}
+              value={this.state.output3}
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={
-            !(
-              this.state.typeOf &&
-              this.state.prompt &&
-              this.state.name &&
-              this.state.input1 &&
-              this.state.output1 &&
-              this.state.input2 &&
-              this.state.output2 &&
-              this.state.input3 &&
-              this.state.output3
-            )
-          }
-        >
-          Submit
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={
+              !(
+                this.state.typeOf &&
+                this.state.prompt &&
+                this.state.name &&
+                this.state.input1 &&
+                this.state.output1 &&
+                this.state.input2 &&
+                this.state.output2 &&
+                this.state.input3 &&
+                this.state.output3
+              )
+            }
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     )
   }
 }
