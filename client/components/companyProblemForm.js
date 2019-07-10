@@ -40,15 +40,15 @@ class CompanyProblemForm extends React.Component {
     let problem = {name, prompt}
     let functionName = name.toLowerCase().replace(/[^A-Z0-9]/gi, '')
     problem.defaultCode = `function ${functionName}(){\n  return\n}`
-    problem.test = []
-    problem.test.push(`typeof ${functionName}(${input1})`)
-    problem.test.push(typeOf)
-    problem.test.push(`${functionName}(${input1})`)
-    problem.test.push(output1)
-    problem.test.push(`${functionName}(${input2})`)
-    problem.test.push(output2)
-    problem.test.push(`${functionName}(${input3})`)
-    problem.test.push(output3)
+    problem.tests = []
+    problem.tests.push(`typeof ${functionName}(${input1})`)
+    problem.tests.push(typeOf)
+    problem.tests.push(`${functionName}(${input1})`)
+    problem.tests.push(output1)
+    problem.tests.push(`${functionName}(${input2})`)
+    problem.tests.push(output2)
+    problem.tests.push(`${functionName}(${input3})`)
+    problem.tests.push(output3)
 
     this.props.addProblem(this.props.id, problem)
 
