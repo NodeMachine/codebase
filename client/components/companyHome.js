@@ -11,10 +11,16 @@ class CompanyHome extends Component {
 
   render() {
     return (
-      <div>
-        <div>Welcome, company {this.props.company.companyName || ''}</div>
-        <div>Here are all the users with ranking:</div>
+      <div id="company-home-container">
         <ul id="developer-list-container">
+          <li className="developer-list-item" key={Math.random()}>
+            <h3 className="developer-info name">Name</h3>
+            <h3 className="developer-info">Score</h3>
+            <h3 className="developer-info">Bio</h3>
+            <h3 className="developer-info location">Location</h3>
+
+            <hr id="title-divider" />
+          </li>
           {this.props.users.length
             ? this.props.users.map(user => {
                 return (
