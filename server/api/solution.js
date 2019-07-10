@@ -42,6 +42,7 @@ async function ssr(url, userCode, userProblemTests) {
     el.innerHTML += test + ' '
   })
 }
+setTimeout(() => document.stop(), 5000)
 tests()`
   })
   await page.evaluate(() => 'running tests!')
