@@ -18,7 +18,7 @@ const DeveloperListItem = props => {
       {savedUsers.includes(user.id) ? (
         <div>
           <button
-            className="delete"
+            className="delete developer-info"
             type="button"
             onClick={evt => {
               evt.preventDefault(props.removeUser(company.id, user.id))
@@ -33,7 +33,7 @@ const DeveloperListItem = props => {
       ) : (
         <div>
           <button
-            type="button"
+            type="button developer-info"
             onClick={evt => {
               evt.preventDefault()
               props.addSavedUser(company.id, user.id)
