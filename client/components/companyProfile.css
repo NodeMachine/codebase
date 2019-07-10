@@ -1,0 +1,83 @@
+.company-profile-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 13vh;
+}
+.user-profile-container img {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+.profile-left {
+  flex: 0 0 30%;
+  margin: 0 2% 0 2%;
+}
+
+.profile-main-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-right {
+  flex: 0 0 60%;
+  margin-right: 50px;
+}
+
+.profile-description {
+  display: flex;
+  justify-content: space-between;
+}
+
+#text-box > div {
+  display: flex;
+  align-items: baseline;
+}
+
+#text-box p {
+  font-size: 14px;
+  font-weight: 200;
+  margin-left: 3%;
+}
+
+.profile-description svg {
+  margin-top: 22px;
+  font-size: 24px;
+}
+
+.profile-description-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-description-form button {
+  align-self: center;
+}
+
+.saved-users {
+  display: flex;
+  justify-content: space-between;
+}
+.saved-users button {
+  align-self: center;
+}
+button {
+  background-color: #26c6da;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  align-self: flex-start;
+}
+
+.company-profile-container form {
+  background-color: #263238;
+}
+
+.custom-problem-form button {
+  align-self: center;
+}

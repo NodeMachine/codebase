@@ -59,3 +59,7 @@ form button:disabled {
   background-color: rgba(0, 168, 159, 0.2);
   color: rgba(255, 255, 255, 0.4);
 }
+
+#companyCheckbox {
+  display: inline;
+}

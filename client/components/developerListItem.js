@@ -5,13 +5,15 @@ import {addSavedUser} from '../store/company'
 const DeveloperListItem = props => {
   const user = props.user
   const company = props.company
-
+  console.log('USER ', user)
   return (
     <li className="developer-list-item" key={user.id}>
-      <h6>
+      <h5 className="developer-info name">
         {user.firstName} {user.lastName}
-        {user.score}
-      </h6>
+      </h5>
+      <h5 className="developer-info">{user.score}</h5>
+      <h5 className="developer-info">{user.bio}</h5>
+      <h5 className="developer-info">{user.location}</h5>
       <button
         type="button"
         onClick={evt => {
@@ -21,6 +23,7 @@ const DeveloperListItem = props => {
       >
         SAVE USER
       </button>
+      <hr />
     </li>
   )
 }

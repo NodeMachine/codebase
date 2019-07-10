@@ -33,7 +33,6 @@
 
 .resultItem {
   display: flex;
-  /* justify-content: space-around; */
   margin-bottom: 30px;
 }
 
@@ -49,6 +48,10 @@
 
 button {
   margin-left: 5px;
+}
+
+button:disabled {
+  opacity: 0.2;
 }
 
 ul {
@@ -77,4 +80,15 @@ ul {
   100% {
     transform: rotate(-360deg);
   }
+}
+
+.directions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.directions hr {
+  margin: 0;
+  align-self: stretch;
 }

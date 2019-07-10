@@ -49,42 +49,57 @@ class ProblemListPage extends Component {
   render() {
     return (
       <div className="container">
-        <div>
-          <input
-            type="checkbox"
-            name="strings"
-            onClick={this.handleClick}
-            defaultChecked={true}
-          />
-          <label htmlFor="strings">Strings</label>
-          <input
-            type="checkbox"
-            name="arrays"
-            onClick={this.handleClick}
-            defaultChecked={true}
-          />
-          <label htmlFor="arrays">Arrays</label>
-          <input
-            type="checkbox"
-            name="sorting"
-            onClick={this.handleClick}
-            defaultChecked={true}
-          />
-          <label htmlFor="sorting">Sorting</label>
-          <input
-            type="checkbox"
-            name="data structures"
-            onClick={this.handleClick}
-            defaultChecked={true}
-          />
-          <label htmlFor="data structures">Data Structures</label>
-          <input
-            type="checkbox"
-            name="dynamic programming"
-            onClick={this.handleClick}
-            defaultChecked={true}
-          />
-          <label htmlFor="dynamic programming">Dynamic Programming</label>
+        <div className="filters">
+          <h3>Filters: </h3>
+          <hr />
+          <div className="checkbox-item">
+            <label htmlFor="strings">Strings</label>
+            <input
+              type="checkbox"
+              name="strings"
+              onClick={this.handleClick}
+              defaultChecked={true}
+            />
+          </div>
+
+          <div className="checkbox-item">
+            <label htmlFor="arrays">Arrays</label>
+            <input
+              type="checkbox"
+              name="arrays"
+              onClick={this.handleClick}
+              defaultChecked={true}
+            />
+          </div>
+
+          <div className="checkbox-item">
+            <label htmlFor="sorting">Sorting</label>
+            <input
+              type="checkbox"
+              name="sorting"
+              onClick={this.handleClick}
+              defaultChecked={true}
+            />
+          </div>
+
+          <div className="checkbox-item">
+            <label htmlFor="data structures">Data Structures</label>
+            <input
+              type="checkbox"
+              name="data structures"
+              onClick={this.handleClick}
+              defaultChecked={true}
+            />
+          </div>
+          <div className="checkbox-item">
+            <label htmlFor="dynamic programming">Dynamic Programming</label>
+            <input
+              type="checkbox"
+              name="dynamic programming"
+              onClick={this.handleClick}
+              defaultChecked={true}
+            />
+          </div>
         </div>
         <div className="problem-list-container">
           <div className="problem-list-title-container">

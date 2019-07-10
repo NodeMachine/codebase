@@ -27,7 +27,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  /* margin: 20px 0 0px 0; */
 }
 
 .problem-list-item {
@@ -63,4 +62,39 @@
 .problemName h4 {
   text-decoration: underline;
   text-decoration-color: #6ff9ff;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  justify-content: flex-start;
+  align-items: baseline;
+  margin-right: 10vw;
+}
+
+.filters > h3 {
+  padding-top: 20px;
+}
+
+.filters > hr {
+  min-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  margin-right: auto;
+  margin-bottom: 25px;
+}
+
+.checkbox-item {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.checkbox-item > label {
+  font-size: 14px;
+  margin-top: 2px;
+  font-weight: 200;
 }

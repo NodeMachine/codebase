@@ -27,10 +27,9 @@ router.put('/login', async (req, res, next) => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        getCompanyByAuthId(user.user.uid).then(async company => {
+        getCompanyByAuthId(user.user.uid).then(company => {
           req.session.companyId = company.id
-          const customProblems = await getCustomProblems(company.id)
-          res.send({...company, customProblems})
+          res.send(company)
         })
       })
       .catch(error => {
@@ -73,6 +72,9 @@ router.post('/signup', async (req, res, next) => {
           authId: user.user.uid,
           savedUsers: []
         })
+        company.customProblems = []
+        req.session.companyId = company.id
+
         res.send(company)
       })
       .catch(error => {
@@ -103,8 +105,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const companyId = req.params.id
     const company = await getCompanyById(companyId)
-    const customProblems = await getCustomProblems(companyId)
-    res.send({...company, customProblems})
+    res.send(company)
   } catch (error) {
     next(error)
   }
@@ -123,9 +124,11 @@ router.post('/:companyId/:userId', async (req, res, next) => {
 //REMOVE SAVED USER TO COMPANY:
 router.delete('/:companyId/:userId', async (req, res, next) => {
   try {
-    await deleteSavedUser(req.params.companyId, req.params.userId)
-    res.json('User deleted')
-    console.log('user has been saved to company!')
+    const updatedCompany = await deleteSavedUser(
+      req.params.companyId,
+      req.params.userId
+    )
+    res.json(updatedCompany)
   } catch (error) {
     next(error)
   }
@@ -214,7 +217,6 @@ router.put('/:companyId', async (req, res, next) => {
   try {
     await updateCompany(req.params.companyId, req.body.update)
     const company = await getCompanyById(req.params.companyId)
-    console.log(company)
     res.send(company)
   } catch (error) {
     next(error)

@@ -1,7 +1,8 @@
+/* eslint-disable complexity */
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {login, signup} from '../store/user'
+import {login, signup, gotErrorThunk} from '../store/user'
 import {companyLogin, companySignup} from '../store/company'
 import {Redirect} from 'react-router-dom'
 import './auth-form.css'
@@ -15,15 +16,23 @@ class AuthForm extends React.Component {
     this.state = {
       password: '',
       email: '',
-      isCompany: false
+      isCompany: false,
+      error: this.props.error
     }
     this.handleChange = this.handleChange.bind(this)
+  }
+  componentWillUnmount() {
+    if (this.props.error) {
+      this.props.gotError('')
+    }
   }
 
   handleChange(event) {
     event.preventDefault()
+    if (this.props.error) {
+      this.props.gotError('')
+    }
     this.setState({
-      error: '',
       [event.target.name]: event.target.value
     })
   }
@@ -52,13 +61,14 @@ class AuthForm extends React.Component {
           name={name}
         >
           <div>
-            <label htmlFor="isCompany">Are you a company? </label>
+            <label htmlFor="isCompany">
+              <small>Are you a company?</small>
+            </label>
             <input
               type="checkbox"
               id="companyCheckbox"
               name="isCompany"
               onChange={() => this.isCompanyToggle()}
-              // checked='true'
             />
           </div>
 
@@ -101,17 +111,24 @@ class AuthForm extends React.Component {
                 <small>Company Name</small>
               </label>
               <input name="companyName" type="text" />
+            </div>
+          ) : null}
+          {name === 'signup' && this.state.isCompany ? (
+            <div>
               <label htmlFor="companyInfo">
                 <small>Company Info</small>
               </label>
               <input name="companyInfo" type="text" />
+            </div>
+          ) : null}
+          {name === 'signup' && this.state.isCompany ? (
+            <div>
               <label htmlFor="companyIndustry">
                 <small>Company Industry</small>
               </label>
               <input name="companyIndustry" type="text" />
             </div>
           ) : null}
-
           {name === 'signup' && !this.state.isCompany ? (
             <div>
               <label htmlFor="lastName">
@@ -127,7 +144,9 @@ class AuthForm extends React.Component {
                 !(this.state.email.length && this.state.password.length >= 6)
               }
             >
-              {displayName}
+              {this.state.isCompany
+                ? `Company ${displayName}`
+                : `Developer ${displayName}`}
             </button>
             {this.props.error ? (
               <small style={{color: 'red'}}>{this.props.error}</small>
@@ -208,7 +227,8 @@ const mapDispatch = dispatch => {
       } catch (error) {
         console.log(error)
       }
-    }
+    },
+    gotError: error => dispatch(gotErrorThunk(error))
   }
 }
 
