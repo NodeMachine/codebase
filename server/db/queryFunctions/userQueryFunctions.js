@@ -58,17 +58,6 @@ const getUserByAuthId = async authid => {
   }
 }
 
-const getAllUsers = async () => {
-  try {
-    const result = await db.collection('users').get()
-    return result.docs.map(item => {
-      return {id: item.id, ...item.data()}
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 const addProblemToUser = async (userId, problemId, problemData) => {
   try {
     const searchedProblem = await db
@@ -112,6 +101,24 @@ const createUser = async obj => {
     return user
   } catch (error) {
     console.log('error crating user: ', error)
+  }
+}
+
+const getAllUsers = async () => {
+  try {
+    const result = await db.collection('users').get()
+    const users = []
+
+    for (let i = 0; i < result.docs.length; i++) {
+      let item = result.docs[i]
+      let user = {id: item.id, ...item.data()}
+      let problems = await getAllUserProblems(user.id)
+      user.problems = Object.values(problems)
+      users.push(user)
+    }
+    return users
+  } catch (error) {
+    console.log(error)
   }
 }
 
