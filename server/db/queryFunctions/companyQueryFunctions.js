@@ -2,6 +2,42 @@ const {db} = require('./index')
 const {getUserById} = require('./userQueryFunctions')
 const FieldValue = require('firebase-admin').firestore.FieldValue
 
+const getCustomProblems = async companyId => {
+  try {
+    const result = await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .collection('customProblems')
+      .get()
+
+    const customProblems = result.docs.map(problem => {
+      return {id: problem.id, ...problem.data()}
+    })
+    return customProblems
+  } catch (error) {
+    console.log('Error in getting custom problems', error)
+  }
+}
+
+const getCompanyById = async companyId => {
+  try {
+    const data = await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .get()
+    if (data.exists) {
+      const problems = await getCustomProblems(companyId)
+      const company = {id: data.id, ...data.data()}
+      company.customProblems = problems
+      return company
+    } else {
+      console.log('Company does not exist.')
+    }
+  } catch (error) {
+    console.log('Error getting company by ID', error)
+  }
+}
+
 const getAllCompanies = async () => {
   try {
     const result = await db.collection('companies').get()
@@ -39,27 +75,6 @@ const createCustomProblem = async (companyId, problem) => {
   }
 }
 
-const addSavedUser = async (companyId, userId) => {
-  try {
-    const company = await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .get()
-
-    const {savedUsers} = company.data()
-    savedUsers.push(userId)
-    await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .update({savedUsers: savedUsers})
-
-    const updatedCompany = await getCompanyById(companyId)
-    return updatedCompany
-  } catch (error) {
-    console.log('Error in adding saved user', error)
-  }
-}
-
 const deleteSavedUser = async (companyId, userId) => {
   try {
     const company = await db
@@ -74,26 +89,10 @@ const deleteSavedUser = async (companyId, userId) => {
       .doc(`${companyId}`)
       .update({savedUsers: updatedUserArr})
 
-    return 'User has been deleted'
+    const updatedCompany = await getCompanyById(companyId)
+    return updatedCompany
   } catch (error) {
     console.log('Error in adding saved user', error)
-  }
-}
-
-const getCustomProblems = async companyId => {
-  try {
-    const result = await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .collection('customProblems')
-      .get()
-
-    const customProblems = result.docs.map(problem => {
-      return {id: problem.id, ...problem.data()}
-    })
-    return customProblems
-  } catch (error) {
-    console.log('Error in getting custom problems', error)
   }
 }
 
@@ -188,9 +187,31 @@ const updateCustomProblem = async (companyId, problemId, updateObject) => {
       .collection('customProblems')
       .doc(`${problemId}`)
       .update(updateObject)
-    return 'Custom problem was updated'
+    const updatedCompany = await getCompanyById(companyId)
+    return updatedCompany
   } catch (error) {
     console.log('Error in updating problem', error)
+  }
+}
+
+const addSavedUser = async (companyId, userId) => {
+  try {
+    const company = await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .get()
+
+    const {savedUsers} = company.data()
+    savedUsers.push(userId)
+    await db
+      .collection('companies')
+      .doc(`${companyId}`)
+      .update({savedUsers: savedUsers})
+
+    const updatedCompany = await getCompanyById(companyId)
+    return updatedCompany
+  } catch (error) {
+    console.log('Error in adding saved user', error)
   }
 }
 
@@ -213,25 +234,6 @@ const getCompanyByAuthId = async authid => {
     return result
   } catch (error) {
     console.log(error)
-  }
-}
-
-const getCompanyById = async companyId => {
-  try {
-    const data = await db
-      .collection('companies')
-      .doc(`${companyId}`)
-      .get()
-    if (data.exists) {
-      const problems = await getCustomProblems(companyId)
-      const company = {id: data.id, ...data.data()}
-      company.customProblems = problems
-      return company
-    } else {
-      console.log('Company does not exist.')
-    }
-  } catch (error) {
-    console.log('Error getting company by ID', error)
   }
 }
 
