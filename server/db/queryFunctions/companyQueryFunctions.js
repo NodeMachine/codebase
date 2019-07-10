@@ -202,7 +202,7 @@ const addSavedUser = async (companyId, userId) => {
       .get()
 
     const {savedUsers} = company.data()
-    if (!savedUsers.contains(userId)) {
+    if (!savedUsers.includes(userId)) {
       savedUsers.push(userId)
     }
     await db
