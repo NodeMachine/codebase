@@ -8,7 +8,6 @@
 
 #developer-list-container {
   display: flex;
-  /* flex: 0 0 60vw; */
   max-width: 60vw;
   flex-direction: row;
   flex-wrap: wrap;
@@ -20,7 +19,6 @@
   flex: 1 0 100%;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: baseline;
 }
 
@@ -53,4 +51,8 @@
   text-decoration: none;
   display: inline-block;
   font-size: 10px;
+}
+
+.delete {
+  background-color: #db350a !important;
 }

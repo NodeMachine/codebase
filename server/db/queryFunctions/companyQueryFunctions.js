@@ -202,7 +202,9 @@ const addSavedUser = async (companyId, userId) => {
       .get()
 
     const {savedUsers} = company.data()
-    savedUsers.push(userId)
+    if (!savedUsers.includes(userId)) {
+      savedUsers.push(userId)
+    }
     await db
       .collection('companies')
       .doc(`${companyId}`)

@@ -2,7 +2,7 @@
   background-color: none;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: flex-end;
   position: absolute;
   top: 0px;
   left: 30px;
@@ -19,9 +19,14 @@
 
 #navbar h1 {
   font-weight: 400;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
 }
 
 #navbar svg {
   transform: translate(0px, 3px);
+}
+
+.bracket {
+  color: #26c6da;
+  margin: 0px 15px;
 }

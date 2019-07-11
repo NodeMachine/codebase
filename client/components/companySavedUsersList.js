@@ -53,22 +53,21 @@ class CompanySavedUsersList extends React.Component {
                       </button>
                     </div>
                     <details>
-                      <h4>User solutions</h4>
-                      <details>
-                        {user.problems && user.problems.length
-                          ? user.problems.map(problem => {
-                              return (
-                                <div key={problem.id}>
-                                  <p>{problem.name || ''}</p>
-                                  <p>{problem.isSolved || ''}</p>
-                                  <details>
-                                    <code>{problem.solution || ''}</code>
-                                  </details>
-                                </div>
-                              )
-                            })
-                          : 'No problems yet.'}
-                      </details>
+                      {Object.values(user.problems) &&
+                      Object.values(user.problems).length
+                        ? Object.values(user.problems).map(problem => {
+                            return (
+                              <div key={problem.id}>
+                                <details>
+                                  <summary>
+                                    Solution code for {problem.name}
+                                  </summary>
+                                  <code>{problem.solution || ''}</code>
+                                </details>
+                              </div>
+                            )
+                          })
+                        : 'No problems yet.'}
                     </details>
                   </li>
                 )

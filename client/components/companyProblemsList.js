@@ -15,6 +15,7 @@ const CompanyProblemsList = props => {
               {`https://nodemachine.herokuapp.com/problems/${problem.id}/${id}`}
             </p>
             <details>
+              <summary>Developer Solutions</summary>
               {problem.users && problem.users.length ? (
                 problem.users.map(user => {
                   return (

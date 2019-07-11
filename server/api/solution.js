@@ -29,7 +29,8 @@ function promiseTimeout(ms, promise) {
 // Function opens up a instance of Chrome, inserts the user's code via a script tag, evaluates the code against the tests, and returns the html document as a string.
 async function ssr(url, userCode, userProblemTests) {
   const browser = await puppeteer.launch({
-    headless: true
+    headless: true,
+    args: ['--no-sandbox']
   })
   const page = await browser.newPage()
   await page.goto(url, {waitUntil: 'networkidle0'})
@@ -42,6 +43,7 @@ async function ssr(url, userCode, userProblemTests) {
     el.innerHTML += test + ' '
   })
 }
+setTimeout(() => document.stop(), 6000)
 tests()`
   })
   await page.evaluate(() => 'running tests!')
@@ -61,6 +63,7 @@ router.post('/:id/:companyId?', async (req, res, next) => {
     } else {
       problem = await getProblemById(problemId)
     }
+    console.log(problem)
     const expectedOutput = problem.tests.filter((el, ind) => ind % 2 !== 0)
     const tests = problem.tests.filter((el, ind) => ind % 2 === 0)
     const inputs = tests.map(el => {
