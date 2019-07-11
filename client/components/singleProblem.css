@@ -1,5 +1,6 @@
 .singleProblemContainer {
   margin-top: 15vh;
+  padding: 0 2%;
 }
 
 .promptResultContainer {
@@ -84,11 +85,15 @@ ul {
 
 .directions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   width: 100%;
 }
 
 .directions hr {
-  margin: 0;
-  align-self: stretch;
+  min-width: 100%;
+}
+
+.directions p {
+  margin-top: 7px;
 }
