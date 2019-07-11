@@ -29,7 +29,6 @@ class CompanySavedUsersList extends React.Component {
         <ul>
           {savedUsersArray.length
             ? savedUsersArray.map(user => {
-                console.log(user)
                 return (
                   <li key={user.id}>
                     <div className="saved-users">

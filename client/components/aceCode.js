@@ -21,14 +21,12 @@ class AceCode extends React.Component {
     axios
       .post('/api/solution', this.state)
       .then(returnResult => {
-        console.log('returnResult: ', returnResult.data)
         this.setState({result: returnResult.data})
       })
       .catch(err => console.log(err))
   }
 
   render() {
-    console.log('this.state.code: ', this.state.code)
     return (
       <div>
         <AceEditor
@@ -40,10 +38,6 @@ class AceCode extends React.Component {
           editorProps={{$blockScrolling: true}}
         />
         <button onClick={() => this.handleSubmit()}>Run code</button>
-        {/* <div>
-          This is a result window for now:
-          <p>{this.state.result}</p>
-        </div> */}
       </div>
     )
   }
