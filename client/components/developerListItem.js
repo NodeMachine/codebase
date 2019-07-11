@@ -13,12 +13,12 @@ const DeveloperListItem = props => {
         {user.firstName} {user.lastName}
       </h5>
       <h5 className="developer-info">{user.score}</h5>
-      <h5 className="developer-info">{user.bio}</h5>
       <h5 className="developer-info">{user.location}</h5>
+      <h5 className="developer-info">{user.bio}</h5>
       {savedUsers.includes(user.id) ? (
-        <div>
+        <div className="developer-info-button">
           <button
-            className="delete developer-info"
+            className="delete"
             type="button"
             onClick={evt => {
               evt.preventDefault(props.removeUser(company.id, user.id))
@@ -26,14 +26,14 @@ const DeveloperListItem = props => {
             }}
           >
             {' '}
-            DELETE DEVELOPER
+            REMOVE DEVELOPER
           </button>
           <ToastsContainer store={ToastsStore} />
         </div>
       ) : (
-        <div>
+        <div className="developer-info-button">
           <button
-            type="button developer-info"
+            type="button "
             onClick={evt => {
               evt.preventDefault()
               props.addSavedUser(company.id, user.id)
