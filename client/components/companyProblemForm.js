@@ -42,7 +42,7 @@ class CompanyProblemForm extends React.Component {
     problem.defaultCode = `function ${functionName}(){\n  return\n}`
     problem.tests = []
     problem.tests.push(`typeof ${functionName}(${input1})`)
-    problem.tests.push(typeOf)
+    problem.tests.push('"' + typeOf + '"')
     problem.tests.push(`${functionName}(${input1})`)
     problem.tests.push(output1)
     problem.tests.push(`${functionName}(${input2})`)
