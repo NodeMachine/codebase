@@ -8,7 +8,7 @@
 
 #developer-list-container {
   display: flex;
-  max-width: 80vw;
+  max-width: 70vw;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
@@ -20,6 +20,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: baseline;
+  /* justify-content: space-evenly; */
 }
 
 .developer-list-item > hr {
@@ -30,6 +31,17 @@
   flex: 0 0 15%;
   font-weight: 200;
   letter-spacing: 1px;
+  display: flex;
+}
+
+.developer-info-button {
+  flex: 0 0 15%;
+  font-weight: 200;
+  letter-spacing: 1px;
+}
+
+.developer-info-button button {
+  align-self: center;
 }
 
 #title-divider {
