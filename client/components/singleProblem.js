@@ -125,7 +125,7 @@ class SingleProblem extends Component {
             name="UNIQUE_ID_OF_DIV"
             value={this.state.code}
             editorProps={{$blockScrolling: true}}
-            height="70vh"
+            height="60vh"
             width="50vw"
           />
           <div className="buttonContainer">
