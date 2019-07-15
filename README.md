@@ -13,6 +13,7 @@ http://nodemachine.herokuapp.com
 * Firebase
 * Heroku
 * Recharts
+* D3
 
 
 ## Developers
